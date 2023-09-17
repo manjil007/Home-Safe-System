@@ -6,9 +6,8 @@ import java.time.LocalDateTime;
  * Data Transfer Object containing user data from the {@code USER} table.
  */
 public class User {
-
     private final String username;
-    private String secretPIN;
+    private String hashedPIN;
     private LocalDateTime expiration;
     private boolean admin;
 
@@ -20,12 +19,12 @@ public class User {
         return username;
     }
 
-    public String getSecretPIN() {
-        return secretPIN;
+    public String getHashedPIN() {
+        return hashedPIN;
     }
 
-    public void setSecretPIN(String secretPIN) {
-        this.secretPIN = secretPIN;
+    public void setHashedPIN(String secretPIN) {
+        this.hashedPIN = secretPIN;
     }
 
     public LocalDateTime getExpiration() {
