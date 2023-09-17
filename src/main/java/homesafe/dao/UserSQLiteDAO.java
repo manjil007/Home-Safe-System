@@ -4,13 +4,13 @@ import homesafe.entity.User;
 import homesafe.service.AuthenticationService;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 import static java.util.logging.Level.WARNING;
@@ -29,7 +29,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             + "       name text TEXT PRIMARY KEY,\n"
             + "       hashed_pin TEXT NOT NULL,\n"
             + "       admin INTEGER NOT NULL,\n"
-            + "       expiration_date TEXT"
+            + "       expiration_date DATETIME"
             + ");";
 
     /**
@@ -42,6 +42,15 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             + "          admin,\n"
             + "          expiration_date\n"
             + "from      users;";
+
+    private static final String FIND_USER_BY_NAME_QUERY
+            = "select /* USER_BY_NAME */\n"
+            + "          name,\n"
+            + "          hashed_pin,\n"
+            + "          admin,\n"
+            + "          expiration_date\n"
+            + "from      users\n"
+            + "where     name = ?";
 
     /**
      * SQL query to insert a new user into the {@code users} table
@@ -236,4 +245,20 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
         }
     }
 
+    @Override
+    public Optional<User> getUserByName(String name) throws SQLException {
+        long start = System.currentTimeMillis();
+
+        try {
+            PreparedStatement ps = getConn().prepareStatement(FIND_USER_BY_NAME_QUERY);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            return Optional.of(mapUser(rs));
+        } catch (SQLException e) {
+            long dur = System.currentTimeMillis() - start;
+            getLogger().log(WARNING, "[SQLStats] USER_BY_NAME failed({0}) in {1} ms.",
+                    new Object[]{e.getMessage().trim(), dur});
+            throw e;
+        }
+    }
 }

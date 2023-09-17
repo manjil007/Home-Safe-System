@@ -4,6 +4,7 @@ import homesafe.entity.User;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * A DAO to retrieve user information from a database.
@@ -49,4 +50,14 @@ public interface UserDAO extends BaseDAO {
      * @return returns a list of {@link User} DTOs
      */
     List<User> listAllUsers() throws SQLException;
+
+    /**
+     * Method to obtain a single {@link User} from the {@code users} table.
+     *
+     * @param name primary key name of user to get
+     * @return an {@link Optional} object which may or may not contain a
+     *         {@link User} object.
+     * @throws SQLException if database query could not be executed
+     */
+    Optional<User> getUserByName(String name) throws SQLException;
 }
