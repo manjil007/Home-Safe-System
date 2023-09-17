@@ -4,6 +4,7 @@ import homesafe.entity.User;
 import homesafe.service.AuthenticationService;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -70,6 +71,9 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             = "delete from users /* REMOVE_USER */\n"
             + "where       name = ?;";
 
+    private static final String USER_COUNT_QUERY
+            = "select count(*) as total from users;";
+
     public UserSQLiteDAO(Connection conn) {
         super(conn);
         initialSetup();
@@ -103,17 +107,27 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     @Override
     public void initialSetup() {
         try {
-            PreparedStatement ps = getConn().prepareStatement(CREATE_USER_TABLE);
-            boolean result = ps.execute();
+            ResultSet rs = getConn().getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
+            if (!rs.next()) { // table does not exist
+                PreparedStatement ps = getConn().prepareStatement(CREATE_USER_TABLE);
+                ps.execute();
+            }
 
-            if (result) {
+            rs = getConn().getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
+            if (rs.next()) {
                 getLogger().log(INFO, "[SQLStats] User table successfully created.");
 
-                User defaultUser = new User("admin");
-                defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
-                defaultUser.setAdmin(true);
+                PreparedStatement ps = getConn().prepareStatement(USER_COUNT_QUERY);
+                rs = ps.executeQuery();
+                int userCount = rs.getInt("total");
 
-                addUser(defaultUser);
+                if (userCount == 0) {
+                    User defaultUser = new User("admin");
+                    defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
+                    defaultUser.setAdmin(true);
+
+                    addUser(defaultUser);
+                }
             }
         } catch (SQLException e) {
             getLogger().log(WARNING, "[SQLStats] User table failed to be created. {0}",
