@@ -2,6 +2,7 @@ package homesafe.dao;
 
 import homesafe.entity.User;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -20,5 +21,5 @@ public interface UserDAO extends BaseDAO {
      * Method to obtain a list of all registered users of the home safe.
      * @return returns a list of {@link User} DTOs
      */
-    List<User> listAllUsers();
+    List<User> listAllUsers() throws SQLException;
 }
