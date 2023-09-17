@@ -45,15 +45,6 @@ public interface DAOUtils {
             getLogger().log(WARNING, "[SQLStats] Connection to SQLite database" +
                             " was unsuccessful. {0}",
                     e.getMessage().trim());
-        } finally {
-            try {
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException e) {
-                getLogger().log(SEVERE, "[SQLStats] Critical failure when attempting" +
-                        " to close SQLite connection. {0}", e.getMessage().trim());
-            }
         }
 
         return conn;
