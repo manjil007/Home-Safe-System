@@ -6,8 +6,7 @@ import java.util.function.Supplier;
 import java.util.logging.Logger;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Factory class that is used to instantiate all implementation specific DAO's.
  */
 public abstract class DAOFactory {
 

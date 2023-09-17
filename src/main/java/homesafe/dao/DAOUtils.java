@@ -16,8 +16,7 @@ import static java.util.logging.Level.WARNING;
 import static java.util.logging.Level.SEVERE;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Static method utility class for supporting DAO operations.
  */
 public interface DAOUtils {
 

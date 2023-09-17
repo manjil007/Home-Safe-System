@@ -7,6 +7,9 @@ import java.util.Collections;
 
 import java.util.List;
 
+/**
+ * Standard SQLite implementation of {@link UserDAO}
+ */
 public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
 
     public UserSQLiteDAO(Connection conn) {

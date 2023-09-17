@@ -4,6 +4,9 @@ import homesafe.entity.User;
 
 import java.util.List;
 
+/**
+ * A DAO to retrieve user information from a database.
+ */
 public interface UserDAO extends BaseDAO {
 
     /**
