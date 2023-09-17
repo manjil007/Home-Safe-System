@@ -7,10 +7,15 @@ import java.util.Collections;
 
 import java.util.List;
 
-public class UserSQLLiteDAO extends AbstractSQLLiteDAO implements UserDAO {
+public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
 
-    public UserSQLLiteDAO(Connection conn) {
+    public UserSQLiteDAO(Connection conn) {
         super(conn);
+    }
+
+    @Override
+    public void initialSetup() {
+        // todo
     }
 
     @Override
