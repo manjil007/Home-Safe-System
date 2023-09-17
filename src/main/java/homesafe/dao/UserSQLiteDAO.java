@@ -1,6 +1,7 @@
 package homesafe.dao;
 
 import homesafe.entity.User;
+import homesafe.service.UserService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -32,7 +33,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             + ");";
 
     /**
-     * SQL query to obtain all users from the {@code user} table.
+     * SQL query to obtain all users from the {@code users} table.
      */
     private static final String ALL_USERS_QUERY
             = "select /* ALL_USERS_QUERY */\n"
@@ -41,6 +42,34 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             + "          admin,\n"
             + "          expiration_date\n"
             + "from      users;";
+
+    /**
+     * SQL query to insert a new user into the {@code users} table
+     */
+    private static final String NEW_USER_QUERY
+            = "insert into users( /* NEW_USER */\n"
+            + "            name,\n"
+            + "            hashed_pin,\n"
+            + "            admin,\n"
+            + "            expiration_date)\n"
+            + "values (?, ?, ?, ?);";
+
+    /**
+     * SQL query to update a user from the {@code users} table
+     */
+    private static final String UPDATE_USER_QUERY
+            = "update users SET /* UPDATE_USER */\n"
+            + "             hashed_pin = ?,\n"
+            + "             admin = ?,\n"
+            + "             expiration_date = ?\n"
+            + "where        name = ?;";
+
+    /**
+     * SQL query to remove a user from the {@code users} table
+     */
+    private static final String REMOVE_USER_QUERY
+            = "delete from users /* REMOVE_USER */\n"
+            + "where       name = ?;";
 
     public UserSQLiteDAO(Connection conn) {
         super(conn);
@@ -75,13 +104,99 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     public void initialSetup() {
         try {
             PreparedStatement ps = getConn().prepareStatement(CREATE_USER_TABLE);
-            ps.execute();
+            boolean result = ps.execute();
 
-            getLogger().log(INFO, "[SQLStats] User table successfully created.");
+            if (result) {
+                getLogger().log(INFO, "[SQLStats] User table successfully created.");
+
+                User defaultUser = new User("admin");
+                defaultUser.setHashedPIN(UserService.hashPIN("admin", "000000"));
+                defaultUser.setAdmin(true);
+
+                addUser(defaultUser);
+            }
         } catch (SQLException e) {
             getLogger().log(WARNING, "[SQLStats] User table failed to be created. {0}",
                     e.getMessage().trim());
         }
+    }
+
+    @Override
+    public boolean addUser(User user) throws SQLException {
+        long start = System.currentTimeMillis();
+
+        try {
+            PreparedStatement ps = getConn().prepareStatement(NEW_USER_QUERY);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getHashedPIN());
+            ps.setInt(3, user.isAdmin() ? 1 : 0);
+            ps.setTimestamp(4, DAOUtils.asSqlTimestamp(user.getExpiration()));
+            int result = ps.executeUpdate();
+
+            long dur = System.currentTimeMillis() - start;
+            if (result == 1) {
+                getLogger().log(INFO, "[SQLStats] Successfully added user to table in {0} ms.", dur);
+                return true;
+            }
+            getLogger().log(WARNING, "[SQLStats] Failed to add user to table in {0} ms.", dur);
+        } catch (SQLException e) {
+            long dur = System.currentTimeMillis() - start;
+            getLogger().log(WARNING, "[SQLStats] Failed to add user to table in {0} ms. {1}",
+                    new Object[]{dur, e.getMessage().trim()});
+            throw e;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateUser(User user) throws SQLException {
+        long start = System.currentTimeMillis();
+
+        try {
+            PreparedStatement ps = getConn().prepareStatement(UPDATE_USER_QUERY);
+            ps.setString(1, user.getHashedPIN());
+            ps.setInt(2, user.isAdmin() ? 1 : 0);
+            ps.setTimestamp(3, DAOUtils.asSqlTimestamp(user.getExpiration()));
+            ps.setString(4, user.getUsername());
+            int result = ps.executeUpdate();
+
+            long dur = System.currentTimeMillis() - start;
+            if (result == 1) {
+                getLogger().log(INFO, "[SQLStats] Successfully updated user in {0} ms.", dur);
+                return true;
+            }
+            getLogger().log(WARNING, "[SQLStats] Failed to update user in {0} ms.", dur);
+        } catch (SQLException e) {
+            long dur = System.currentTimeMillis() - start;
+            getLogger().log(WARNING, "[SQLStats] Failed to update user in {0} ms. {1}",
+                    new Object[]{dur, e.getMessage().trim()});
+            throw e;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeUser(User user) throws SQLException {
+        long start = System.currentTimeMillis();
+
+        try {
+            PreparedStatement ps = getConn().prepareStatement(REMOVE_USER_QUERY);
+            ps.setString(1, user.getUsername());
+            int result = ps.executeUpdate();
+
+            long dur = System.currentTimeMillis() - start;
+            if (result == 1) {
+                getLogger().log(INFO, "[SQLStats] Successfully removed user from table in {0} ms", dur);
+                return true;
+            }
+            getLogger().log(WARNING, "[SQLStats] Failed to remove user from table in {0} ms.", dur);
+        } catch (SQLException e) {
+            long dur = System.currentTimeMillis() - start;
+            getLogger().log(WARNING, "[SQLStats] Failed to remove user from table in {0} ms. {1}",
+                    new Object[]{dur, e.getMessage().trim()});
+            throw e;
+        }
+        return false;
     }
 
     @Override

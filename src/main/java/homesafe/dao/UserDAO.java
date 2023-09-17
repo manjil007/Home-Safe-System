@@ -18,6 +18,33 @@ public interface UserDAO extends BaseDAO {
     void initialSetup();
 
     /**
+     * This method attempts to add a new user to the database.
+     *
+     * @param user {@link User} to add to the {@code users} table.
+     * @return true if user was successfully added
+     * @throws SQLException if database query could not be executed
+     */
+    boolean addUser(User user) throws SQLException;
+
+    /**
+     * This method attempts to update a new user to the database.
+     *
+     * @param user {@link User} to update in the {@code users} table.
+     * @return true if user was successfully updated
+     * @throws SQLException if database query could not be executed
+     */
+    boolean updateUser(User user) throws SQLException;
+
+    /**
+     * This method attempts to add a remove user to the database.
+     *
+     * @param user {@link User} to remove to the {@code users} table.
+     * @return true if user was successfully removed
+     * @throws SQLException if database query could not be executed
+     */
+    boolean removeUser(User user) throws SQLException;
+
+    /**
      * Method to obtain a list of all registered users of the home safe.
      * @return returns a list of {@link User} DTOs
      */
