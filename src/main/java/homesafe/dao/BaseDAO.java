@@ -1,16 +1,18 @@
 package homesafe.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface BaseDAO {
 
     /**
-     * TODO
-     * @return
+     * Commit the transaction and log any exception.
      */
-    List<String> getColumnsNames();
-
     void commit();
 
+    /**
+     * Rollback the transaction and log any exception.
+     */
     void rollback();
+
 }
