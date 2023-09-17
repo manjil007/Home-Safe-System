@@ -72,6 +72,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
 
     public UserSQLiteDAO(Connection conn) {
         super(conn);
+        initialSetup();
     }
 
     private static Logger getLogger() {
