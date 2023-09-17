@@ -6,16 +6,16 @@ import java.util.logging.Logger;
 
 import static java.util.logging.Level.WARNING;
 
-public abstract class AbstractSQLLiteDAO implements BaseDAO {
+public abstract class AbstractSQLiteDAO implements BaseDAO {
 
     private final Connection conn;
 
-    protected AbstractSQLLiteDAO(Connection conn) {
+    protected AbstractSQLiteDAO(Connection conn) {
         this.conn = conn;
     }
 
     private static Logger getLogger() {
-        return Logger.getLogger(AbstractSQLLiteDAO.class.getName());
+        return Logger.getLogger(AbstractSQLiteDAO.class.getName());
     }
 
     public Connection getConn() {
