@@ -13,14 +13,13 @@ import java.util.logging.Logger;
 
 import static java.util.logging.Level.INFO;
 import static java.util.logging.Level.WARNING;
-import static java.util.logging.Level.SEVERE;
 
 /**
  * Static method utility class for supporting DAO operations.
  */
 public interface DAOUtils {
 
-    static final String JDBC_CONNECTION_STRING = "jdbc:sqlite:safe.db";
+    String JDBC_CONNECTION_STRING = "jdbc:sqlite:safe.db";
 
     static Logger getLogger() {
         return Logger.getLogger(DAOUtils.class.getName());
