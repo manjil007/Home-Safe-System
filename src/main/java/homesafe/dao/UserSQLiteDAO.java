@@ -1,14 +1,13 @@
 package homesafe.dao;
 
 import homesafe.entity.User;
-import homesafe.service.UserService;
+import homesafe.service.AuthenticationService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Collections;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -110,7 +109,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
                 getLogger().log(INFO, "[SQLStats] User table successfully created.");
 
                 User defaultUser = new User("admin");
-                defaultUser.setHashedPIN(UserService.hashPIN("admin", "000000"));
+                defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
                 defaultUser.setAdmin(true);
 
                 addUser(defaultUser);

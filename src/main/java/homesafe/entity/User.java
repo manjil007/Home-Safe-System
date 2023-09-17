@@ -3,7 +3,7 @@ package homesafe.entity;
 import java.time.LocalDateTime;
 
 /**
- * Data Transfer Object containing user data from the {@code USER} table.
+ * Data Transfer Object containing user data from the {@code users} table.
  */
 public class User {
     private final String username;

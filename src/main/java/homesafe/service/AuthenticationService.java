@@ -5,7 +5,7 @@ import homesafe.entity.User;
 /**
  * This class will be responsible for obtaining and authentication user data.
  */
-public class UserService {
+public class AuthenticationService {
 
     /**
      * Utility method that takes a {@link User}'s name and PIN and calculates
