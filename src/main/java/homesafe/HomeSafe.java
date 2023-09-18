@@ -2,7 +2,11 @@ package homesafe;
 
 import homesafe.dao.DAOFactory;
 import homesafe.dao.UserDAO;
+import homesafe.entity.ExampleSafeEvent;
 import homesafe.entity.User;
+import homesafe.service.EventService;
+import homesafe.service.ExampleEventConsumer;
+import homesafe.service.ExampleEventProducer;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -19,6 +23,15 @@ public class HomeSafe {
      * @param args command line input arguments
      */
     public static void main(String[] args) {
+//        manualTestDatabase();
+        manualTestEvents();
+    }
+
+    private static Logger getLogger() {
+        return Logger.getLogger(HomeSafe.class.getName());
+    }
+
+    private static void manualTestDatabase() {
         User user = new User("Mike");
         user.setHashedPIN("Mike:123456");
         user.setAdmin(true);
@@ -50,8 +63,18 @@ public class HomeSafe {
         }
     }
 
-    private static Logger getLogger() {
-        return Logger.getLogger(HomeSafe.class.getName());
+    private static void manualTestEvents() {
+        // create event producer
+        ExampleEventProducer producer = new ExampleEventProducer("mike");
+        // create event consumer, who subscribes on construction
+        ExampleEventConsumer consumer = new ExampleEventConsumer();
+
+        // updated producer name should emit a name change event and log it
+        producer.setName("joe");
+        producer.setName("abigail");
+
+        EventService.unsubscribe(consumer, ExampleSafeEvent.class);
+        producer.setName("bob");
     }
 
 }
