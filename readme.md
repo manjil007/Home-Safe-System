@@ -1,7 +1,7 @@
 # Home Safe
 This project is a group project assigned by the 
 UNM CS 460 - Software Engineering class. The project 
-repository represents the software of our Home Safe and it's
+repository represents the software of our Home Safe, and it's
 simulation.
 
 ## Team
