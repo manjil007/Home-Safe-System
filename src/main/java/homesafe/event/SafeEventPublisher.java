@@ -1,5 +1,6 @@
 package homesafe.entity;
 
+import homesafe.event.AbstractSafeEvent;
 import homesafe.service.EventService;
 
 /**

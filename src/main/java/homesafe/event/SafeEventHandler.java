@@ -1,5 +1,7 @@
 package homesafe.entity;
 
+import homesafe.event.AbstractSafeEvent;
+
 /**
  * created by:
  * author: MichaelMillar
