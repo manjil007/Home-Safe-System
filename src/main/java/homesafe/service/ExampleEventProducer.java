@@ -1,7 +1,7 @@
 package homesafe.service;
 
-import homesafe.entity.ExampleSafeEvent;
-import homesafe.entity.SafeEventPublisher;
+import homesafe.event.ExampleSafeEvent;
+import homesafe.event.SafeEventPublisher;
 
 /**
  * created by:

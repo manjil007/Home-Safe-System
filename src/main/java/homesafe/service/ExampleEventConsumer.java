@@ -1,7 +1,7 @@
 package homesafe.service;
 
-import homesafe.entity.ExampleSafeEvent;
-import homesafe.entity.SafeEventHandler;
+import homesafe.event.ExampleSafeEvent;
+import homesafe.event.SafeEventHandler;
 
 import java.util.logging.Logger;
 
