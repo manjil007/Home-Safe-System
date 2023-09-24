@@ -115,18 +115,18 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
 
     @Override
     public void initialSetup() {
-        try {
-            ResultSet rs = getConn().getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
+        try (Connection conn = DAOUtils.getConnection()) {
+            ResultSet rs = conn.getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
             if (!rs.next()) { // table does not exist
-                PreparedStatement ps = getConn().prepareStatement(CREATE_USER_TABLE);
+                PreparedStatement ps = conn.prepareStatement(CREATE_USER_TABLE);
                 ps.execute();
             }
 
-            rs = getConn().getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
+            rs = conn.getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
             if (rs.next()) {
                 getLogger().log(INFO, "[SQLStats] User table successfully created.");
 
-                PreparedStatement ps = getConn().prepareStatement(USER_COUNT_QUERY);
+                PreparedStatement ps = conn.prepareStatement(USER_COUNT_QUERY);
                 rs = ps.executeQuery();
                 int userCount = rs.getInt("total");
 
@@ -148,8 +148,8 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     public boolean addUser(User user) throws SQLException {
         long start = System.currentTimeMillis();
 
-        try {
-            PreparedStatement ps = getConn().prepareStatement(NEW_USER_QUERY);
+        try (Connection conn = DAOUtils.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(NEW_USER_QUERY);
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getHashedPIN());
             ps.setInt(3, user.isAdmin() ? 1 : 0);
@@ -175,8 +175,8 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     public boolean updateUser(User user) throws SQLException {
         long start = System.currentTimeMillis();
 
-        try {
-            PreparedStatement ps = getConn().prepareStatement(UPDATE_USER_QUERY);
+        try (Connection conn = DAOUtils.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(UPDATE_USER_QUERY);
             ps.setString(1, user.getHashedPIN());
             ps.setInt(2, user.isAdmin() ? 1 : 0);
             ps.setTimestamp(3, DAOUtils.asSqlTimestamp(user.getExpiration()));
@@ -202,8 +202,8 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     public boolean removeUser(User user) throws SQLException {
         long start = System.currentTimeMillis();
 
-        try {
-            PreparedStatement ps = getConn().prepareStatement(REMOVE_USER_QUERY);
+        try (Connection conn = DAOUtils.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(REMOVE_USER_QUERY);
             ps.setString(1, user.getUsername());
             int result = ps.executeUpdate();
 
@@ -226,8 +226,8 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     public List<User> listAllUsers() throws SQLException {
         long start = System.currentTimeMillis();
 
-        try {
-            List<User> result = DAOUtils.queryForList(getConn(),
+        try (Connection conn = DAOUtils.getConnection()) {
+            List<User> result = DAOUtils.queryForList(conn,
                     ALL_USERS_QUERY,
                     null,
                     UserSQLiteDAO::mapUser);
@@ -249,8 +249,8 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     public Optional<User> getUserByName(String name) throws SQLException {
         long start = System.currentTimeMillis();
 
-        try {
-            PreparedStatement ps = getConn().prepareStatement(FIND_USER_BY_NAME_QUERY);
+        try (Connection conn = DAOUtils.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(FIND_USER_BY_NAME_QUERY);
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
             return Optional.of(mapUser(rs));
