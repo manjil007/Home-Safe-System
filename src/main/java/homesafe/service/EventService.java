@@ -1,16 +1,14 @@
 package homesafe.service;
 
-import homesafe.entity.AbstractSafeEvent;
-import homesafe.entity.SafeEventHandler;
-import homesafe.entity.SafeEventPublisher;
+import homesafe.event.AbstractSafeEvent;
+import homesafe.event.SafeEventHandler;
+import homesafe.event.SafeEventPublisher;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.logging.Level;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Logger;
 
 /**
@@ -25,13 +23,13 @@ public class EventService implements Runnable {
     private final ConcurrentHashMap<Class<? extends AbstractSafeEvent>,
             List<SafeEventHandler<? extends AbstractSafeEvent>>> subscribers;
 
-    private final BlockingQueue<AbstractSafeEvent> eventQueue;
+    private final ConcurrentLinkedQueue<AbstractSafeEvent> eventQueue;
 
     private boolean run;
 
     private EventService() {
         subscribers = new ConcurrentHashMap<>();
-        eventQueue = new LinkedBlockingQueue<>();
+        eventQueue = new ConcurrentLinkedQueue<>();
         run = true;
     }
 
@@ -89,31 +87,28 @@ public class EventService implements Runnable {
      */
     public <T extends AbstractSafeEvent>
     void publishEvent(T event) {
-        try {
-            eventQueue.put(event);
-        } catch (InterruptedException e) {
-            getLogger().log(Level.WARNING, "[EventService] Error adding event data to event queue. {0}",
-                    e.getMessage().trim());
-        }
+        eventQueue.add(event);
     }
 
     @Override
     public void run() {
         while (run) {
-            try {
-                AbstractSafeEvent event = eventQueue.take();
-                List<SafeEventHandler<? extends AbstractSafeEvent>> eventHandlers =
-                        subscribers.get(event.getClass());
-                if (eventHandlers != null) {
-                    // This unchecked warning is ok, the events will always extend AbstractSafeEvent
-                    for (SafeEventHandler handler : eventHandlers) {
-                        handler.handleEvent(event);
-                    }
-                }
-            } catch (InterruptedException e) {
-                getLogger().log(Level.WARNING, "[EventService] Error getting data from event queue. {0}",
-                        e.getMessage().trim());
+            AbstractSafeEvent event = eventQueue.poll();
+            if (event == null) continue;
+
+            List<SafeEventHandler<? extends AbstractSafeEvent>> eventHandlers =
+                    subscribers.get(event.getClass());
+
+            if (eventHandlers == null) continue;
+            // This unchecked warning is ok, the events will always extend AbstractSafeEvent
+            for (int i = eventHandlers.size() - 1; i >= 0; i--) {
+                SafeEventHandler handler = eventHandlers.get(i);
+                handler.handleEvent(event);
             }
         }
+    }
+
+    public void stop() {
+        this.run = false;
     }
 }

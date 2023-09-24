@@ -2,13 +2,15 @@ package homesafe;
 
 import homesafe.dao.DAOFactory;
 import homesafe.dao.UserDAO;
-import homesafe.entity.AbstractSafeEvent;
-import homesafe.entity.DoorEvent;
-import homesafe.entity.ExampleSafeEvent;
+import homesafe.event.AbstractSafeEvent;
+import homesafe.event.DoorEvent;
+import homesafe.event.ExampleSafeEvent;
 import homesafe.entity.User;
 import homesafe.service.EventService;
 import homesafe.service.ExampleEventConsumer;
 import homesafe.service.ExampleEventProducer;
+import org.w3c.dom.events.Event;
+import org.w3c.dom.events.EventListener;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -16,10 +18,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class HomeSafe {
+
+    private static ExecutorService es;
 
     /**
      * The main starting point of the Home Safe software.
@@ -27,11 +32,18 @@ public class HomeSafe {
      * @param args command line input arguments
      */
     public static void main(String[] args) {
+        initialize();
         manualTestDatabase();
         manualTestEvents();
 
-        AbstractSafeEvent test = new DoorEvent("door_closed", false);
-        System.out.println(test.getClass().getName());
+        // adding hard stop so system doesn't keep running forever
+        try {
+            es.shutdown();
+            es.awaitTermination(1000, TimeUnit.MILLISECONDS);
+            EventService.getInstance().stop();
+        } catch (Exception e) {
+            // don't care
+        }
     }
 
     /**
@@ -39,9 +51,12 @@ public class HomeSafe {
      * and other thread services.
      */
     private static void initialize() {
+        // create services
+        EventService eventService = EventService.getInstance();
 
         // Create thread executor service and dispatch threads
-        ExecutorService executorService = Executors.newCachedThreadPool();
+        es = Executors.newCachedThreadPool();
+        es.execute(eventService);
 
     }
 
@@ -82,18 +97,18 @@ public class HomeSafe {
     }
 
     private static void manualTestEvents() {
-        // create event producer
-        ExampleEventProducer producer = new ExampleEventProducer("mike");
-        // create event consumer, who subscribes on construction
+        // create listener
         ExampleEventConsumer consumer = new ExampleEventConsumer();
+        // spawn lots of threads and test event system
+        for (int i = 0; i < 100; i++) {
+            es.execute(() -> {
+                ExampleEventProducer prod = new ExampleEventProducer("mike");
+                for (int i1 = 0; i1 < 50; i1++) {
+                    prod.setName(String.valueOf(i1));
+                }
+            });
+        }
 
-        // updated producer name should emit a name change event and log it
-        producer.setName("joe");
-        producer.setName("abigail");
-
-        EventService.getInstance()
-                .unsubscribe(consumer, ExampleSafeEvent.class);
-        producer.setName("bob");
     }
 
 }
