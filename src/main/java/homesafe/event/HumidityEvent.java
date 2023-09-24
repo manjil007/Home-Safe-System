@@ -1,4 +1,4 @@
-package homesafe.entity;
+package homesafe.event;
 
 /**
  * Humidity specific safe event Data Transfer Object

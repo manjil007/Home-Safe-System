@@ -1,4 +1,4 @@
-package homesafe.entity;
+package homesafe.event;
 
 /**
  * Door open/close specific event Data Transfer Object

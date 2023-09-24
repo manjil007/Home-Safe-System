@@ -1,4 +1,4 @@
-package homesafe.entity;
+package homesafe.event;
 
 /**
  * Locking PIN Motor specific event Data Transfer Object

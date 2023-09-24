@@ -1,4 +1,4 @@
-package homesafe.entity;
+package homesafe.event;
 
 /**
  * Abstract base class for safe events. Each "event publisher" will have their

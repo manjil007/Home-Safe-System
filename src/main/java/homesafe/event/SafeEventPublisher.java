@@ -1,4 +1,4 @@
-package homesafe.entity;
+package homesafe.event;
 
 import homesafe.event.AbstractSafeEvent;
 import homesafe.service.EventService;

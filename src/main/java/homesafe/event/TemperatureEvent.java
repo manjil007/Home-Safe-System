@@ -1,4 +1,4 @@
-package homesafe.entity;
+package homesafe.event;
 
 /**
  * Temperature specific event Data Transfer Object
