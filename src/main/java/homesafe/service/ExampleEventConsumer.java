@@ -14,7 +14,8 @@ import static java.util.logging.Level.INFO;
 public class ExampleEventConsumer implements SafeEventHandler<ExampleSafeEvent> {
 
     public ExampleEventConsumer() {
-        EventService.subscribe(this, ExampleSafeEvent.class);
+        EventService.getInstance()
+                .subscribe(this, ExampleSafeEvent.class);
     }
 
     private static Logger getLogger() {

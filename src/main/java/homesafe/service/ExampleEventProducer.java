@@ -27,6 +27,6 @@ public class ExampleEventProducer implements SafeEventPublisher<ExampleSafeEvent
 
     @Override
     public void publishEvent(ExampleSafeEvent event) {
-        EventService.publishEvent(event);
+        EventService.getInstance().publishEvent(event);
     }
 }

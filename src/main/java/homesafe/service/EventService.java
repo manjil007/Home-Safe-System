@@ -7,22 +7,43 @@ import homesafe.entity.SafeEventPublisher;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Service that will handle the publishing and subscribing of events
  * This service should be able to run on it's own thread.
  */
-public class EventService {
+public class EventService implements Runnable {
     // TODO: Transition EventService into an async model
 
-    private static final ConcurrentHashMap<Class<? extends AbstractSafeEvent>,
+    private static EventService INSTANCE;
+
+    private final ConcurrentHashMap<Class<? extends AbstractSafeEvent>,
             List<SafeEventHandler<? extends AbstractSafeEvent>>> subscribers;
 
-    private EventService() { /* Static methods only... */ }
+    private final BlockingQueue<AbstractSafeEvent> eventQueue;
 
-    static {
+    private boolean run;
+
+    private EventService() {
         subscribers = new ConcurrentHashMap<>();
+        eventQueue = new LinkedBlockingQueue<>();
+        run = true;
+    }
+
+    public static EventService getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new EventService();
+        }
+        return INSTANCE;
+    }
+
+    private static Logger getLogger() {
+        return Logger.getLogger(EventService.class.getName());
     }
 
     /**
@@ -33,7 +54,7 @@ public class EventService {
      * @param eventType the event class to handle
      * @param <T>       the event type class
      */
-    public static <T extends AbstractSafeEvent>
+    public <T extends AbstractSafeEvent>
     void subscribe(SafeEventHandler<T> handler, Class<T> eventType) {
         List<SafeEventHandler<? extends AbstractSafeEvent>> eventHandlers =
                 subscribers.computeIfAbsent(eventType, (key -> Collections.synchronizedList(new ArrayList<>())));
@@ -50,7 +71,7 @@ public class EventService {
      * @param eventType the event class to handle
      * @param <T>       the event type class
      */
-    public static <T extends AbstractSafeEvent>
+    public <T extends AbstractSafeEvent>
     void unsubscribe(SafeEventHandler<T> handler, Class<T> eventType) {
         subscribers.computeIfPresent(eventType, (key, value) -> {
             value.remove(handler);
@@ -66,14 +87,32 @@ public class EventService {
      * @param event the event to publish
      * @param <T>   the event type class
      */
-    public static <T extends AbstractSafeEvent>
+    public <T extends AbstractSafeEvent>
     void publishEvent(T event) {
-        List<SafeEventHandler<? extends AbstractSafeEvent>> eventHandlers =
-                subscribers.get(event.getClass());
-        if (eventHandlers != null) {
-            // This unchecked warning is ok, the events will always extend AbstractSafeEvent
-            for (SafeEventHandler handler : eventHandlers) {
-                handler.handleEvent(event);
+        try {
+            eventQueue.put(event);
+        } catch (InterruptedException e) {
+            getLogger().log(Level.WARNING, "[EventService] Error adding event data to event queue. {0}",
+                    e.getMessage().trim());
+        }
+    }
+
+    @Override
+    public void run() {
+        while (run) {
+            try {
+                AbstractSafeEvent event = eventQueue.take();
+                List<SafeEventHandler<? extends AbstractSafeEvent>> eventHandlers =
+                        subscribers.get(event.getClass());
+                if (eventHandlers != null) {
+                    // This unchecked warning is ok, the events will always extend AbstractSafeEvent
+                    for (SafeEventHandler handler : eventHandlers) {
+                        handler.handleEvent(event);
+                    }
+                }
+            } catch (InterruptedException e) {
+                getLogger().log(Level.WARNING, "[EventService] Error getting data from event queue. {0}",
+                        e.getMessage().trim());
             }
         }
     }

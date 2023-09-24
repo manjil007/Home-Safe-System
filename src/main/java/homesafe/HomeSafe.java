@@ -2,6 +2,8 @@ package homesafe;
 
 import homesafe.dao.DAOFactory;
 import homesafe.dao.UserDAO;
+import homesafe.entity.AbstractSafeEvent;
+import homesafe.entity.DoorEvent;
 import homesafe.entity.ExampleSafeEvent;
 import homesafe.entity.User;
 import homesafe.service.EventService;
@@ -12,6 +14,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,8 +27,22 @@ public class HomeSafe {
      * @param args command line input arguments
      */
     public static void main(String[] args) {
-//        manualTestDatabase();
+        manualTestDatabase();
         manualTestEvents();
+
+        AbstractSafeEvent test = new DoorEvent("door_closed", false);
+        System.out.println(test.getClass().getName());
+    }
+
+    /**
+     * This method will initialize and spin up all threads for sensors,
+     * and other thread services.
+     */
+    private static void initialize() {
+
+        // Create thread executor service and dispatch threads
+        ExecutorService executorService = Executors.newCachedThreadPool();
+
     }
 
     private static Logger getLogger() {
@@ -73,7 +91,8 @@ public class HomeSafe {
         producer.setName("joe");
         producer.setName("abigail");
 
-        EventService.unsubscribe(consumer, ExampleSafeEvent.class);
+        EventService.getInstance()
+                .unsubscribe(consumer, ExampleSafeEvent.class);
         producer.setName("bob");
     }
 
