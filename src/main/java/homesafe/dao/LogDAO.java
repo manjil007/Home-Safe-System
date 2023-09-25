@@ -19,6 +19,13 @@ public interface LogDAO extends BaseDAO {
     void initialSetup();
 
     /**
+     * Saves the {@link LogData} DTO to the log table.
+     * @param data log data to persist
+     * @throws SQLException if update could not be completed
+     */
+    void log(LogData data) throws SQLException;
+
+    /**
      * Method to obtain a list of all logged events of the home safe.
      * @return returns a list of {@link LogData} DTOs
      * @throws SQLException if the query cannot be completed

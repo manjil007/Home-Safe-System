@@ -28,16 +28,25 @@ public class LogSQLiteDAO extends AbstractSQLiteDAO implements LogDAO {
             + "             message TEXT NOT NULL\n"
             + ");";
 
+    private static final String ADD_LOG_QUERY
+            = "insert into logs (\n"
+            + "            username,\n"
+            + "            created_at,\n"
+            + "            message)\n"
+            + "values (?, ?, ?);";
+
     private static final String ALL_LOGS_QUERY
             = "select /* ALL_LOGS */\n"
             + "          username,\n"
             + "          created_at,\n"
             + "          message\n"
-            + "from      logs;";
+            + "from      logs\n"
+            + "order by created_at desc";
 
     private static final String ALL_LOGS_FOR_USERNAME_QUERY
-            = ALL_LOGS_QUERY.replace(';', '\n')
-            .concat("where username = ?;");
+            = ALL_LOGS_QUERY.replace("order by created_at desc",
+                    "where username = ?\n")
+            .concat("order by created_at desc;");
 
     public LogSQLiteDAO(Connection conn) {
         super(conn);
@@ -63,6 +72,27 @@ public class LogSQLiteDAO extends AbstractSQLiteDAO implements LogDAO {
         } catch (SQLException e) {
             getLogger().log(WARNING, "[LogSQLiteDAO] failed to initialize log table. {0}",
                     e.getMessage().trim());
+        }
+    }
+
+    @Override
+    public void log(LogData data) throws SQLException {
+        long start = System.currentTimeMillis();
+
+        try (Connection conn = DAOUtils.getConnection()) {
+            PreparedStatement ps = conn.prepareStatement(ADD_LOG_QUERY);
+            ps.setString(1, data.getUsername());
+            ps.setTimestamp(2, DAOUtils.asSqlTimestamp(data.getCreatedAt()));
+            ps.setString(3, data.getMessage());
+            ps.executeUpdate();
+
+            long dur = System.currentTimeMillis() - start;
+            getLogger().log(INFO, "[SQLStats] NEW_LOG completed in {0} ms.", dur);
+        } catch (SQLException e) {
+            long dur = System.currentTimeMillis() - start;
+            getLogger().log(WARNING, "[SQLStats] NEW_LOG failed({0}) in {1} ms.",
+                    new Object[]{e.getMessage().trim(), dur});
+            throw e;
         }
     }
 

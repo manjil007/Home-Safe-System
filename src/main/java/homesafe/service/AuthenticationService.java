@@ -7,6 +7,8 @@ import homesafe.entity.User;
  */
 public class AuthenticationService {
 
+    private static User currentUser;
+
     /**
      * Utility method that takes a {@link User}'s name and PIN and calculates
      * a hash string from them.
@@ -18,5 +20,9 @@ public class AuthenticationService {
     public static String hashPIN(String name, String pin) {
         // TODO(mike): Determine how to best hash the name and pin
         return String.format("%s:%s", name, pin);
+    }
+
+    public static User getCurrentUser() {
+        return currentUser;
     }
 }
