@@ -1,8 +1,6 @@
 package homesafe.dao;
 
 import homesafe.entity.LogData;
-import homesafe.entity.User;
-import homesafe.service.AuthenticationService;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
