@@ -16,8 +16,6 @@ import java.util.logging.Logger;
  * This service should be able to run on it's own thread.
  */
 public class EventService implements Runnable {
-    // TODO: Transition EventService into an async model
-
     private static EventService INSTANCE;
 
     private final ConcurrentHashMap<Class<? extends AbstractSafeEvent>,
