@@ -28,8 +28,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             = "CREATE TABLE IF NOT EXISTS users (\n"
             + "       name text TEXT PRIMARY KEY,\n"
             + "       hashed_pin TEXT NOT NULL,\n"
-            + "       admin INTEGER NOT NULL,\n"
-            + "       expiration_date DATETIME"
+            + "       admin INTEGER NOT NULL\n"
             + ");";
 
     /**
@@ -39,16 +38,14 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             = "select /* ALL_USERS_QUERY */\n"
             + "          name,\n"
             + "          hashed_pin,\n"
-            + "          admin,\n"
-            + "          expiration_date\n"
+            + "          admin\n"
             + "from      users;";
 
     private static final String FIND_USER_BY_NAME_QUERY
             = "select /* USER_BY_NAME */\n"
             + "          name,\n"
             + "          hashed_pin,\n"
-            + "          admin,\n"
-            + "          expiration_date\n"
+            + "          admin\n"
             + "from      users\n"
             + "where     name = ?";
 
@@ -59,8 +56,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             = "insert into users( /* NEW_USER */\n"
             + "            name,\n"
             + "            hashed_pin,\n"
-            + "            admin,\n"
-            + "            expiration_date)\n"
+            + "            admin)\n"
             + "values (?, ?, ?, ?);";
 
     /**
@@ -69,8 +65,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
     private static final String UPDATE_USER_QUERY
             = "update users SET /* UPDATE_USER */\n"
             + "             hashed_pin = ?,\n"
-            + "             admin = ?,\n"
-            + "             expiration_date = ?\n"
+            + "             admin = ?\n"
             + "where        name = ?;";
 
     /**
@@ -108,7 +103,6 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
         User user = new User(name);
         user.setHashedPIN(hashedPIN);
         user.setAdmin(admin);
-        user.setExpiration(expiration);
 
         return user;
     }
@@ -153,7 +147,6 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             ps.setString(1, user.getUsername());
             ps.setString(2, user.getHashedPIN());
             ps.setInt(3, user.isAdmin() ? 1 : 0);
-            ps.setTimestamp(4, DAOUtils.asSqlTimestamp(user.getExpiration()));
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
@@ -179,7 +172,6 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             PreparedStatement ps = conn.prepareStatement(UPDATE_USER_QUERY);
             ps.setString(1, user.getHashedPIN());
             ps.setInt(2, user.isAdmin() ? 1 : 0);
-            ps.setTimestamp(3, DAOUtils.asSqlTimestamp(user.getExpiration()));
             ps.setString(4, user.getUsername());
             int result = ps.executeUpdate();
 

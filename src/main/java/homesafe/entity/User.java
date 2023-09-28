@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 public class User {
     private final String username;
     private String hashedPIN;
-    private LocalDateTime expiration;
     private boolean admin;
 
     public User(String username) {
@@ -27,14 +26,6 @@ public class User {
         this.hashedPIN = secretPIN;
     }
 
-    public LocalDateTime getExpiration() {
-        return expiration;
-    }
-
-    public void setExpiration(LocalDateTime expiration) {
-        this.expiration = expiration;
-    }
-
     public boolean isAdmin() {
         return admin;
     }
@@ -48,7 +39,6 @@ public class User {
         return "User{" +
                 "username='" + username + '\'' +
                 ", hashedPIN='" + hashedPIN + '\'' +
-                ", expiration=" + expiration +
                 ", admin=" + admin +
                 '}';
     }
