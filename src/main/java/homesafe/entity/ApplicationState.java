@@ -1,6 +1,6 @@
 package homesafe.entity;
 
-import static homesafe.entity.State.IDLE;
+import static homesafe.entity.State.SLEEP;
 
 /**
  * created by:
@@ -13,7 +13,7 @@ public class ApplicationState {
 
     public static ApplicationState getInstance() {
         if (instance == null) {
-            instance = new ApplicationState(IDLE);
+            instance = new ApplicationState(SLEEP);
         }
         return instance;
     }

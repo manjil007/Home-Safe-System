@@ -35,7 +35,7 @@ public class KeypadController extends AbstractController implements SafeEventHan
         if (state != currentState) {
             currentState = state;
             switch (state) {
-                case IDLE, VIEW_LOGS, OPEN, LOCKOUT -> currentDataObject = null;
+                case SLEEP, VIEW_LOGS, OPEN, LOCKOUT -> currentDataObject = null;
                 case LOGIN -> currentDataObject = new LoginDataObject();
                 case ADMIN_EDIT_USER -> currentDataObject =
                         new EditAdminDataObject(AuthenticationService.getCurrentUser());

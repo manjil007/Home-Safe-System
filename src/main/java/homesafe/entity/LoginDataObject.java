@@ -7,6 +7,7 @@ package homesafe.entity;
 public class LoginDataObject implements DataObject {
 
     public static final String USERNAME_FIELD = "username";
+    public static final String PIN_FIELD = "pin";
 
     private String username;
     private String pin;

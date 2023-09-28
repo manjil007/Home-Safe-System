@@ -6,7 +6,7 @@ package homesafe.entity;
  */
 public enum State {
 
-    IDLE,
+    SLEEP,
     LOGIN,
     ADMIN_EDIT_USER,
     SELF_EDIT_USER,
