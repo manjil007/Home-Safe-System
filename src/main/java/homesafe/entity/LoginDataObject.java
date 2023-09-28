@@ -1,16 +1,24 @@
 package homesafe.entity;
 
+import homesafe.event.AlertEvent;
+import homesafe.service.AuthenticationService;
+import homesafe.service.EventService;
+
 /**
- * created by:
- * author: MichaelMillar
+ * Data Object to store edits from the user login screen.
  */
 public class LoginDataObject implements DataObject {
 
+    /**
+     * Valid "active" field names
+     */
     public static final String USERNAME_FIELD = "username";
     public static final String PIN_FIELD = "pin";
 
     private String username;
     private String pin;
+
+    // currently active field name
     private String active;
 
     public LoginDataObject() {
@@ -63,6 +71,23 @@ public class LoginDataObject implements DataObject {
 
     @Override
     public void process() {
+        // verify both fields have data
+        if (username.isEmpty() || pin.isEmpty()) {
+            AlertEvent event = new AlertEvent(AlertEvent.EMPTY_FIELD_EVENT);
+            EventService.getInstance().publishEvent(event);
+            return;
+        }
 
+        // validate login
+        boolean authorized = AuthenticationService.authorizeUser(username, pin);
+        if (!authorized) {
+            AlertEvent event = new AlertEvent(AlertEvent.UNAUTHORIZED_EVENT);
+            EventService.getInstance().publishEvent(event);
+            return;
+        }
+
+        // valid user
+        AlertEvent event = new AlertEvent(AlertEvent.AUTHORIZED_EVENT);
+        EventService.getInstance().publishEvent(event);
     }
 }

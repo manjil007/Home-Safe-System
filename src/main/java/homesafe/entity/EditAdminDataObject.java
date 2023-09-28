@@ -1,22 +1,31 @@
 package homesafe.entity;
 
+import homesafe.event.AlertEvent;
+import homesafe.service.EventService;
+import homesafe.service.UserService;
+
 /**
- * created by:
- * author: MichaelMillar
+ * Data Object to store edits from the user edit admin screen.
  */
 public class EditAdminDataObject implements DataObject {
 
-        public static final String USERNAME_FIELD = "username";
-        public static final String NEW_PIN_FIELD = "newPin";
-        public static final String CONFIRM_PIN_FIELD = "confirmPin";
+    /**
+     * Valid "active" field data strings
+     */
+    public static final String USERNAME_FIELD = "username";
+    public static final String NEW_PIN_FIELD = "newPin";
+    public static final String CONFIRM_PIN_FIELD = "confirmPin";
 
-        private final User user;
-        private String username;
-        private String newPin;
-        private String confirmPin;
-        private boolean admin;
+    // User should only be null if adding a new user
+    private User user;
+    // Username will only be updated for a new user
+    private String username;
+    private String newPin;
+    private String confirmPin;
+    private boolean admin;
 
-        private String active;
+    // currently active field name to be updated
+    private String active;
 
     public EditAdminDataObject(User user) {
         this.user = user;
@@ -98,6 +107,30 @@ public class EditAdminDataObject implements DataObject {
 
     @Override
     public void process() {
+        boolean newUser = user == null;
+
+        // confirm if pins match
+        if (!newPin.equals(confirmPin)) {
+            AlertEvent event = new AlertEvent(AlertEvent.PIN_MISMATCH_EVENT);
+            EventService.getInstance().publishEvent(event);
+            return;
+        }
+
+        if (newUser) {
+            // update username ONLY if new user
+            user = new User(username);
+            user.setHashedPIN(newPin);
+            user.setAdmin(admin);
+
+            // Save user
+            UserService.getInstance().addUser(user);
+        } else {
+            user.setHashedPIN(newPin);
+            user.setAdmin(admin);
+
+            // Update user
+            UserService.getInstance().updateUser(user);
+        }
 
     }
 }

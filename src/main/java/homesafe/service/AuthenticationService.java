@@ -67,7 +67,7 @@ public class AuthenticationService {
         return null;
     }
 
-    private static boolean verifyHash(User user, String hash) {
+    public static boolean verifyHash(User user, String hash) {
         return user.getHashedPIN().equals(hash);
     }
 
