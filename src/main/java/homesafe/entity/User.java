@@ -1,7 +1,5 @@
 package homesafe.entity;
 
-import java.time.LocalDateTime;
-
 /**
  * Data Transfer Object containing user data from the {@code users} table.
  */
