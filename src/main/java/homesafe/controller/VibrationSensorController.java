@@ -4,8 +4,7 @@ import homesafe.entity.VibrationLevel;
 import homesafe.event.VibrationEvent;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Vibration sensor controller that reads the vibration data from the sensor.
  */
 public class VibrationSensorController extends AbstractController {
 

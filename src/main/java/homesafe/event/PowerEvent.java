@@ -6,6 +6,8 @@ package homesafe.event;
  */
 public class PowerEvent extends AbstractSafeEvent {
 
+    public static final String LOW_POWER_EVENT = "low_power";
+
     private final float powerLevel;
     private final float threshold;
 

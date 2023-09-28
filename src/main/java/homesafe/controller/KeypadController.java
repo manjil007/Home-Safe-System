@@ -11,8 +11,8 @@ import homesafe.event.SafeEventHandler;
 import homesafe.service.AuthenticationService;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Keyboard/keypad controller class that handles the inputs from the display and
+ * keyboard.
  */
 public class KeypadController extends AbstractController implements SafeEventHandler<ButtonEvent> {
 
@@ -30,6 +30,10 @@ public class KeypadController extends AbstractController implements SafeEventHan
 
     private KeypadController() {    }
 
+    /**
+     * Helper method that updates the current data object being updated from
+     * the display based on the current application state.
+     */
     private void monitorState() {
         State state = ApplicationState.getInstance().getState();
         if (state != currentState) {

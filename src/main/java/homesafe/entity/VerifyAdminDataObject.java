@@ -88,7 +88,7 @@ public class VerifyAdminDataObject implements DataObject {
             EventService.getInstance().publishEvent(event);
             return;
         }
-        
+
         // verified
         AlertEvent event = new AlertEvent(AlertEvent.AUTHORIZED_EVENT);
         EventService.getInstance().publishEvent(event);

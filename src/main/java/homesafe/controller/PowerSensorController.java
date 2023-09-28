@@ -3,15 +3,14 @@ package homesafe.controller;
 import homesafe.event.PowerEvent;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Power sensor controller that updates the power levels from the sensor readings.
  */
 public class PowerSensorController extends AbstractController {
 
     private static PowerSensorController instance;
 
     private float powerLevel;
-    private float threshold;
+    private final float threshold;
 
     public static PowerSensorController getInstance() {
         if (instance == null) {
@@ -32,7 +31,7 @@ public class PowerSensorController extends AbstractController {
     public void setPowerLevel(float powerLevel) {
         this.powerLevel = powerLevel;
         if (this.powerLevel <= threshold) {
-            PowerEvent event = new PowerEvent("low_power", powerLevel, threshold);
+            PowerEvent event = new PowerEvent(PowerEvent.LOW_POWER_EVENT, powerLevel, threshold);
             publishEvent(event);
         }
     }

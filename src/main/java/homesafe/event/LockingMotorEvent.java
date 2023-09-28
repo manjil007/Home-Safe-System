@@ -5,6 +5,10 @@ package homesafe.event;
  */
 public class LockingMotorEvent extends AbstractSafeEvent {
 
+    public static final String DOOR_LOCKED_EVENT = "door_locked";
+    public static final String DOOR_UNLOCKED_EVENT = "door_unlocked";
+    public static final String DOOR_JAMMED_EVENT = "door_jammed";
+
     private final float motorPosition;
     private final boolean motorJammed;
     private final boolean fullyExtended;
