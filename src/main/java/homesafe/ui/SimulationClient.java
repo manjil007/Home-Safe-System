@@ -1,5 +1,5 @@
 package homesafe.ui;
 
-public class SimiluationClient {
+public class SimulationClient {
     // TODO: Start class of the user UI
 }
