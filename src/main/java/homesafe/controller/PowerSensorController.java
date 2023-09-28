@@ -8,10 +8,19 @@ import homesafe.event.PowerEvent;
  */
 public class PowerSensorController extends AbstractController {
 
+    private static PowerSensorController instance;
+
     private float powerLevel;
     private float threshold;
 
-    public PowerSensorController(float powerLevel, float threshold) {
+    public static PowerSensorController getInstance() {
+        if (instance == null) {
+            instance = new PowerSensorController(1, 0.15f);
+        }
+        return instance;
+    }
+
+    private PowerSensorController(float powerLevel, float threshold) {
         this.powerLevel = powerLevel;
         this.threshold = threshold;
     }

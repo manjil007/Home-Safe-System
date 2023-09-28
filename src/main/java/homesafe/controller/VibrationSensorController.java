@@ -9,8 +9,17 @@ import homesafe.event.VibrationEvent;
  */
 public class VibrationSensorController extends AbstractController {
 
+    private static VibrationSensorController instance;
+
     private VibrationLevel level;
     private VibrationLevel threshold;
+
+    public static VibrationSensorController getInstance() {
+        if (instance == null) {
+            instance = new VibrationSensorController(VibrationLevel.HIGH);
+        }
+        return instance;
+    }
 
     public VibrationSensorController(VibrationLevel threshold) {
         this.level = VibrationLevel.NONE;

@@ -10,13 +10,22 @@ import homesafe.event.SafeEventHandler;
  */
 public class LockingMotorController extends AbstractController implements SafeEventHandler<AbstractSafeEvent> {
 
+    private static LockingMotorController insance;
+
     private static final float OPEN_POSITION = 0;
     private static final float CLOSED_POSITION = 1;
 
     private float motorPosition;
     private boolean jammed;
 
-    public LockingMotorController(float motorPosition) {
+    public static LockingMotorController getInstance() {
+        if (insance == null) {
+            insance = new LockingMotorController(CLOSED_POSITION);
+        }
+        return insance;
+    }
+
+    private LockingMotorController(float motorPosition) {
         this.motorPosition = motorPosition;
         this.jammed = false;
     }
