@@ -83,7 +83,6 @@ public class HomeSafe {
             for (User u : users) {
                 getLogger().log(Level.INFO, "{0}", u);
             }
-            user.setExpiration(LocalDateTime.now());
             userDAO.updateUser(user);
             Optional<User> u = userDAO.getUserByName("Mike");
             if (u.isPresent()) {
