@@ -9,6 +9,7 @@ import homesafe.entity.User;
 import homesafe.service.EventService;
 import homesafe.service.ExampleEventConsumer;
 import homesafe.service.ExampleEventProducer;
+import homesafe.ui.MainGUI;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 
@@ -59,6 +60,8 @@ public class HomeSafe {
         es = Executors.newCachedThreadPool();
         es.execute(eventService);
 
+        //run GUI
+        MainGUI gui = new MainGUI();
     }
 
     private static Logger getLogger() {
