@@ -5,6 +5,9 @@ package homesafe.event;
  */
 public class DoorEvent extends AbstractSafeEvent {
 
+    public static final String DOOR_OPENED = "door_opened";
+    public static final String DOOR_CLOSED = "door_closed";
+
     private final boolean doorOpen;
 
     public DoorEvent(String eventType, boolean doorOpen) {
