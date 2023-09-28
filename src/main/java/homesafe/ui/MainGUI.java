@@ -1,19 +1,17 @@
 package homesafe.ui;
 
-import homesafe.HomeSafe;
-
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
 public class MainGUI {
-
     public MainGUI() {
         JFrame frame = new JFrame();
-        safeLocked lockedPanel = null;
-        lockedPanel = new safeLocked();
-        JPanel panel = lockedPanel.getPanel();
+        GUIUtils guiUtils = new GUIUtils(frame);
+        SafeLocked safeLocked = new SafeLocked(guiUtils);
+        JPanel panel = safeLocked.getPanel();
 
+        Image windowIcon = Toolkit.getDefaultToolkit().getImage("src/main/resources/images/windowIcon.png");
+        frame.setIconImage(windowIcon);
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setTitle("Safe");
