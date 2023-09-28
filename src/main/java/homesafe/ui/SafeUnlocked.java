@@ -67,7 +67,7 @@ public class SafeUnlocked {
         displayBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                WelcomeScreen welcomeScreen = new WelcomeScreen();
+                WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
                 guiUtils.switchScreens(welcomeScreen.getPanel());
             }
         });

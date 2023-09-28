@@ -9,7 +9,9 @@ import homesafe.entity.User;
 import homesafe.service.EventService;
 import homesafe.service.ExampleEventConsumer;
 import homesafe.service.ExampleEventProducer;
+import homesafe.ui.GUIUtils;
 import homesafe.ui.MainGUI;
+import homesafe.ui.WelcomeScreen;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.events.EventListener;
 
