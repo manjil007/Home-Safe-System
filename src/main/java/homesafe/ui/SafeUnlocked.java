@@ -42,10 +42,17 @@ public class SafeUnlocked {
 
         guiUtils.setFont(displayBtn, 30);
 
-        guiUtils.createBtn(devToolsBtn, 20, 20, 75, 75, Color.lightGray, panel);
-        guiUtils.createBtn(handleBtn, 100, halfHeight, 350, 350, Color.darkGray, panel);
-        guiUtils.createBtn(displayBtn, 550, halfHeight, (int) width - 650, 350, Color.black, panel);
-        guiUtils.createBtn(keyBtn, (int) (width / 2) - 15, (int) (height / 2) + 200, 30, 60, Color.darkGray, panel);
+        guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
+        guiUtils.createClearBtn(handleBtn, 100, halfHeight, 350, 350, panel);
+        guiUtils.createColorBtn(displayBtn, 550, halfHeight, (int) width - 650, 350, Color.black, panel);
+        guiUtils.createClearBtn(keyBtn, (int) (width / 2) - 15, (int) (height / 2) + 200, 30, 60, panel);
+
+        //Create background
+        ImageIcon safeBack = new ImageIcon("src/main/resources/images/safeWall.jpg");
+        safeBack = guiUtils.resizeImg(safeBack, (int) width, (int) height);
+        JLabel safeBkgrnd = new JLabel(safeBack);
+        safeBkgrnd.setBounds(1, 1, (int) width, (int) height);
+        panel.add(safeBkgrnd);
 
         //Button Actions
         handleBtn.addActionListener(new ActionListener() {

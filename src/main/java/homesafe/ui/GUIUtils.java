@@ -12,11 +12,20 @@ public class GUIUtils {
         this.frame= frame;
     }
 
-    public void createBtn (JButton btn, int x, int y, int width, int height, Color bg, JPanel panel) {
+    public void createColorBtn(JButton btn, int x, int y, int width, int height, Color bg, JPanel panel) {
         btn.setBounds(x, y, width, height);
         btn.setBackground(bg);
         btn.setBorderPainted(false);
         btn.setFocusPainted(false);
+        panel.add(btn);
+    }
+
+    public void createClearBtn(JButton btn, int x, int y, int width, int height, JPanel panel) {
+        btn.setBounds(x, y, width, height);
+        btn.setBorderPainted(false);
+        btn.setFocusPainted(false);
+        btn.setOpaque(false);
+        btn.setContentAreaFilled(false);
         panel.add(btn);
     }
 

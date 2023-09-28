@@ -28,7 +28,7 @@ public class GoldRiches {
         //Create button
         JButton closeBtn = new JButton("Close");
         guiUtils.setFont(closeBtn, 15);
-        guiUtils.createBtn(closeBtn, 20, 20, 100, 75, Color.lightGray, panel);
+        guiUtils.createColorBtn(closeBtn, 20, 20, 100, 75, Color.lightGray, panel);
 
         //Create Gold
         ImageIcon goldIcon = new ImageIcon("src/main/resources/images/goldgoldgold.jpeg");
