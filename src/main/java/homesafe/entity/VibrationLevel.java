@@ -1,8 +1,7 @@
 package homesafe.entity;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Enumeration class that contains all valid vibration sensor level values.
  */
 public enum VibrationLevel {
     NONE(0),

@@ -3,8 +3,7 @@ package homesafe.entity;
 import static homesafe.entity.State.SLEEP;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Singleton class that keeps track of the current safe state
  */
 public class ApplicationState {
 
@@ -26,6 +25,11 @@ public class ApplicationState {
         return state;
     }
 
+    /**
+     * This method will transition the safe's state and perform any required
+     * business logic when transitioning between states.
+     * @param state new state
+     */
     public void transitionState(State state) {
         // TODO: Do we need more logic for state transitions?
         this.state = state;

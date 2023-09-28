@@ -1,8 +1,7 @@
 package homesafe.entity;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Enumeration class that contains all valid safe states
  */
 public enum State {
 

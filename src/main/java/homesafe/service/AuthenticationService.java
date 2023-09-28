@@ -36,13 +36,19 @@ public class AuthenticationService {
         return currentUser;
     }
 
+    /**
+     * Method that determines if the current user is verified. This method will
+     * return true only if the current user is not null and is authorized.
+     *
+     * @return true if current user is not null and authorized
+     */
     public static boolean isAuthorized() {
-        return authorized;
+        return currentUser != null && authorized;
     }
 
     /**
      * Utility method that takes a {@link User}'s name and PIN and calculates
-     * a hash string from them.
+     * a hash string from them use SHA-1.
      *
      * @param name the user's name
      * @param pin  the user's PIN
@@ -67,10 +73,29 @@ public class AuthenticationService {
         return null;
     }
 
+    /**
+     * Utility method that will verify that a {@link User} hashed pin matches
+     * the given hashed pin.
+     *
+     * @param user user to verify against
+     * @param hash hash to verify
+     * @return true if the user's hash matches the new hash
+     */
     public static boolean verifyHash(User user, String hash) {
         return user.getHashedPIN().equals(hash);
     }
 
+    /**
+     * This method will take in a username and pin and attempt to validate that
+     * user against the existing user database. If the user is existing and the
+     * pin hash matches the existing hash, the user will be authorized. This
+     * method will also kick off a lockout period if there were too many failed
+     * attempts in a short period of time.
+     *
+     * @param name username
+     * @param pin pin/passcode
+     * @return true if the user was authorized
+     */
     public static boolean authorizeUser(String name, String pin) {
         currentUser = new User(name);
 
@@ -106,6 +131,13 @@ public class AuthenticationService {
         return true;
     }
 
+    /**
+     * Utility helper method that updates the concurrent failed attempt count. If
+     * the value passed in is zero, any active timers are canceled and the value
+     * is set to zero.
+     *
+     * @param val new concurrent fail count
+     */
     private static void updateFailedAttempts(int val) {
         concurrentFailedAttempts = val;
         if (val == 0) {
@@ -120,10 +152,16 @@ public class AuthenticationService {
         }
     }
 
+    /**
+     * Resets all failed attempt counts
+     */
     public static void resetFailedAttempts() {
         updateFailedAttempts(0);
     }
 
+    /**
+     * This method initiates the lockout period.
+     */
     private static void performLockout() {
         LogService.log("Safe Lockout System Activated due to excessive failed access attempts.");
         ApplicationState.getInstance().transitionState(State.LOCKOUT);
@@ -132,11 +170,19 @@ public class AuthenticationService {
         timer.schedule(lockoutTimer, LOGOUT_TIME);
     }
 
+    /**
+     * This method disengages the lockout period.
+     */
     public static void resetLockout() {
         ApplicationState.getInstance().transitionState(State.SLEEP);
         resetFailedAttempts();
     }
 
+    /**
+     * Utility method that performs the authorization of the user
+     *
+     * @param user user to authorize
+     */
     private static void authorizeUser(User user) {
         currentUser = user;
         authorized = true;
@@ -145,6 +191,9 @@ public class AuthenticationService {
                 user.getUsername()));
     }
 
+    /**
+     * Method to de-authorize a user (logout)
+     */
     public static void deAuthorizeUser() {
         currentUser = null;
         authorized = false;

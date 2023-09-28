@@ -12,8 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Service class that handles all the user data requests to and from the
+ * UserDAO.
  */
 public class UserService {
 
@@ -36,6 +36,11 @@ public class UserService {
         return Logger.getLogger(UserService.class.getName());
     }
 
+    /**
+     * Method to fetch a {@link User} from the UserDAO by it's username.
+     * @param name username of the user
+     * @return an optional that may or may not contain a User
+     */
     public Optional<User> getUserByName(String name) {
         try {
             return userDAO.getUserByName(name);
@@ -46,6 +51,11 @@ public class UserService {
         return Optional.empty();
     }
 
+    /**
+     * Method to fetch all {@link User} from the UserDAO.
+     *
+     * @return a list of {@link User} objects, or an empty list
+     */
     public List<User> getAllUsers() {
         try {
             return userDAO.listAllUsers();
@@ -56,6 +66,11 @@ public class UserService {
         return new ArrayList<>();
     }
 
+    /**
+     * Method to persist a {@link User} into the user database.
+     *
+     * @param user user to store
+     */
     public void addUser(User user) {
         // hash user's pin
         user.setHashedPIN(AuthenticationService.hashPIN(user.getUsername(), user.getHashedPIN()));
@@ -72,10 +87,20 @@ public class UserService {
         }
     }
 
+    /**
+     * Method to remove a {@link User} from the user database based on it's username.
+     *
+     * @param name name of user to delete
+     */
     public void deleteUserByName(String name) {
         deleteUser(new User(name));
     }
 
+    /**
+     * Method to remove a {@link User} from the user database.
+     *
+     * @param user user to delete
+     */
     public void deleteUser(User user) {
         try {
             boolean result = userDAO.removeUser(user);
@@ -90,6 +115,11 @@ public class UserService {
         }
     }
 
+    /**
+     *  Method to update a {@link User} in the user database.
+     *
+     * @param user user to update
+     */
     public void updateUser(User user) {
         // hash user's pin
         user.setHashedPIN(AuthenticationService.hashPIN(user.getUsername(), user.getHashedPIN()));

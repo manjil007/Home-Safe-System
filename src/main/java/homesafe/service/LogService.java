@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * created by:
- * author: MichaelMillar
+ * Service class that handles the storing and retrieval of all Log data from
+ * the LogDAO.
  */
 public class LogService {
     private static final LogDAO logDAO;
