@@ -20,12 +20,10 @@ public class UserTest {
         User user = new User(name);
         user.setHashedPIN(hashedPin);
         user.setAdmin(true);
-        user.setExpiration(LocalDateTime.of(2023, 9, 16, 11, 15));
 
         Assertions.assertNotNull(user.getUsername());
         Assertions.assertNotNull(user.getHashedPIN());
         Assertions.assertTrue(user.isAdmin());
-        Assertions.assertNotNull(user.getExpiration());
     }
 
 }

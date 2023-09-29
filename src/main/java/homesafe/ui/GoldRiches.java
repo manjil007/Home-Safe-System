@@ -1,6 +1,7 @@
 package homesafe.ui;
 
 import homesafe.event.DoorEvent;
+import homesafe.service.EventService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -44,6 +45,7 @@ public class GoldRiches {
                 SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
                 guiUtils.switchScreens(safeUnlocked.getPanel());
                 DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);
+                EventService.getInstance().publishEvent(event);
             }
         });
     }

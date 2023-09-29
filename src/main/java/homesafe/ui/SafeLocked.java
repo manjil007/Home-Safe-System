@@ -1,6 +1,7 @@
 package homesafe.ui;
 
 import homesafe.event.DoorEvent;
+import homesafe.service.EventService;
 
 import javax.swing.*;
 import java.awt.*;
@@ -69,6 +70,7 @@ public class SafeLocked {
                 GoldRiches goldRiches = new GoldRiches(guiUtils);
                 guiUtils.switchScreens(goldRiches.getPanel());
                 DoorEvent event = new DoorEvent(DoorEvent.DOOR_OPENED, true);
+                EventService.getInstance().publishEvent(event);
             }
         });
     }
