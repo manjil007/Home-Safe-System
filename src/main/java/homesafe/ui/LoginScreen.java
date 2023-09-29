@@ -27,7 +27,8 @@ public class LoginScreen {
         panel.add(userLabel);
 
         JTextField userText = new JTextField(20);
-        userText.setBounds(100, 100, 200, 100);
+
+        guiUtils.createTxtFlds(userText, 200, 200, 200, 100, panel);
     }
 
     public JPanel getPanel() {

@@ -29,6 +29,17 @@ public class GUIUtils {
         panel.add(btn);
     }
 
+    /**
+     * Just messing with Text fields
+     * may delete this method later
+     * -Jacob
+     */
+    public void createTxtFlds(JTextField txt, int x, int y, int width, int height, JPanel panel) {
+        txt.setBounds(x, y, width, height);
+        txt.setOpaque(false);
+        panel.add(txt);
+    }
+
     public void setFont (JComponent comp, float size) {
         try {
             Font customFont = Font.createFont(Font.TRUETYPE_FONT,
