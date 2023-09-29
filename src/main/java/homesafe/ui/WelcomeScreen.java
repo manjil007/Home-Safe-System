@@ -53,6 +53,9 @@ public class WelcomeScreen {
                 public void actionPerformed(ActionEvent e) {
                     // if user is ADMIN, create log screen, pass admin = true
                     // else, create log screen, pass admin = false
+                    LogScreen logScreen = new LogScreen(guiUtils);
+                    guiUtils.switchScreens(logScreen.getPanel());
+
                 }
             });
             lockSafeBtn.addActionListener(new ActionListener() {

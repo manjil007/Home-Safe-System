@@ -23,27 +23,30 @@ public class LoginScreen {
     }
 
     private void createPanel() {
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
-        int halfHeight = (int)((height/2) - 215);
+        int halfHeight = (int) ((screenSize.getHeight()/2) - 215);
+        int halfWidth = (int) ((screenSize.getWidth()/2) - 215);
 
         JLabel userLabel = new JLabel("Username");
-        userLabel.setBounds(500, 500, 100, 100);
+        userLabel.setBounds(halfWidth, halfHeight, 100, 100);
         panel.add(userLabel);
 
         JTextField userText = new JTextField(20);
-        guiUtils.createTxtFlds(userText, 575, 525, 100,50, panel);
+        guiUtils.createTxtFlds(userText, halfWidth + 75, halfHeight + 25, 100,50, panel);
 
         JLabel userLabel2 = new JLabel("PIN");
-        userLabel2.setBounds(500, 550, 100, 100);
+        userLabel2.setBounds(halfWidth, halfHeight + 50, 100, 100);
         panel.add(userLabel2);
 
         JTextField userPin = new JTextField(20);
-        guiUtils.createTxtFlds(userPin, 575, 575, 100, 50, panel);
+        guiUtils.createTxtFlds(userPin, halfWidth + 75, halfHeight + 75, 100, 50, panel);
 
         JButton closeBtn = new JButton("Close");
         guiUtils.setFont(closeBtn, 15);
         guiUtils.createColorBtn(closeBtn, 20, 20, 100, 75, Color.lightGray, panel);
+
+        JButton enterBtn = new JButton("Enter");
+        guiUtils.setFont(enterBtn, 15);
+        guiUtils.createColorBtn(enterBtn, halfWidth + 200, halfHeight + 70, 100, 75, Color.lightGray, panel);
 
         closeBtn.addActionListener(new ActionListener() {
             @Override
@@ -52,6 +55,16 @@ public class LoginScreen {
                 guiUtils.switchScreens(safeUnlocked.getPanel());
                 DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);
                 EventService.getInstance().publishEvent(event);
+            }
+        });
+
+        enterBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Bypassing authentication for now
+                WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
+                guiUtils.switchScreens(welcomeScreen.getPanel());
+
             }
         });
     }
