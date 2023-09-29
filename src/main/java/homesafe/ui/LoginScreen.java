@@ -9,7 +9,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class LoginScreen {
-
     private GUIUtils guiUtils;
     private JPanel panel = new JPanel();
 
