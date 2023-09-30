@@ -1,6 +1,5 @@
 /**
  * Author: Raju Nayak
- * Date: 9/27/23
  */
 
 package homesafe.controller;
@@ -36,6 +35,6 @@ public class TemperatureSensorController extends AbstractController{
 
     @Override
     public void run() {
-
+        // TODO
     }
 }

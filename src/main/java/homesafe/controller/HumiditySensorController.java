@@ -1,13 +1,26 @@
 /**
  * Author: Raju Nayak
- * Date: 9/27/23
  */
 
 package homesafe.controller;
 
-public class HumiditySensorController extends AbstractController{
+import homesafe.event.HumidityEvent;
+import homesafe.event.SafeEventHandler;
+
+/**
+ * Humidity sensor controller handle the humidity event inside safe.
+ */
+public class HumiditySensorController extends AbstractController implements SafeEventHandler<HumidityEvent> {
 
     private float humidity;
+    private static HumiditySensorController instance;
+
+    public static HumiditySensorController getInstance() {
+        if (instance == null) {
+            instance = new HumiditySensorController(0.0f);
+        }
+        return instance;
+    }
 
     public HumiditySensorController(float humidity) {
         this.humidity = humidity;
@@ -23,6 +36,11 @@ public class HumiditySensorController extends AbstractController{
 
     @Override
     public void run() {
+        // TODO
+    }
 
+    @Override
+    public void handleEvent(HumidityEvent event) {
+        setHumidity(event.getHumidity());
     }
 }
