@@ -60,8 +60,9 @@ public class SafeLocked {
         displayBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                LoginScreen loginScreen = new LoginScreen(guiUtils);
-                guiUtils.switchScreens(loginScreen.getPanel());
+                // TEST EntryScreen object
+//                LoginScreen loginScreen = new LoginScreen(guiUtils);
+//                guiUtils.switchScreens(loginScreen.getPanel());
             }
         });
 

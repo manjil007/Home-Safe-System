@@ -10,6 +10,8 @@ public class WelcomeScreen {
     private final GUIUtils guiUtils;
     private final JPanel panel = new JPanel();
 
+    private int textFieldPanelType;
+
 
     public WelcomeScreen(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
@@ -69,6 +71,9 @@ public class WelcomeScreen {
         mngPINBtn.addActionListener(e -> {
             // if user is ADMIN, create admin screen
             // else, create non-admin screen (modify PIN only)
+            textFieldPanelType = 2;
+            EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
+            guiUtils.switchScreens(entryScreen.getPanel());
         });
         viewLogsBtn.addActionListener(e -> {
             // if user is ADMIN, create log screen, pass admin = true
@@ -83,8 +88,10 @@ public class WelcomeScreen {
             EventService.getInstance().publishEvent(event);
         });
         westButtons.getBackButton().addActionListener(e -> {
-            LoginScreen loginScreen = new LoginScreen(guiUtils);
-            guiUtils.switchScreens(loginScreen.getPanel());
+            // TEST EntryScreen object
+//            LoginScreen loginScreen = new LoginScreen(guiUtils);
+//            loginScreen.getTextFieldsPanel();
+//            guiUtils.switchScreens(loginScreen.getPanel());
         });
         westButtons.getExitDisplayButton().addActionListener(e -> {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);

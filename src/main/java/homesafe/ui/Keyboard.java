@@ -7,14 +7,26 @@ public class Keyboard extends JPanel {
     private JButton keyboardBtn;
     private JButton userNameEntry;
     private JButton pinEntry;
+
     //private JTextField usernameField;
     //private JTextField pinField;
-    private JPanel textFieldsPanel;
-    private JPanel keyboardPanel;
+    private int textFieldPanelType;
+    private JPanel textFieldsPanel; // add "Enter" button to this panel
+    private JPanel keyboardPanel; // remove "Enter" button from this panel
+
     private JPanel changePinTextFieldsPanel;
 
-    public Keyboard() {
+    public Keyboard(int textFieldPanelType) {
         setLayout(new BorderLayout());
+
+        // Login screen = 1
+        //
+
+        // Let there be ONE testFieldPanel field
+        // if textFieldPanelType = 1
+        // textFieldPanel = createTextFieldPanelOne()
+        // else if textFieldPanelType = 2
+
 
         // Create text fields
         JTextField usernameField = new JTextField(20);
@@ -74,6 +86,13 @@ public class Keyboard extends JPanel {
         //add(keyboardPanel, BorderLayout.SOUTH);
     }
 
+    public int getTextFieldPanelType() {
+        return textFieldPanelType;
+    }
+
+    public void setTextFieldPanelType(int textFieldPanelType) {
+        this.textFieldPanelType = textFieldPanelType;
+    }
     public JPanel getTextFieldsPanel(){return textFieldsPanel;}
     public JPanel getKeyboardPanel(){return keyboardPanel;}
     public JPanel getChangePinTextFieldsPanel(){return changePinTextFieldsPanel;}
