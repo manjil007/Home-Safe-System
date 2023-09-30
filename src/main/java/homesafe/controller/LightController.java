@@ -1,31 +1,38 @@
 /**
  * Author: Raju Nayak
- * Date: 9/30/23
  */
 
 package homesafe.controller;
+
+import homesafe.event.ButtonEvent;
 import homesafe.event.DoorEvent;
+import homesafe.event.SafeEventHandler;
+import homesafe.service.EventService;
 
 /**
  * Controller class to handle the light functionality inside safe.
  */
-public class LightController extends AbstractController{
+public class LightController extends AbstractController implements SafeEventHandler<DoorEvent> {
 
+    private static LightController instance;
     private boolean isLightOn;
-    private final DoorEvent doorEvent;
 
-    /**
-     * Constructor of the light controller.
-     * @param doorEvent a dependency of the door event
-     */
-    public LightController(DoorEvent doorEvent) {
-        this.doorEvent = doorEvent;
+    private LightController() {
+        isLightOn = false;
+        EventService.getInstance().subscribe(this, DoorEvent.class);
+    }
+
+    public static LightController getInstance() {
+        if (instance == null) {
+            instance = new LightController();
+        }
+        return instance;
     }
 
     /**
      * Method to handle the light functionality based on door event.
      */
-    public void lightHandler() {
+    public void lightHandler(DoorEvent doorEvent) {
         boolean isDoorOpen = doorEvent.isDoorOpen();
 
         if (isDoorOpen && !isLightOn) {
@@ -37,6 +44,11 @@ public class LightController extends AbstractController{
 
     @Override
     public void run() {
-        lightHandler();
+        // TODO
+    }
+
+    @Override
+    public void handleEvent(DoorEvent event) {
+        lightHandler(event);
     }
 }
