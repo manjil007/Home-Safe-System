@@ -21,6 +21,11 @@ public class LoginScreen {
         createPanel();
     }
 
+    /**
+     * The createPanel() method just creates the panel
+     * the user sees once they reach the login screen
+     */
+
     private void createPanel() {
         int halfHeight = (int) ((screenSize.getHeight()/2) - 215);
         int halfWidth = (int) ((screenSize.getWidth()/2) - 215);
@@ -39,15 +44,23 @@ public class LoginScreen {
         JTextField userPin = new JTextField(20);
         guiUtils.createTxtFlds(userPin, halfWidth + 75, halfHeight + 75, 100, 50, panel);
 
-        JButton closeBtn = new JButton("Close");
-        guiUtils.setFont(closeBtn, 15);
-        guiUtils.createColorBtn(closeBtn, 20, 20, 100, 75, Color.lightGray, panel);
 
         JButton enterBtn = new JButton("Enter");
         guiUtils.setFont(enterBtn, 15);
         guiUtils.createColorBtn(enterBtn, halfWidth + 200, halfHeight + 70, 100, 75, Color.lightGray, panel);
 
-        closeBtn.addActionListener(new ActionListener() {
+        /**
+         * Commenting this chunck of code out for the time being
+         * because we're adding westPanelButton object. We'll see
+         * how that works, may come back to this later.
+         */
+
+        /*JButton closeBtn = new JButton("Close");
+        guiUtils.setFont(closeBtn, 15);
+        guiUtils.createColorBtn(closeBtn, 20, 20, 100, 75, Color.lightGray, panel);
+
+
+            closeBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
@@ -56,7 +69,29 @@ public class LoginScreen {
                 EventService.getInstance().publishEvent(event);
             }
         });
+        */
 
+        WestPanelButtons westButtons = new WestPanelButtons();
+
+
+        JPanel emptySidePanel = new JPanel();
+        emptySidePanel.setLayout(new BoxLayout(emptySidePanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
+        emptySidePanel.setPreferredSize(new Dimension (200,150));
+
+        panel.add(westButtons, BorderLayout.WEST);
+        panel.add(emptySidePanel, BorderLayout.EAST);
+
+        westButtons.getBackButton().addActionListener(e -> {
+            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+            guiUtils.switchScreens(safeUnlocked.getPanel());
+        });
+
+        westButtons.getExitDisplayButton().addActionListener(e -> {
+            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+            guiUtils.switchScreens(safeUnlocked.getPanel());
+
+
+        });
         enterBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -66,6 +101,8 @@ public class LoginScreen {
 
             }
         });
+
+
     }
 
     public JPanel getPanel() {
