@@ -7,9 +7,6 @@ public class MainGUI {
     public MainGUI() {
         JFrame frame = new JFrame();
         GUIUtils guiUtils = new GUIUtils(frame);
-        // Code for testing welcome screen
-        // WelcomeScreen test1 = new WelcomeScreen(guiUtils);
-        // JPanel panel = test1.getPanel();
         SafeLocked safeLocked = new SafeLocked(guiUtils);
         JPanel panel = safeLocked.getPanel();
 
@@ -21,5 +18,6 @@ public class MainGUI {
         frame.pack();
         frame.setVisible(true);
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
     }
 }
