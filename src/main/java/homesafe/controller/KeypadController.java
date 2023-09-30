@@ -9,6 +9,7 @@ import homesafe.entity.State;
 import homesafe.event.ButtonEvent;
 import homesafe.event.SafeEventHandler;
 import homesafe.service.AuthenticationService;
+import homesafe.service.EventService;
 
 /**
  * Keyboard/keypad controller class that handles the inputs from the display and
@@ -28,7 +29,9 @@ public class KeypadController extends AbstractController implements SafeEventHan
         return instance;
     }
 
-    private KeypadController() {    }
+    private KeypadController() {
+        EventService.getInstance().subscribe(this, ButtonEvent.class);
+    }
 
     /**
      * Helper method that updates the current data object being updated from
