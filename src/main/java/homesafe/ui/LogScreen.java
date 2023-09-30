@@ -1,11 +1,14 @@
 package homesafe.ui;
+import homesafe.entity.LogData;
+import homesafe.service.LogService;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class LogScreen {
 
     private final GUIUtils guiUtils;
-    private final JPanel panel = new JPanel();
+    private final JPanel panel = new JPanel(); // MAIN Panel
 
     public LogScreen(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
@@ -17,6 +20,26 @@ public class LogScreen {
 
     private void createPanel() {
         // Needs to be able to display List<LogData> object
+
+        // Panel for displaying log info
+        JPanel logInfoPanel = new JPanel();
+        logInfoPanel.setLayout(new BoxLayout(logInfoPanel, BoxLayout.Y_AXIS));
+        logInfoPanel.setBackground(Color.CYAN);
+        logInfoPanel.setPreferredSize(new Dimension(800,500));
+
+        // Populate panel with LogData
+        for(LogData logData : LogService.fetchAllLogs()){
+            JLabel msg = new JLabel(logData.getMessage());
+            JLabel user = new JLabel(logData.getUsername());
+            JLabel time = new JLabel(String.valueOf(logData.getCreatedAt()));
+            logInfoPanel.add(msg);
+            logInfoPanel.add(user);
+            logInfoPanel.add(time);
+        }
+
+        panel.add(logInfoPanel, BorderLayout.CENTER);
+
+        // Back & Exit Display Buttons
         WestPanelButtons westButtons = new WestPanelButtons();
         panel.add(westButtons, BorderLayout.WEST);
 

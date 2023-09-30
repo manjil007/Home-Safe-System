@@ -52,7 +52,6 @@ public class WelcomeScreen {
 
         // WEST PANEL
         WestPanelButtons westButtons = new WestPanelButtons();
-        panel.add(westButtons, BorderLayout.WEST);
 
         // EAST PANEL
         JPanel emptySidePanel = new JPanel();

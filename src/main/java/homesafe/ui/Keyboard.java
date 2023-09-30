@@ -4,13 +4,63 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Keyboard extends JPanel {
-    private final JButton keyboardBtn;
+    private JButton keyboardBtn;
+    private JButton userNameEntry;
+    private JButton pinEntry;
+    //private JTextField usernameField;
+    //private JTextField pinField;
+    private JPanel textFieldsPanel;
+    private JPanel keyboardPanel;
 
     public Keyboard() {
-        setLayout(new BorderLayout()); // Use BorderLayout to allow scaling
-        keyboardBtn = new JButton("Keyboard");
-        keyboardBtn.setPreferredSize(new Dimension(400, 400));
-        add(keyboardBtn, BorderLayout.CENTER);
+        setLayout(new BorderLayout());
+
+        // Create text fields
+        JTextField usernameField = new JTextField(20);
+        JTextField pinField = new JTextField(20);
+        textFieldsPanel = new JPanel();
+        textFieldsPanel.setLayout(new GridLayout(2, 1));
+        textFieldsPanel.add(new JLabel("Username"));
+        textFieldsPanel.add(usernameField);
+        textFieldsPanel.add(new JLabel("PIN"));
+        textFieldsPanel.add(pinField);
+
+        // Create keyboard panel
+        keyboardPanel = new JPanel();
+        keyboardPanel.setLayout(new GridLayout(4, 10));
+
+        String[] keyLabels = {
+                "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+                "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
+                "u", "v", "w", "x", "y", "z", "0", "1", "2", "3",
+                "4", "5", "6", "7", "8", "9", "Enter", "Backspace"
+        };
+
+        for (String label : keyLabels) {
+            JButton button = new JButton(label);
+            button.addActionListener(e -> {
+                String buttonText = button.getText();
+                if (buttonText.equals("Enter")) {
+                    System.out.println("Username: " + usernameField.getText());
+                    System.out.println("PIN: " + pinField.getText());
+                } else if (buttonText.equals("Backspace")) {
+                    String text = usernameField.getText();
+                    if (text.length() > 0) {
+                        usernameField.setText(text.substring(0, text.length() - 1));
+                    }
+                } else {
+                    usernameField.setText(usernameField.getText() + buttonText);
+                }
+            });
+            keyboardPanel.add(button);
+        }
+
+        // Add components to the main panel
+        //add(textFieldsPanel, BorderLayout.CENTER);
+        //add(keyboardPanel, BorderLayout.SOUTH);
     }
+
+    public JPanel getTextFieldsPanel(){return textFieldsPanel;}
+    public JPanel getKeyboardPanel(){return keyboardPanel;}
     public JButton getKeyboardBtn(){return keyboardBtn;}
 }
