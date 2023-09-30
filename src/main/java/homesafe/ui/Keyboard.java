@@ -11,6 +11,7 @@ public class Keyboard extends JPanel {
     //private JTextField pinField;
     private JPanel textFieldsPanel;
     private JPanel keyboardPanel;
+    private JPanel changePinTextFieldsPanel;
 
     public Keyboard() {
         setLayout(new BorderLayout());
@@ -24,6 +25,19 @@ public class Keyboard extends JPanel {
         textFieldsPanel.add(usernameField);
         textFieldsPanel.add(new JLabel("PIN"));
         textFieldsPanel.add(pinField);
+
+        JTextField oldPin = new JTextField(20);
+        JTextField newPin = new JTextField(20);
+        JTextField confirmPin = new JTextField(20);
+        changePinTextFieldsPanel = new JPanel();
+        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
+        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
+        changePinTextFieldsPanel.add(oldPin);
+        changePinTextFieldsPanel.add(new JLabel("New Pin"));
+        changePinTextFieldsPanel.add(newPin);
+        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
+        changePinTextFieldsPanel.add(confirmPin);
+
 
         // Create keyboard panel
         keyboardPanel = new JPanel();
@@ -62,5 +76,6 @@ public class Keyboard extends JPanel {
 
     public JPanel getTextFieldsPanel(){return textFieldsPanel;}
     public JPanel getKeyboardPanel(){return keyboardPanel;}
+    public JPanel getChangePinTextFieldsPanel(){return changePinTextFieldsPanel;}
     public JButton getKeyboardBtn(){return keyboardBtn;}
 }

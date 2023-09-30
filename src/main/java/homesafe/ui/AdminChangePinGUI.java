@@ -19,16 +19,13 @@ public class AdminChangePinGUI extends JFrame {
     JButton test = new JButton("LOG IN");
     int width = test.getWidth();
     int height = test.getHeight();
-    Image resizedIcon = logInicon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
-    JButton loginButton = new JButton(new ImageIcon(resizedIcon));
+
+    JButton loginButton = new JButton(logInicon);
     JButton backbutton = new JButton(lbackIcon);
     JButton zoomOutButton = new JButton(zoomIcon);
     JCheckBox adminCheckBox = new JCheckBox("Admin");
 
     //JCheckBox showPIN= new JCheckBox("Show PIN");
-
-
-
 
     AdminChangePinGUI() {
         setLayoutManager();
@@ -69,9 +66,7 @@ public class AdminChangePinGUI extends JFrame {
         container.add(adminCheckBox);
     }
 
-
-
-
+    
     public static void main(String[] a) {
         AdminChangePinGUI frame = new AdminChangePinGUI();
         frame.setTitle("Login Form");
