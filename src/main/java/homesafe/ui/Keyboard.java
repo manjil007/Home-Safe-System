@@ -44,16 +44,29 @@ public class Keyboard extends JPanel {
         // Let there be ONE testFieldPanel field
         // if textFieldPanelType = 1
         switch (textFieldPanelType){
-            case 1: textFieldsPanel = createTextPanel1();
-            case 2: textFieldsPanel = createTextPanel2();
-            case 3: textFieldsPanel = createTextPanel3();
-            case 4: textFieldsPanel = createTextPanel4();
-            case 5: textFieldsPanel = createTextPanel5();
-            default: textFieldsPanel = null; // change?
+            case 1:
+                textFieldsPanel = createTextPanel1();
+                break;
+            case 2:
+                textFieldsPanel = createTextPanel2();
+                break;
+            case 3:
+                textFieldsPanel = createTextPanel3();
+                break;
+            case 4:
+                textFieldsPanel = createTextPanel4();
+                break;
+            case 5:
+                textFieldsPanel = createTextPanel5();
+                break;
+            default:
+                // ????
+                break;
         }
 
 
         Component[] components = textFieldsPanel.getComponents();
+
 
         for (Component component : components){
             if (component.getName() != null && component.getName().equals("userNameField")){
@@ -63,10 +76,6 @@ public class Keyboard extends JPanel {
                 pin = (JTextField) component;
             }
         }
-
-
-
-
 
 
         // Create keyboard panel
@@ -173,18 +182,18 @@ public class Keyboard extends JPanel {
         return changePinTextFieldsPanel;
     }
     public JPanel createTextPanel5(){
-        JPanel textPanel1 = new JPanel();
+        JPanel textPanel5 = new JPanel();
 
         // Create text fields
         JTextField adminPin = new JTextField(20);
         JTextField confirmPin = new JTextField(20);
-        textPanel1.setLayout(new GridLayout(2, 1));
-        textPanel1.add(new JLabel("Admin PIN"));
-        textPanel1.add(adminPin);
-        textPanel1.add(new JLabel("Confirm PIN"));
-        textPanel1.add(confirmPin);
+        textPanel5.setLayout(new GridLayout(2, 1));
+        textPanel5.add(new JLabel("Admin PIN"));
+        textPanel5.add(adminPin);
+        textPanel5.add(new JLabel("Confirm PIN"));
+        textPanel5.add(confirmPin);
 
-        return textPanel1;
+        return textPanel5;
     }
 
 }
