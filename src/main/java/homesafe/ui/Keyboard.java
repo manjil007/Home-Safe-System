@@ -26,13 +26,13 @@ public class Keyboard extends JPanel {
     private JButton userNameEntry;
     private JButton pinEntry;
 
-    private JTextField usernameField;
-    private JTextField pinField;
+    private JTextField username;
+    private JTextField pin;
     private int textFieldPanelType;
     private JPanel textFieldsPanel; // add "Enter" button to this panel
     private JPanel keyboardPanel; // remove "Enter" button from this panel
 
-    private JPanel changePinTextFieldsPanel;
+//    private JPanel changePinTextFieldsPanel;
 
     public Keyboard(int textFieldPanelType) {
         setLayout(new BorderLayout());
@@ -51,26 +51,16 @@ public class Keyboard extends JPanel {
 
         for (Component component : components){
             if (component.getName() != null && component.getName().equals("userNameField")){
-                usernameField = (JTextField) component;
+                username = (JTextField) component;
             }
             else if(component.getName() != null && component.getName().equals("pinField")){
-                pinField = (JTextField) component;
+                pin = (JTextField) component;
             }
         }
 
 
 
-        JTextField oldPin = new JTextField(20);
-        JTextField newPin = new JTextField(20);
-        JTextField confirmPin = new JTextField(20);
-        changePinTextFieldsPanel = new JPanel();
-        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
-        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
-        changePinTextFieldsPanel.add(oldPin);
-        changePinTextFieldsPanel.add(new JLabel("New Pin"));
-        changePinTextFieldsPanel.add(newPin);
-        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
-        changePinTextFieldsPanel.add(confirmPin);
+
 
 
         // Create keyboard panel
@@ -89,15 +79,15 @@ public class Keyboard extends JPanel {
             button.addActionListener(e -> {
                 String buttonText = button.getText();
                 if (buttonText.equals("Enter")) {
-                    System.out.println("Username: " + usernameField.getText());
-                    System.out.println("PIN: " + pinField.getText());
+                    System.out.println("Username: " + username.getText());
+                    System.out.println("PIN: " + pin.getText());
                 } else if (buttonText.equals("Backspace")) {
-                    String text = usernameField.getText();
+                    String text = username.getText();
                     if (text.length() > 0) {
-                        usernameField.setText(text.substring(0, text.length() - 1));
+                        username.setText(text.substring(0, text.length() - 1));
                     }
                 } else {
-                    usernameField.setText(usernameField.getText() + buttonText);
+                    username.setText(username.getText() + buttonText);
                 }
             });
             keyboardPanel.add(button);
@@ -117,7 +107,7 @@ public class Keyboard extends JPanel {
     }
     public JPanel getTextFieldsPanel(){return textFieldsPanel;}
     public JPanel getKeyboardPanel(){return keyboardPanel;}
-    public JPanel getChangePinTextFieldsPanel(){return changePinTextFieldsPanel;}
+
     public JButton getKeyboardBtn(){return keyboardBtn;}
 
     public JPanel createTextPanel1(){
@@ -135,20 +125,60 @@ public class Keyboard extends JPanel {
         return textPanel1;
     }
     public JPanel createTextPanel2(){
-        JPanel textPanel2 = new JPanel();
-        return textPanel2;
+        JTextField oldPin = new JTextField(20);
+        JTextField newPin = new JTextField(20);
+        JTextField confirmPin = new JTextField(20);
+        JPanel changePinTextFieldsPanel = new JPanel();
+        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
+        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
+        changePinTextFieldsPanel.add(oldPin);
+        changePinTextFieldsPanel.add(new JLabel("New Pin"));
+        changePinTextFieldsPanel.add(newPin);
+        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
+        changePinTextFieldsPanel.add(confirmPin);
+        return changePinTextFieldsPanel;
     }
     public JPanel createTextPanel3(){
-        JPanel textPanel3 = new JPanel();
-        return textPanel3;
+        JTextField userNameField = new JTextField(20);
+        JTextField pinField = new JTextField(20);
+        JTextField confirmPin = new JTextField(20);
+        JPanel addNewUser = new JPanel();
+        addNewUser.setLayout(new GridLayout(3, 1));
+        addNewUser.add(new JLabel("User Name"));
+        addNewUser.add(userNameField);
+        addNewUser.add(new JLabel("6 Digit PIN"));
+        addNewUser.add(pinField);
+        addNewUser.add(new JLabel("Confirm New Pin"));
+        addNewUser.add(confirmPin);
+        return addNewUser;
     }
     public JPanel createTextPanel4(){
-        JPanel textPanel4 = new JPanel();
-        return textPanel4;
+        JTextField oldPin = new JTextField(20);
+        JTextField newPin = new JTextField(20);
+        JTextField confirmPin = new JTextField(20);
+        JPanel changePinTextFieldsPanel = new JPanel();
+        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
+        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
+        changePinTextFieldsPanel.add(oldPin);
+        changePinTextFieldsPanel.add(new JLabel("New Pin"));
+        changePinTextFieldsPanel.add(newPin);
+        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
+        changePinTextFieldsPanel.add(confirmPin);
+        return changePinTextFieldsPanel;
     }
     public JPanel createTextPanel5(){
-        JPanel textPanel5 = new JPanel();
-        return textPanel5;
+        JPanel textPanel1 = new JPanel();
+
+        // Create text fields
+        JTextField adminPin = new JTextField(20);
+        JTextField confirmPin = new JTextField(20);
+        textPanel1.setLayout(new GridLayout(2, 1));
+        textPanel1.add(new JLabel("Admin PIN"));
+        textPanel1.add(adminPin);
+        textPanel1.add(new JLabel("Confirm PIN"));
+        textPanel1.add(confirmPin);
+
+        return textPanel1;
     }
 
 }
