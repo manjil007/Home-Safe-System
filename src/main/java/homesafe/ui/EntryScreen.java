@@ -4,16 +4,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class EntryScreen {
-
-    int textFieldPanelType = 0;
     private WestPanelButtons westPanelButtons = new WestPanelButtons();
     private JPanel eastEmptyPanel = new JPanel();
-    private Keyboard keyboard = new Keyboard(textFieldPanelType);
+    private Keyboard keyboard;
     private GUIUtils guiUtils;
     private JPanel panel = new JPanel();
 
 
     public EntryScreen(GUIUtils guiUtils, int textFieldPanelType) {
+
+        keyboard = new Keyboard(textFieldPanelType);
         this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.GREEN);
