@@ -16,6 +16,7 @@ import java.awt.*;
  * public JPanel createTextPanel4();
  * Creates text fields: old PW, new PW, confirm new PIN, Admin?
  *
+ *
  * public JPanel createTextPanel5();
  * Creates text fields: admin PIN, reenter PIN
  *
@@ -42,12 +43,17 @@ public class Keyboard extends JPanel {
 
         // Let there be ONE testFieldPanel field
         // if textFieldPanelType = 1
-        textFieldsPanel = createTextPanel1();
+        switch (textFieldPanelType){
+            case 1: textFieldsPanel = createTextPanel1();
+            case 2: textFieldsPanel = createTextPanel2();
+            case 3: textFieldsPanel = createTextPanel3();
+            case 4: textFieldsPanel = createTextPanel4();
+            case 5: textFieldsPanel = createTextPanel5();
+            default: textFieldsPanel = null; // change?
+        }
 
-        // else if textFieldPanelType = 2
 
         Component[] components = textFieldsPanel.getComponents();
-
 
         for (Component component : components){
             if (component.getName() != null && component.getName().equals("userNameField")){
