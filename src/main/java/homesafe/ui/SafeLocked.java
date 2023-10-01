@@ -61,6 +61,8 @@ public class SafeLocked {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TEST EntryScreen object
+                EntryScreen entryScreen = new EntryScreen(guiUtils,1);
+                guiUtils.switchScreens(entryScreen.getPanel());
 //                LoginScreen loginScreen = new LoginScreen(guiUtils);
 //                guiUtils.switchScreens(loginScreen.getPanel());
             }
