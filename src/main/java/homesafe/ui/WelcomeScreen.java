@@ -74,7 +74,7 @@ public class WelcomeScreen {
             textFieldPanelType = 2;
             EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
             guiUtils.switchScreens(entryScreen.getPanel());
-            System.out.println("Button Pressed");
+            //Tester: Delete later//System.out.println("Button Pressed");
 
         });
         viewLogsBtn.addActionListener(e -> {
