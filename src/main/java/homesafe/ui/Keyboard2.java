@@ -58,7 +58,7 @@ public class Keyboard2 extends JPanel {
             JButton button = new JButton(label);
             //label = String.valueOf(mB.getJLabel());
             button.setFont(new Font("Serif", Font.BOLD, 20));
-            button.setPreferredSize(new Dimension(200,225));
+            button.setPreferredSize(new Dimension(70,50));
             button.addActionListener(e -> {
                 String buttonText = button.getText();
                 if (buttonText.equals("Enter")) {
