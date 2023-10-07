@@ -6,14 +6,13 @@ import java.awt.*;
 public class EntryScreen {
     private WestPanelButtons westPanelButtons = new WestPanelButtons();
     private JPanel eastEmptyPanel = new JPanel();
-    private Keyboard keyboard;
+    private SwitchPanel keyboard;
     private GUIUtils guiUtils;
     private JPanel panel = new JPanel();
 
 
     public EntryScreen(GUIUtils guiUtils, int textFieldPanelType) {
-
-        keyboard = new Keyboard(textFieldPanelType);
+        keyboard = new SwitchPanel(textFieldPanelType);
         this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.GREEN);
@@ -26,8 +25,9 @@ public class EntryScreen {
         // EAST Panel Setup
         eastEmptyPanel.setLayout(new BoxLayout(eastEmptyPanel, BoxLayout.Y_AXIS));
         eastEmptyPanel.setPreferredSize(new Dimension(200,150));
+        // Create Enter Button object
 
-        panel.add(keyboard.getKeyboardPanel(), BorderLayout.SOUTH);
+        panel.add(keyboard.getSwitchPanel(), BorderLayout.SOUTH);
         panel.add(keyboard.getTextFieldsPanel(), BorderLayout.CENTER);
         panel.add(westPanelButtons, BorderLayout.WEST);
         panel.add(eastEmptyPanel, BorderLayout.EAST);
@@ -44,7 +44,7 @@ public class EntryScreen {
         });
     }
 
-    public Keyboard getKeyboard(){return keyboard;}
+    public SwitchPanel getKeyboard(){return keyboard;}
 
     public JPanel getPanel(){return panel;}
 }

@@ -12,7 +12,7 @@ import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
 
 /**
- * Keyboard/keypad controller class that handles the inputs from the display and
+ * SwitchPanel/keypad controller class that handles the inputs from the display and
  * keyboard.
  */
 public class KeypadController extends AbstractController implements SafeEventHandler<ButtonEvent> {
