@@ -72,6 +72,13 @@ public class WelcomeScreen {
             // if user is ADMIN, create admin screen
             // else, create non-admin screen (modify PIN only)
             textFieldPanelType = 2;
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Example usage:
+                    PopUpDialog popup = new PopUpDialog("Emely is 10, but she uses Android phone");
+                    popup.showPopUp();
+                }
+            });
             EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
             guiUtils.switchScreens(entryScreen.getPanel());
             //Tester: Delete later//System.out.println("Button Pressed");

@@ -41,8 +41,6 @@ public class EntryScreen {
         westPanelButtons.getExitDisplayButton().addActionListener(e -> {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
             guiUtils.switchScreens(safeUnlocked.getPanel());
-
-
         });
     }
 

@@ -30,6 +30,8 @@ public class LogScreen {
         logInfoPanel.setBackground(Color.CYAN);
         logInfoPanel.setPreferredSize(new Dimension(800,500));
 
+
+
         // Populate panel with LogData
         for(LogData logData : LogService.fetchAllLogs()){
             JLabel msg = new JLabel(logData.getMessage());
@@ -39,6 +41,7 @@ public class LogScreen {
             logInfoPanel.add(user);
             logInfoPanel.add(time);
         }
+
 
         panel.add(logInfoPanel, BorderLayout.CENTER);
 
@@ -56,14 +59,9 @@ public class LogScreen {
             guiUtils.switchScreens(safeUnlocked.getPanel());
 
         });
-
-
     }
-
 
     public JPanel getPanel() {
         return panel;
     }
-
-
 }

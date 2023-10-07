@@ -64,6 +64,14 @@ public class Keyboard2 extends JPanel {
                 if (buttonText.equals("Enter")) {
                     for (JTextField textField : textFields) {
                         System.out.println(textField.getName() + ": " + textField.getText());
+                        // TEST CODE
+                        SwingUtilities.invokeLater(new Runnable() {
+                            public void run() {
+                                // Example usage:
+                                PopUpDialog popup = new PopUpDialog("You are entering Manage PIN window");
+                                popup.showPopUp();
+                            }
+                        });
                     }
                 } else if (buttonText.equals("Backspace") && focusedField != null && focusedField.getText().length() > 0) {
                     focusedField.setText(focusedField.getText().substring(0, focusedField.getText().length() - 1));
