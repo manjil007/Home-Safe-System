@@ -54,6 +54,8 @@ public class Keyboard2 extends JPanel {
                 "u", "v", "w", "x", "y", "z", "Enter", "Backspace"
         };
 
+        // nonsense
+
         for (String label : keyLabels) {
             JButton button = new JButton(label);
             //label = String.valueOf(mB.getJLabel());

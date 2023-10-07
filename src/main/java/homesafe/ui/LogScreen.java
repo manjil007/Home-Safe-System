@@ -20,9 +20,7 @@ public class LogScreen {
 
     private void createPanel() {
         // Needs to be able to display List<LogData> object
-        LogService.fetchAllLogs();
-
-
+        //LogService.fetchAllLogs();
 
         // Panel for displaying log info
         JPanel logInfoPanel = new JPanel();
