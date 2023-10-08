@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
+import static java.util.logging.Level.SEVERE;
 import static java.util.logging.Level.WARNING;
 import static java.util.logging.Level.INFO;
 
@@ -26,7 +27,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
      */
     private static final String CREATE_USER_TABLE
             = "CREATE TABLE IF NOT EXISTS users (\n"
-            + "       name text TEXT PRIMARY KEY,\n"
+            + "       name TEXT PRIMARY KEY,\n"
             + "       hashed_pin TEXT NOT NULL,\n"
             + "       admin INTEGER NOT NULL\n"
             + ");";
@@ -98,7 +99,6 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
         String name = rs.getString(1);
         String hashedPIN = rs.getString(2);
         boolean admin = rs.getInt(3) == 1;
-        LocalDateTime expiration = DAOUtils.getLocalDateTime(rs, 4);
 
         User user = new User(name);
         user.setHashedPIN(hashedPIN);
@@ -109,6 +109,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
 
     @Override
     public void initialSetup() {
+        int userCount = 0;
         try (Connection conn = DAOUtils.getConnection()) {
             ResultSet rs = conn.getMetaData().getTables(null, null, "users", new String[] {"TABLE"});
             if (!rs.next()) { // table does not exist
@@ -122,19 +123,24 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
 
                 PreparedStatement ps = conn.prepareStatement(USER_COUNT_QUERY);
                 rs = ps.executeQuery();
-                int userCount = rs.getInt("total");
+                userCount = rs.getInt("total");
 
-                if (userCount == 0) {
-                    User defaultUser = new User("admin");
-                    defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
-                    defaultUser.setAdmin(true);
-
-                    addUser(defaultUser);
-                }
             }
         } catch (SQLException e) {
             getLogger().log(WARNING, "[SQLStats] User table failed to be created. {0}",
                     e.getMessage().trim());
+        }
+
+        try {
+            if (userCount == 0) {
+                User defaultUser = new User("admin");
+                defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
+                defaultUser.setAdmin(true);
+
+                addUser(defaultUser);
+            }
+        } catch (SQLException e) {
+            getLogger().log(SEVERE, "[SQLStats] Failed to create initial user. {0}", e.getMessage().trim());
         }
     }
 
