@@ -3,8 +3,11 @@ package homesafe.ui;
 import javax.swing.*;
 import java.awt.*;
 
+import static javax.swing.SwingUtilities.updateComponentTreeUI;
+
 public class MainGUI {
     public MainGUI() {
+
         JFrame frame = new JFrame();
         GUIUtils guiUtils = new GUIUtils(frame);
         SafeLocked safeLocked = new SafeLocked(guiUtils);
@@ -18,6 +21,7 @@ public class MainGUI {
         frame.pack();
         frame.setVisible(true);
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+
 
     }
 }

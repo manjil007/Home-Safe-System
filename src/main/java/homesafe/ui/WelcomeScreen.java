@@ -75,7 +75,7 @@ public class WelcomeScreen {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
-                    PopUpDialog popup = new PopUpDialog("Emely is 10, but she uses Android phone");
+                    PopUpDialog popup = new PopUpDialog("Emely is a baby (waahhhh), but she uses Android phone");
                     popup.showPopUp();
                 }
             });

@@ -19,6 +19,14 @@ public class LogScreen {
     }
 
     private void createPanel() {
+
+        // if ADMIN
+        // ...
+        // use fetchAllLogs
+        // else
+        // ...
+        // use fetch
+
         // Needs to be able to display List<LogData> object
         //LogService.fetchAllLogs();
 
@@ -27,8 +35,6 @@ public class LogScreen {
         logInfoPanel.setLayout(new BoxLayout(logInfoPanel, BoxLayout.Y_AXIS));
         logInfoPanel.setBackground(Color.CYAN);
         logInfoPanel.setPreferredSize(new Dimension(800,500));
-
-
 
         // Populate panel with LogData
         for(LogData logData : LogService.fetchAllLogs()){
@@ -39,7 +45,6 @@ public class LogScreen {
             logInfoPanel.add(user);
             logInfoPanel.add(time);
         }
-
 
         panel.add(logInfoPanel, BorderLayout.CENTER);
 

@@ -172,7 +172,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             PreparedStatement ps = conn.prepareStatement(UPDATE_USER_QUERY);
             ps.setString(1, user.getHashedPIN());
             ps.setInt(2, user.isAdmin() ? 1 : 0);
-            ps.setString(4, user.getUsername());
+            ps.setString(3, user.getUsername());
             int result = ps.executeUpdate();
 
             long dur = System.currentTimeMillis() - start;
