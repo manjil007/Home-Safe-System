@@ -57,7 +57,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             + "            name,\n"
             + "            hashed_pin,\n"
             + "            admin)\n"
-            + "values (?, ?, ?, ?);";
+            + "values (?, ?, ?);";
 
     /**
      * SQL query to update a user from the {@code users} table
