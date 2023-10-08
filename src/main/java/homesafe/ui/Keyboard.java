@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * This class was created in order to separate
@@ -18,6 +20,7 @@ public class Keyboard extends JPanel {
     private JPanel textFieldsPanel;
     private JPanel keyboardPanel;
     private JTextField focusedField;
+    private JButton[] keyButtons;
 
     /**
      * The constructor takes
@@ -48,34 +51,38 @@ public class Keyboard extends JPanel {
                 "u", "v", "w", "x", "y", "z", "Enter", "Backspace"
         };
 
-        // nonsense
+        keyButtons = new JButton[keyLabels.length];
 
-        for (String label : keyLabels) {
-            JButton button = new JButton(label);
-            //label = String.valueOf(mB.getJLabel());
-            button.setFont(new Font("Serif", Font.BOLD, 20));
-            button.setPreferredSize(new Dimension(70,50));
-            button.addActionListener(e -> {
-                String buttonText = button.getText();
-                if (buttonText.equals("Enter")) {
-                    for (JTextField textField : textFields) {
-                        System.out.println(textField.getName() + ": " + textField.getText());
-                        // TEST CODE
-                        SwingUtilities.invokeLater(new Runnable() {
-                            public void run() {
-                                // Example usage:
-                                PopUpDialog popup = new PopUpDialog("You are entering Manage PIN window");
-                                popup.showPopUp();
-                            }
-                        });
+        for (int i = 0; i < keyButtons.length; i++) {
+            // Label
+            keyButtons[i] = new JButton(keyLabels[i]);
+            keyButtons[i].setText(keyLabels[i]);
+
+            //Font
+            try {
+                Font customFont = Font.createFont(Font.TRUETYPE_FONT,
+                        new File("src/main/resources/fonts/spectrumFont.ttf")).deriveFont(15F);
+                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+                ge.registerFont(customFont);
+                keyButtons[i].setFont(customFont);
+            } catch (IOException | FontFormatException e) {
+                e.printStackTrace();
+            }
+
+            int finalI = i;
+            keyButtons[i].addActionListener(e -> {
+                String buttonText = keyButtons[finalI].getText();
+                if (!buttonText.equals("Enter")) {
+                    if (buttonText.equals("Backspace") && focusedField != null && focusedField.getText().length() > 0) {
+                        focusedField.setText(focusedField.getText().substring(0, focusedField.getText().length() - 1));
+                    } else {
+                        focusedField.setText(focusedField.getText() + buttonText);
                     }
-                } else if (buttonText.equals("Backspace") && focusedField != null && focusedField.getText().length() > 0) {
-                    focusedField.setText(focusedField.getText().substring(0, focusedField.getText().length() - 1));
-                } else {
-                    focusedField.setText(focusedField.getText() + buttonText);
                 }
             });
-            keyboardPanel.add(button);
+
+            keyboardPanel.add(keyButtons[i]);
+
         }
 
         // Add components to the main panel
@@ -109,5 +116,8 @@ public class Keyboard extends JPanel {
         return keyboardPanel;
     }
 
+    public JButton getEnterButton(){
+        return keyButtons[36];
+    }
 
 }

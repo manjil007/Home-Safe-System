@@ -74,6 +74,19 @@ public class SwitchPanel extends JPanel {
         //textPanel1.add(pinField);
 
         keyboard = new Keyboard(usernameField, pinField);
+
+        JButton enterButt = keyboard.getEnterButton();
+        enterButt.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Example usage:
+                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 1");
+                    popup.showPopUp();
+                }
+            });
+        });
+
+
         textPanel1 = keyboard.getTextFieldsPanel();
         switchPanel.add(keyboard.getKeyboardPanel());
 
@@ -97,6 +110,18 @@ public class SwitchPanel extends JPanel {
         changePinTextFieldsPanel.add(confirmPin);
 
         keyboard = new Keyboard(oldPin, newPin, confirmPin);
+
+        JButton enterButt = keyboard.getEnterButton();
+        enterButt.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Example usage:
+                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 2");
+                    popup.showPopUp();
+                }
+            });
+        });
+
         switchPanel.add(keyboard.getKeyboardPanel());
         changePinTextFieldsPanel = keyboard.getTextFieldsPanel();
 
@@ -120,31 +145,57 @@ public class SwitchPanel extends JPanel {
         addNewUser.add(confirmPin);
 
         keyboard = new Keyboard(userNameField, pinField, confirmPin);
+
+        JButton enterButt = keyboard.getEnterButton();
+        enterButt.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Example usage:
+                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 3");
+                    popup.showPopUp();
+                }
+            });
+        });
+
+
         addNewUser = keyboard.getTextFieldsPanel();
         switchPanel.add(keyboard.getKeyboardPanel());
 
         return addNewUser;
     }
     public JPanel createTextPanel4(){
-            JTextField oldPin = new JTextField(20);
-            oldPin.setName("Old Pin");
-            JTextField newPin = new JTextField(20);
-            newPin.setName("New Pin");
-            JTextField confirmPin = new JTextField(20);
-            confirmPin.setName("Confirm New Pin");
+        JTextField oldPin = new JTextField(20);
+        oldPin.setName("Old Pin");
+        JTextField newPin = new JTextField(20);
+        newPin.setName("New Pin");
+        JTextField confirmPin = new JTextField(20);
+        confirmPin.setName("Confirm New Pin");
 
-            JPanel changePinTextFieldsPanel = new JPanel();
-            changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
-            changePinTextFieldsPanel.add(new JLabel("Old Pin"));
-            changePinTextFieldsPanel.add(oldPin);
-            changePinTextFieldsPanel.add(new JLabel("New Pin"));
-            changePinTextFieldsPanel.add(newPin);
-            changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
-            changePinTextFieldsPanel.add(confirmPin);
-            changePinTextFieldsPanel.getName();
+        JPanel changePinTextFieldsPanel = new JPanel();
+        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
+        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
+        changePinTextFieldsPanel.add(oldPin);
+        changePinTextFieldsPanel.add(new JLabel("New Pin"));
+        changePinTextFieldsPanel.add(newPin);
+        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
+        changePinTextFieldsPanel.add(confirmPin);
+        changePinTextFieldsPanel.getName();
 
-            keyboard = new Keyboard(oldPin, newPin, confirmPin);
-            changePinTextFieldsPanel = keyboard.getTextFieldsPanel();
+        keyboard = new Keyboard(oldPin, newPin, confirmPin);
+
+        JButton enterButt = keyboard.getEnterButton();
+        enterButt.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Example usage:
+                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 4");
+                    popup.showPopUp();
+                }
+            });
+        });
+
+
+        changePinTextFieldsPanel = keyboard.getTextFieldsPanel();
             switchPanel.add(keyboard.getKeyboardPanel());
 
             return changePinTextFieldsPanel;
@@ -165,13 +216,21 @@ public class SwitchPanel extends JPanel {
         textPanel5.add(confirmPin);
 
         keyboard = new Keyboard(adminPin, confirmPin);
+
+        JButton enterButt = keyboard.getEnterButton();
+        enterButt.addActionListener(e -> {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    // Example usage:
+                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 5");
+                    popup.showPopUp();
+                }
+            });
+        });
+
         textPanel5 = keyboard.getTextFieldsPanel();
         switchPanel.add(keyboard.getKeyboardPanel());
 
         return textPanel5;
     }
-
-
-
-
 }
