@@ -1,12 +1,18 @@
 package homesafe.ui;
 
+import homesafe.dao.UserDAO;
+import homesafe.dao.UserSQLiteDAO;
 import homesafe.event.DoorEvent;
 import homesafe.service.EventService;
+import homesafe.service.UserService;
+import homesafe.entity.User;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLOutput;
+import java.util.List;
 
 public class SafeLocked {
     private GUIUtils guiUtils;
@@ -60,9 +66,38 @@ public class SafeLocked {
         displayBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TEST EntryScreen object
-                EntryScreen entryScreen = new EntryScreen(guiUtils,1);
-                guiUtils.switchScreens(entryScreen.getPanel());
+                List<User> users = UserService.getInstance().getAllUsers();
+                users.add(new User("1234"));
+                System.out.println(users.size());
+                EntryScreen entryScreen;
+                if (users.size() == 0){
+                    entryScreen = new EntryScreen(guiUtils, 3);
+                    guiUtils.switchScreens(entryScreen.getPanel());
+
+                    String username = "";
+                    String pin = "";
+                    String confirmPin = "";
+
+                    JPanel panels = entryScreen.getPanel();
+                    for (Component component : panels.getComponents()){
+                        if (component.getName() != null && component.getName().equals("User Name")){
+                            JTextField textField = (JTextField)component;
+                            username = textField.getText();
+                        }else if (component.getName() != null && component.getName().equals("6 Digit Pin")){
+                            JTextField textField = (JTextField)component;
+                            pin = textField.getText();
+                        }else if (component.getName() != null && component.getName().equals("Confirm New Pin")){
+                            JTextField textField = (JTextField)component;
+                            confirmPin = textField.getText();
+                        }
+                    }
+                    System.out.println(username + " " + " " + pin + " " + confirmPin);
+
+                }else {
+                    // TEST EntryScreen object
+                    entryScreen = new EntryScreen(guiUtils, 1);
+                    guiUtils.switchScreens(entryScreen.getPanel());
+                }
             }
         });
 
