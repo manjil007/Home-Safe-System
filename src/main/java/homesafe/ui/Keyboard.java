@@ -70,9 +70,6 @@ public class Keyboard extends JPanel {
             }
 
             String buttonText = keyButtons[i].getText();
-            if (!buttonText.equals("Enter") && !buttonText.equals("Backspace")) {
-                keyButtons[i].setPreferredSize(new Dimension(70, 50));
-            }
 
             int finalI = i;
             keyButtons[i].addActionListener(e -> {
