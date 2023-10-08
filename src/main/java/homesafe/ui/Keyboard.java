@@ -76,6 +76,7 @@ public class Keyboard extends JPanel {
                     if (buttonText.equals("Backspace") && focusedField != null && focusedField.getText().length() > 0) {
                         focusedField.setText(focusedField.getText().substring(0, focusedField.getText().length() - 1));
                     } else {
+                        keyButtons[finalI].setPreferredSize(new Dimension(70, 50));
                         focusedField.setText(focusedField.getText() + buttonText);
                     }
                 }

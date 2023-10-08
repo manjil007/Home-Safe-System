@@ -75,8 +75,8 @@ public class SwitchPanel extends JPanel {
 
         keyboard = new Keyboard(usernameField, pinField);
 
-        JButton enterButt = keyboard.getEnterButton();
-        enterButt.addActionListener(e -> {
+        JButton enterBtn = keyboard.getEnterButton();
+        enterBtn.addActionListener(e -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
@@ -111,8 +111,8 @@ public class SwitchPanel extends JPanel {
 
         keyboard = new Keyboard(oldPin, newPin, confirmPin);
 
-        JButton enterButt = keyboard.getEnterButton();
-        enterButt.addActionListener(e -> {
+        JButton enterBtn = keyboard.getEnterButton();
+        enterBtn.addActionListener(e -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
@@ -146,8 +146,8 @@ public class SwitchPanel extends JPanel {
 
         keyboard = new Keyboard(userNameField, pinField, confirmPin);
 
-        JButton enterButt = keyboard.getEnterButton();
-        enterButt.addActionListener(e -> {
+        JButton enterBtn = keyboard.getEnterButton();
+        enterBtn.addActionListener(e -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
@@ -183,8 +183,8 @@ public class SwitchPanel extends JPanel {
 
         keyboard = new Keyboard(oldPin, newPin, confirmPin);
 
-        JButton enterButt = keyboard.getEnterButton();
-        enterButt.addActionListener(e -> {
+        JButton enterBtn = keyboard.getEnterButton();
+        enterBtn.addActionListener(e -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
@@ -217,8 +217,8 @@ public class SwitchPanel extends JPanel {
 
         keyboard = new Keyboard(adminPin, confirmPin);
 
-        JButton enterButt = keyboard.getEnterButton();
-        enterButt.addActionListener(e -> {
+        JButton enterBtn = keyboard.getEnterButton();
+        enterBtn.addActionListener(e -> {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
