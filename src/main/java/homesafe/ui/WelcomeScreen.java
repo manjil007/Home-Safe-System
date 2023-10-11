@@ -70,19 +70,13 @@ public class WelcomeScreen {
         // Button Actions ----------------------------------------------------------------------------------------------
         mngPINBtn.addActionListener(e -> {
             // if user is ADMIN, create admin screen
-            // else, create non-admin screen (modify PIN only)
-            textFieldPanelType = 2;
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    // Example usage:
-                    PopUpDialog popup = new PopUpDialog("Emely is a baby (waahhhh), but she uses Android phone");
-                    popup.showPopUp();
-                }
-            });
-            EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
-            guiUtils.switchScreens(entryScreen.getPanel());
-            //Tester: Delete later//System.out.println("Button Pressed");
+            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
 
+            guiUtils.switchScreens(managePinAdmin.getPanel());
+            // else, create non-admin screen (modify PIN only)
+//            textFieldPanelType = 2;
+//            EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
+//            guiUtils.switchScreens(entryScreen.getPanel());
         });
         viewLogsBtn.addActionListener(e -> {
             // if user is ADMIN, create log screen, pass admin = true
@@ -97,10 +91,8 @@ public class WelcomeScreen {
             EventService.getInstance().publishEvent(event);
         });
         westButtons.getBackButton().addActionListener(e -> {
-            // TEST EntryScreen object
-//            LoginScreen loginScreen = new LoginScreen(guiUtils);
-//            loginScreen.getTextFieldsPanel();
-//            guiUtils.switchScreens(loginScreen.getPanel());
+            EntryScreen entryScreen = new EntryScreen(guiUtils, 1);
+            guiUtils.switchScreens(entryScreen.getPanel());
         });
         westButtons.getExitDisplayButton().addActionListener(e -> {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);

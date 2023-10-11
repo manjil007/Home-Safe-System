@@ -22,6 +22,5 @@ public class MainGUI {
         frame.setVisible(true);
         frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
 
-
     }
 }
