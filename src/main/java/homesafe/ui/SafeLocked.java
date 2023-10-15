@@ -1,7 +1,5 @@
 package homesafe.ui;
 
-import homesafe.dao.UserDAO;
-import homesafe.dao.UserSQLiteDAO;
 import homesafe.event.DoorEvent;
 import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
@@ -12,7 +10,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLOutput;
 import java.util.List;
 
 public class SafeLocked {

@@ -1,13 +1,10 @@
 package homesafe.ui;
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ManagePinAdmin {
-
     private final GUIUtils guiUtils;
     private final JPanel panel = new JPanel(); // MAIN Panel
     public ManagePinAdmin(GUIUtils guiUtils){
@@ -40,6 +37,7 @@ public class ManagePinAdmin {
         JPanel leftButtonStackPanel = new JPanel();
         leftButtonStackPanel.setLayout(new GridLayout(10,0));
         List<JButton> leftButtons = new ArrayList<>();
+
 
         for (int i = 1; i <= 10; i++) {
             JButton button = new JButton("User " + i);
@@ -82,14 +80,14 @@ public class ManagePinAdmin {
 
         // Actions if user tries to click modify and delete without
         // first selection a user
-        modifyButton.addActionListener(e -> {
-            PopUpDialog msg = new PopUpDialog("You must choose a user whose PIN you can MODIFY first!");
-            msg.showPopUp();
-        });
-        deleteButton.addActionListener(e -> {
-            PopUpDialog msg = new PopUpDialog("You must choose a user to DELETE first!");
-            msg.showPopUp();
-        });
+//        modifyButton.addActionListener(e -> {
+//            PopUpDialog msg = new PopUpDialog("You must choose a user whose PIN you can MODIFY first!");
+//            msg.showPopUp();
+//        });
+//        deleteButton.addActionListener(e -> {
+//            PopUpDialog msg = new PopUpDialog("You must choose a user to DELETE first!");
+//            msg.showPopUp();
+//        });
 
     }
 
