@@ -268,13 +268,13 @@ public class SwitchPanel extends JPanel {
             String oldPass = oldPin.getText();
             String newPass = newPin.getText();
             String confirm = confirmPin.getText();
-            if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
+            if (AuthenticationService.authorizeUser(user.getUsername(), oldPass)) {
                 if (!Objects.equals(newPass, confirm)) {
                     PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
                 }
                 else {
-                    String hashedPin = AuthenticationService.hashPIN(currentUser.getUsername(), confirm);
+                    String hashedPin = AuthenticationService.hashPIN(user.getUsername(), confirm);
                     user.setHashedPIN(hashedPin);
                     user.setAdmin(adminField.isSelected());
                     UserService.getInstance().updateUser(user);
@@ -326,6 +326,8 @@ public class SwitchPanel extends JPanel {
             if (Objects.equals(pin, confirm)) {
                 if (AuthenticationService.authorizeUser(currentUser.getUsername(), pin)) {
                     UserService.getInstance().deleteUser(user);
+                    PopUpDialog popup = new PopUpDialog("User successfully deleted.");
+                    popup.showPopUp();
                 }
                 else {
                     lockOut();
