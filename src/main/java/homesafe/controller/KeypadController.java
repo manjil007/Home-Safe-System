@@ -61,6 +61,7 @@ public class KeypadController extends AbstractController implements SafeEventHan
 
     @Override
     public void handleEvent(ButtonEvent event) {
+        monitorState();
         switch (event.getEventType()) {
             case ButtonEvent.FIELD_FOCUSED -> {
                 if (currentDataObject != null) {

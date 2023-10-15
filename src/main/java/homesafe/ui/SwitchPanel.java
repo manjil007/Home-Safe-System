@@ -1,23 +1,39 @@
 package homesafe.ui;
 
+import homesafe.controller.KeypadController;
+import homesafe.entity.ApplicationState;
+import homesafe.entity.LoginDataObject;
+import homesafe.entity.State;
+import homesafe.entity.User;
+import homesafe.event.ButtonEvent;
+import homesafe.service.UserService;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 /**
  * public JPanel createTextPanel1();
+ * Login screen
  * Creates text fields: Username, PIN
  *
  * public JPanel createTextPanel2();
+ * Manage pin screen
  * Creates text fields: Old PW, new PW, confirm new PW
  *
  * public JPanel createTextPanel3();
+ * Add user screen
  * Creates text fields: Username, enter 6-digit PIN, confirm new PIN, Admin?
  *
  * public JPanel createTextPanel4();
+ * Manage pin admin screen
  * Creates text fields: old PW, new PW, confirm new PIN, Admin?
  *
  *
  * public JPanel createTextPanel5();
+ * ????
  * Creates text fields: admin PIN, reenter PIN
  *
  */
@@ -27,8 +43,10 @@ public class SwitchPanel extends JPanel {
     private JPanel textFieldsPanel;// add "Enter" button to this panel
     private JPanel switchPanel = new JPanel(); // remove "Enter" button from this panel
     private Keyboard keyboard;
+    private JFrame frame;
 
-    public SwitchPanel(int textFieldPanelType) {
+    public SwitchPanel(int textFieldPanelType, JFrame frame) {
+        this.frame = frame;
         setLayout(new BorderLayout());
         // case determines which kind of text panel should be created for the current
         // "screen" object
@@ -77,15 +95,31 @@ public class SwitchPanel extends JPanel {
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    // Example usage:
-                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 1");
+            SwingUtilities.invokeLater(() -> {
+                String username = usernameField.getText();
+                String pin = pinField.getText();
+
+                ApplicationState.getInstance().transitionState(State.LOGIN);
+
+                updateBackend(ButtonEvent.FIELD_FOCUSED, LoginDataObject.USERNAME_FIELD);
+                updateBackend(ButtonEvent.KEY_PRESSED, username);
+                updateBackend(ButtonEvent.FIELD_FOCUSED, LoginDataObject.PIN_FIELD);
+                updateBackend(ButtonEvent.KEY_PRESSED, pin);
+                updateBackend(ButtonEvent.PROCESS_FORM, "process");
+
+                Optional<User> user = UserService.getInstance().getUserByName(username);
+
+                if (user.isPresent() && Objects.equals(user.get().getHashedPIN(), pin)){
+                    GUIUtils guiUtils = new GUIUtils(frame);
+                    WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
+                    guiUtils.switchScreens(welcomeScreen.getPanel());
+                }
+                else {
+                    PopUpDialog popup = new PopUpDialog("Username or PIN is incorrect.");
                     popup.showPopUp();
                 }
             });
         });
-
 
         textPanel1 = keyboard.getTextFieldsPanel();
         switchPanel.add(keyboard.getKeyboardPanel());
@@ -116,6 +150,10 @@ public class SwitchPanel extends JPanel {
             SwingUtilities.invokeLater(new Runnable() {
                 public void run() {
                     // Example usage:
+                    String oldPass = oldPin.getText();
+                    String newPass = newPin.getText();
+                    String confirm = confirmPin.getText();
+                    //if ()
                     PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 2");
                     popup.showPopUp();
                 }
@@ -233,4 +271,13 @@ public class SwitchPanel extends JPanel {
 
         return textPanel5;
     }
+
+    private void updateBackend (String eventType, String data) {
+        ButtonEvent buttonEvent = new ButtonEvent(eventType, data);
+        KeypadController.getInstance().handleEvent(buttonEvent);
+    }
 }
+
+
+//        EntryScreen entryScreen = new EntryScreen(guiUtils, 3);
+//        guiUtils.switchScreens(entryScreen.getPanel());

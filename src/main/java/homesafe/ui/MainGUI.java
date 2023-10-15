@@ -1,5 +1,7 @@
 package homesafe.ui;
 
+import homesafe.entity.ApplicationState;
+
 import javax.swing.*;
 import java.awt.*;
 

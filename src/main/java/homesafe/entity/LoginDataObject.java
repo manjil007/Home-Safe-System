@@ -22,7 +22,7 @@ public class LoginDataObject implements DataObject {
     private String active;
 
     public LoginDataObject() {
-        this(null, null);
+        this("", "");
     }
 
     public LoginDataObject(String username, String pin) {

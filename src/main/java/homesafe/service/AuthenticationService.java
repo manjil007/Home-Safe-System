@@ -111,7 +111,7 @@ public class AuthenticationService {
         Optional<User> oUser = UserService.getInstance().getUserByName(name);
         // check if user exists in DB
         if (oUser.isEmpty()) {
-            updateFailedAttempts(concurrentFailedAttempts++);
+            updateFailedAttempts(++concurrentFailedAttempts);
             LogService.log(String.format("%s attempted to authorize: no matching user found.",
                     name));
             return false;
@@ -121,7 +121,7 @@ public class AuthenticationService {
         String hash = hashPIN(name, pin);
         boolean verify = verifyHash(user, hash);
         if (!verify) {
-            updateFailedAttempts(concurrentFailedAttempts++);
+            updateFailedAttempts(++concurrentFailedAttempts);
             LogService.log(String.format("%s attempted to authorize: hash doesn't match.",
                     name));
             return false;

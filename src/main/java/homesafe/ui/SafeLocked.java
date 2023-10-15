@@ -67,10 +67,11 @@ public class SafeLocked {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<User> users = UserService.getInstance().getAllUsers();
-                users.add(new User("1234"));
-                System.out.println(users.size());
+                System.out.println(users);
+
                 EntryScreen entryScreen;
-                if (users.size() == 0){
+
+                if (users.isEmpty()){
                     entryScreen = new EntryScreen(guiUtils, 3);
                     guiUtils.switchScreens(entryScreen.getPanel());
 
