@@ -1,4 +1,5 @@
 package homesafe.ui;
+import homesafe.entity.User;
 import homesafe.event.DoorEvent;
 import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
@@ -81,8 +82,7 @@ public class WelcomeScreen {
             }
             // else, create non-admin screen (modify PIN only)
             else {
-                textFieldPanelType = 2;
-                EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
+                EntryScreen entryScreen = new EntryScreen(guiUtils, 2, new User(""));
                 guiUtils.switchScreens(entryScreen.getPanel());
             }
         });
@@ -98,7 +98,7 @@ public class WelcomeScreen {
             EventService.getInstance().publishEvent(event);
         });
         westButtons.getBackButton().addActionListener(e -> {
-            EntryScreen entryScreen = new EntryScreen(guiUtils, 1);
+            EntryScreen entryScreen = new EntryScreen(guiUtils, 1, new User(""));
             guiUtils.switchScreens(entryScreen.getPanel());
         });
         westButtons.getExitDisplayButton().addActionListener(e -> {

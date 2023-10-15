@@ -1,4 +1,5 @@
 package homesafe.ui;
+import homesafe.entity.User;
 import homesafe.service.UserService;
 
 import javax.swing.*;
@@ -41,16 +42,20 @@ public class ManagePinAdmin {
         List<JButton> leftButtons = new ArrayList<>();
 
 
-        for (int i = 1; i <= 10; i++) {
-            JButton button = new JButton("User " + i);
+        List<User> users = UserService.getInstance().getAllUsers();
+
+
+        for (int i = 0; i < users.size(); i++) {
+            JButton button = new JButton(users.get(i).getUsername());
             leftButtons.add(button);
+            int finalI = i;
             button.addActionListener(e1 -> {
                 modifyButton.addActionListener(e2 -> {
-                    EntryScreen entryScreen = new EntryScreen(guiUtils,4);
+                    EntryScreen entryScreen = new EntryScreen(guiUtils,4, users.get(finalI));
                     guiUtils.switchScreens(entryScreen.getPanel());
                 });
                 deleteButton.addActionListener(e3 -> {
-                    EntryScreen entryScreen = new EntryScreen(guiUtils,5);
+                    EntryScreen entryScreen = new EntryScreen(guiUtils,5, users.get(finalI));
                     guiUtils.switchScreens(entryScreen.getPanel());
                 });
             });
@@ -76,13 +81,8 @@ public class ManagePinAdmin {
             guiUtils.switchScreens(safeUnlocked.getPanel());
         });
         addButton.addActionListener(e -> {
-            if (UserService.getInstance().getAllUsers().size() >= 10){
-                PopUpDialog popup = new PopUpDialog("User Limit Exceeded: Max 10 Users");
-                popup.showPopUp();
-            }else {
-                EntryScreen entryScreen = new EntryScreen(guiUtils, 3);
-                guiUtils.switchScreens(entryScreen.getPanel());
-            }
+            EntryScreen entryScreen = new EntryScreen(guiUtils,3, new User(""));
+            guiUtils.switchScreens(entryScreen.getPanel());
         });
 
         // Actions if user tries to click modify and delete without

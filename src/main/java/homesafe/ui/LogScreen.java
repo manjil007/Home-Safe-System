@@ -34,10 +34,10 @@ public class LogScreen {
         // Panel for displaying log info
         JPanel logInfoPanel = new JPanel();
         logInfoPanel.setLayout(new BoxLayout(logInfoPanel, BoxLayout.Y_AXIS));
-        logInfoPanel.setBackground(new Color(0, 147, 212));
         logInfoPanel.setPreferredSize(new Dimension(800,500));
 
         // Populate panel with LogData
+        //admin
         if (AuthenticationService.getCurrentUser().isAdmin()) {
             for (LogData logData : LogService.fetchAllLogs()) {
                 JLabel msg = new JLabel(logData.getMessage());
@@ -53,6 +53,7 @@ public class LogScreen {
                 logInfoPanel.add(time);
             }
         }
+        //non-admin
         else {
             for (LogData logData : LogService.fetchAllLogsByUsername(
                     AuthenticationService.getCurrentUser().getUsername())) {
