@@ -1,4 +1,6 @@
 package homesafe.ui;
+import homesafe.service.UserService;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -74,8 +76,13 @@ public class ManagePinAdmin {
             guiUtils.switchScreens(safeUnlocked.getPanel());
         });
         addButton.addActionListener(e -> {
-            EntryScreen entryScreen = new EntryScreen(guiUtils,3);
-            guiUtils.switchScreens(entryScreen.getPanel());
+            if (UserService.getInstance().getAllUsers().size() >= 10){
+                PopUpDialog popup = new PopUpDialog("User Limit Exceeded: Max 10 Users");
+                popup.showPopUp();
+            }else {
+                EntryScreen entryScreen = new EntryScreen(guiUtils, 3);
+                guiUtils.switchScreens(entryScreen.getPanel());
+            }
         });
 
         // Actions if user tries to click modify and delete without

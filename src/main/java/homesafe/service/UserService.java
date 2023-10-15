@@ -81,7 +81,7 @@ public class UserService {
                         AuthenticationService.getCurrentUser().getUsername(),
                         user.getUsername()));
             }
-        } catch (SQLException e) {
+        }catch (SQLException e) {
             getLogger().log(Level.WARNING, "[UserService]: Error occurred adding user ({0}). {1}",
                     new Object[]{user.getUsername(), e.getMessage().trim()});
         }

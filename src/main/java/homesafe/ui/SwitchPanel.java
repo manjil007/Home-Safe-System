@@ -101,6 +101,8 @@ public class SwitchPanel extends JPanel {
             if (AuthenticationService.authorizeUser(username, pin)) {
                 WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
                 guiUtils.switchScreens(welcomeScreen.getPanel());
+                PopUpDialog popup = new PopUpDialog("You are logged in.");
+                popup.showPopUp();
             }
             else {
                 if(ApplicationState.getInstance().getState() == State.LOCKOUT){
@@ -211,11 +213,15 @@ public class SwitchPanel extends JPanel {
             if (Objects.equals(pin, confirm)) {
                 User newUser = new User(username);
                 String hashedPin = AuthenticationService.hashPIN(newUser.getUsername(), confirm);
+                System.out.println("set hash pin: " + hashedPin);
                 newUser.setHashedPIN(hashedPin);
                 newUser.setAdmin(adminField.isSelected());
                 UserService.getInstance().addUser(newUser);
-                PopUpDialog popup = new PopUpDialog("PIN change successful");
+                PopUpDialog popup = new PopUpDialog("New Admin User Created");
                 popup.showPopUp();
+                System.out.println("1st Time User: " + newUser.getUsername());
+                System.out.println("1ST Time User Pin" + pin);
+                System.out.println("1st Time Hashed Pin: " + hashedPin);
             }
             else {
                 PopUpDialog popup = new PopUpDialog("New PINs do not match.");
@@ -240,6 +246,7 @@ public class SwitchPanel extends JPanel {
 
         return addNewUser;
     }
+
     public JPanel createTextPanel4(){
         JPanel changePinTextFieldsPanel = new JPanel();
 
