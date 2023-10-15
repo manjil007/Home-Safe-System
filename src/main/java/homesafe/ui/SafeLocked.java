@@ -39,14 +39,14 @@ public class SafeLocked {
         keyIcon = guiUtils.resizeImg(keyIcon, 30, 60);
 
         //Create buttons
-        JButton devToolsBtn = new JButton(devIcon);
+      //  JButton devToolsBtn = new JButton(devIcon);
         JButton handleBtn = new JButton(handleIcon);
         JButton displayBtn = new JButton("Locked");
         JButton keyBtn = new JButton(keyIcon);
 
         guiUtils.setFont(displayBtn, 30);
 
-        guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
+      //  guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
         guiUtils.createClearBtn(handleBtn, 100, halfHeight, 350, 350, panel);
         guiUtils.createColorBtn(displayBtn, 550, halfHeight, (int) width - 650, 350, Color.black, panel);
         guiUtils.createClearBtn(keyBtn, (int) (width / 2) - 15, (int) (height / 2) + 200, 30, 60, panel);
@@ -65,36 +65,14 @@ public class SafeLocked {
             public void actionPerformed(ActionEvent e) {
                 List<User> users = UserService.getInstance().getAllUsers();
                 EntryScreen entryScreen;
-                System.out.println(users);
-//                System.out.println("user name = " + users.get(0).getUsername());
-//                System.out.println("user password = " + users.get(0).getHashedPIN());
+
                 if (users.isEmpty()){
                     AuthenticationService.setCurrentUser(new User("first_user"));
-                    entryScreen = new EntryScreen(guiUtils, 3);
+                    entryScreen = new EntryScreen(guiUtils, 3, new User(""));
                     guiUtils.switchScreens(entryScreen.getPanel());
-//
-//                    String username = "";
-//                    String pin = "";
-//                    String confirmPin = "";
-//
-//                    JPanel panels = entryScreen.getPanel();
-//                    for (Component component : panels.getComponents()){
-//                        if (component.getName() != null && component.getName().equals("User Name")){
-//                            JTextField textField = (JTextField)component;
-//                            username = textField.getText();
-//                        }else if (component.getName() != null && component.getName().equals("6 Digit Pin")){
-//                            JTextField textField = (JTextField)component;
-//                            pin = textField.getText();
-//                        }else if (component.getName() != null && component.getName().equals("Confirm New Pin")){
-//                            JTextField textField = (JTextField)component;
-//                            confirmPin = textField.getText();
-//                        }
-//                    }
-//                    System.out.println(username + " " + " " + pin + " " + confirmPin);
-
+                    //first user must be an admin
                 } else {
-                    // TEST EntryScreen object
-                    entryScreen = new EntryScreen(guiUtils, 1);
+                    entryScreen = new EntryScreen(guiUtils, 1, new User(""));
                     guiUtils.switchScreens(entryScreen.getPanel());
                 }
             }

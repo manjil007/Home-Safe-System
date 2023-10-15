@@ -20,11 +20,11 @@ import java.util.Objects;
  * Creates text fields: Username, PIN
  *
  * public JPanel createTextPanel2();
- * Modify pin screen
+ * Modify pin screen (non-admin)
  * Creates text fields: Old PW, new PW, confirm new PW
  *
  * public JPanel createTextPanel3();
- * Add user screen
+ * Add user screen (admin)
  * Creates text fields: Username, enter 6-digit PIN, confirm new PIN, Admin?
  *
  * public JPanel createTextPanel4();
@@ -33,7 +33,7 @@ import java.util.Objects;
  *
  *
  * public JPanel createTextPanel5();
- * Delete user screen
+ * Delete user screen (admin)
  * Creates text fields: admin PIN, reenter PIN
  *
  */
@@ -48,7 +48,7 @@ public class SwitchPanel extends JPanel {
     private JButton backBtn;
     private JButton exitBtn;
 
-    public SwitchPanel(int textFieldPanelType, JFrame frame, JButton backBtn, JButton exitBtn) {
+    public SwitchPanel(int textFieldPanelType, JFrame frame, JButton backBtn, JButton exitBtn, User user) {
         this.frame = frame;
         this.backBtn = backBtn;
         this.exitBtn = exitBtn;
@@ -68,16 +68,17 @@ public class SwitchPanel extends JPanel {
                 textFieldsPanel = createTextPanel3();
                 break;
             case 4:
-                textFieldsPanel = createTextPanel4();
+                textFieldsPanel = createTextPanel4(user);
                 break;
             case 5:
-                textFieldsPanel = createTextPanel5();
+                textFieldsPanel = createTextPanel5(user);
                 break;
             default:
                 // ????
                 break;
         }
     }
+
     public void setTextFieldPanelType(int textFieldPanelType) {this.textFieldPanelType = textFieldPanelType;}
     public JPanel getTextFieldsPanel(){return textFieldsPanel;}
     public JPanel getSwitchPanel(){return switchPanel;}
@@ -98,7 +99,12 @@ public class SwitchPanel extends JPanel {
         enterBtn.addActionListener(e -> {
             String username = usernameField.getText();
             String pin = pinField.getText();
-            if (AuthenticationService.authorizeUser(username, pin)) {
+
+            if (username.length() == 0 || pin.length() == 0){
+                PopUpDialog popup = new PopUpDialog("Please fill out all fields");
+                popup.showPopUp();
+            }
+            else if (AuthenticationService.authorizeUser(username, pin)) {
                 WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
                 guiUtils.switchScreens(welcomeScreen.getPanel());
             }
@@ -240,7 +246,7 @@ public class SwitchPanel extends JPanel {
 
         return addNewUser;
     }
-    public JPanel createTextPanel4(){
+    public JPanel createTextPanel4(User user){
         JPanel changePinTextFieldsPanel = new JPanel();
 
         JTextField oldPin = new JTextField(20);
@@ -268,12 +274,12 @@ public class SwitchPanel extends JPanel {
                     popup.showPopUp();
                 }
                 else {
-//                    String hashedPin = AuthenticationService.hashPIN(currentUser.getUsername(), confirm);
-//                    .setHashedPIN(hashedPin);
-//                    .setAdmin(adminField.isSelected());
-//                    UserService.getInstance().updateUser();
-//                    PopUpDialog popup = new PopUpDialog("Changes successful");
-//                    popup.showPopUp();
+                    String hashedPin = AuthenticationService.hashPIN(currentUser.getUsername(), confirm);
+                    user.setHashedPIN(hashedPin);
+                    user.setAdmin(adminField.isSelected());
+                    UserService.getInstance().updateUser(user);
+                    PopUpDialog popup = new PopUpDialog("Changes successful");
+                    popup.showPopUp();
                 }
             }
             else {
@@ -299,7 +305,7 @@ public class SwitchPanel extends JPanel {
 
             return changePinTextFieldsPanel;
     }
-    public JPanel createTextPanel5(){
+    public JPanel createTextPanel5(User user){
         JPanel textPanel5 = new JPanel();
 
         // Create text fields
@@ -319,7 +325,7 @@ public class SwitchPanel extends JPanel {
             String confirm = confirmPin.getText();
             if (Objects.equals(pin, confirm)) {
                 if (AuthenticationService.authorizeUser(currentUser.getUsername(), pin)) {
-                    //UserService.getInstance().deleteUser();
+                    UserService.getInstance().deleteUser(user);
                 }
                 else {
                     lockOut();

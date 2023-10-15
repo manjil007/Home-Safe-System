@@ -1,5 +1,7 @@
 package homesafe.ui;
 
+import homesafe.entity.User;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -11,11 +13,11 @@ public class EntryScreen {
     private JPanel panel = new JPanel();
 
 
-    public EntryScreen(GUIUtils guiUtils, int textFieldPanelType) {
+    public EntryScreen(GUIUtils guiUtils, int textFieldPanelType, User user) {
         this.guiUtils = guiUtils;
         westPanelButtons = new WestPanelButtons(guiUtils.frame);
         switchPanel = new SwitchPanel(textFieldPanelType, guiUtils.frame,
-                westPanelButtons.getBackButton(), westPanelButtons.getExitDisplayButton());
+                westPanelButtons.getBackButton(), westPanelButtons.getExitDisplayButton(), user);
         panel.setLayout(new BorderLayout());
         switchPanel.setTextFieldPanelType(textFieldPanelType);
         createPanel();

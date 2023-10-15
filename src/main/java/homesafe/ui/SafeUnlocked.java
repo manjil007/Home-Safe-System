@@ -36,14 +36,14 @@ public class SafeUnlocked {
         keyIcon = guiUtils.resizeImg(keyIcon, 30, 60);
 
         //Create buttons
-        JButton devToolsBtn = new JButton(devIcon);
+      //  JButton devToolsBtn = new JButton(devIcon);
         JButton handleBtn = new JButton(handleIcon);
         JButton displayBtn = new JButton("Unlocked");
         JButton keyBtn = new JButton(keyIcon);
 
         guiUtils.setFont(displayBtn, 30);
 
-        guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
+     //   guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
         guiUtils.createClearBtn(handleBtn, 100, halfHeight, 350, 350, panel);
         guiUtils.createColorBtn(displayBtn, 550, halfHeight, (int) width - 650, 350, Color.black, panel);
         guiUtils.createClearBtn(keyBtn, (int) (width / 2) - 15, (int) (height / 2) + 200, 30, 60, panel);
