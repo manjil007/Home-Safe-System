@@ -1,18 +1,18 @@
 package homesafe.ui;
 
-import homesafe.controller.KeypadController;
 import homesafe.entity.ApplicationState;
-import homesafe.entity.LoginDataObject;
 import homesafe.entity.State;
 import homesafe.entity.User;
-import homesafe.event.ButtonEvent;
+import homesafe.event.DoorEvent;
+import homesafe.service.AuthenticationService;
+import homesafe.service.EventService;
 import homesafe.service.UserService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * public JPanel createTextPanel1();
@@ -33,7 +33,7 @@ import java.util.Optional;
  *
  *
  * public JPanel createTextPanel5();
- * ????
+ * Delete user screen
  * Creates text fields: admin PIN, reenter PIN
  *
  */
@@ -77,48 +77,35 @@ public class SwitchPanel extends JPanel {
     public JPanel getSwitchPanel(){return switchPanel;}
 
     public JPanel createTextPanel1(){
-        JPanel textPanel1 = new JPanel();
         // Create text fields
+        JPanel textPanel1 = new JPanel();
         JTextField usernameField = new JTextField(20);
         usernameField.setName("Username");
         JTextField pinField = new JTextField(20);
         pinField.setName("PIN");
         textPanel1.setLayout(new GridLayout(2, 1));
-        // lines 71-73 might not be needed; deletion of JLabels might be applicable
-        // to other createTextPanel methods as well
-        //textPanel1.add(new JLabel("Username"));
-        //textPanel1.add(usernameField);
-        //textPanel1.add(new JLabel("PIN"));
-        //textPanel1.add(pinField);
 
         keyboard = new Keyboard(usernameField, pinField);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            SwingUtilities.invokeLater(() -> {
-                String username = usernameField.getText();
-                String pin = pinField.getText();
-
-                ApplicationState.getInstance().transitionState(State.LOGIN);
-
-                updateBackend(ButtonEvent.FIELD_FOCUSED, LoginDataObject.USERNAME_FIELD);
-                updateBackend(ButtonEvent.KEY_PRESSED, username);
-                updateBackend(ButtonEvent.FIELD_FOCUSED, LoginDataObject.PIN_FIELD);
-                updateBackend(ButtonEvent.KEY_PRESSED, pin);
-                updateBackend(ButtonEvent.PROCESS_FORM, "process");
-
-                Optional<User> user = UserService.getInstance().getUserByName(username);
-
-                if (user.isPresent() && Objects.equals(user.get().getHashedPIN(), pin)){
-                    GUIUtils guiUtils = new GUIUtils(frame);
-                    WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
-                    guiUtils.switchScreens(welcomeScreen.getPanel());
+            String username = usernameField.getText();
+            String pin = pinField.getText();
+            if (AuthenticationService.authorizeUser(username, pin)) {
+                GUIUtils guiUtils = new GUIUtils(frame);
+                WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
+                guiUtils.switchScreens(welcomeScreen.getPanel());
+            }
+            else {
+                if(ApplicationState.getInstance().getState() == State.LOCKOUT){
+                    PopUpDialog popup = new PopUpDialog("You are locked out.");
+                    popup.showPopUp();
                 }
                 else {
                     PopUpDialog popup = new PopUpDialog("Username or PIN is incorrect.");
                     popup.showPopUp();
                 }
-            });
+            }
         });
 
         textPanel1 = keyboard.getTextFieldsPanel();
@@ -136,28 +123,34 @@ public class SwitchPanel extends JPanel {
 
         JPanel changePinTextFieldsPanel = new JPanel();
         changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
-        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
         changePinTextFieldsPanel.add(oldPin);
-        changePinTextFieldsPanel.add(new JLabel("New Pin"));
         changePinTextFieldsPanel.add(newPin);
-        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
         changePinTextFieldsPanel.add(confirmPin);
 
         keyboard = new Keyboard(oldPin, newPin, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    // Example usage:
-                    String oldPass = oldPin.getText();
-                    String newPass = newPin.getText();
-                    String confirm = confirmPin.getText();
-                    //if ()
-                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 2");
+            User currentUser = AuthenticationService.getCurrentUser();
+            String oldPass = oldPin.getText();
+            String newPass = newPin.getText();
+            String confirm = confirmPin.getText();
+            if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
+                if (!Objects.equals(newPass, confirm)) {
+                    PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
                 }
-            });
+                else {
+                    String hashedPin = AuthenticationService.hashPIN(currentUser.getUsername(), confirm);
+                    currentUser.setHashedPIN(hashedPin);
+                    UserService.getInstance().updateUser(currentUser);
+                    PopUpDialog popup = new PopUpDialog("PIN change successful");
+                    popup.showPopUp();
+                }
+            }
+            else {
+                lockOut();
+            }
         });
 
         switchPanel.add(keyboard.getKeyboardPanel());
@@ -172,29 +165,36 @@ public class SwitchPanel extends JPanel {
         pinField.setName("6 Digit Pin");
         JTextField confirmPin = new JTextField(20);
         confirmPin.setName("Confirm New Pin");
+        JCheckBox adminField = new JCheckBox("Admin?");
 
         JPanel addNewUser = new JPanel();
         addNewUser.setLayout(new GridLayout(3, 1));
-        addNewUser.add(new JLabel("User Name"));
         addNewUser.add(userNameField);
-        addNewUser.add(new JLabel("6 Digit PIN"));
         addNewUser.add(pinField);
-        addNewUser.add(new JLabel("Confirm New Pin"));
         addNewUser.add(confirmPin);
+        addNewUser.add(adminField);
 
         keyboard = new Keyboard(userNameField, pinField, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    // Example usage:
-                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 3");
-                    popup.showPopUp();
-                }
-            });
+            String username = userNameField.getText();
+            String pin = pinField.getText();
+            String confirm = confirmPin.getText();
+            if (Objects.equals(pin, confirm)) {
+                User newUser = new User(username);
+                String hashedPin = AuthenticationService.hashPIN(newUser.getUsername(), confirm);
+                newUser.setHashedPIN(hashedPin);
+                newUser.setAdmin(adminField.isSelected());
+                UserService.getInstance().addUser(newUser);
+                PopUpDialog popup = new PopUpDialog("PIN change successful");
+                popup.showPopUp();
+            }
+            else {
+                PopUpDialog popup = new PopUpDialog("New PINs do not match.");
+                popup.showPopUp();
+            }
         });
-
 
         addNewUser = keyboard.getTextFieldsPanel();
         switchPanel.add(keyboard.getKeyboardPanel());
@@ -208,28 +208,41 @@ public class SwitchPanel extends JPanel {
         newPin.setName("New Pin");
         JTextField confirmPin = new JTextField(20);
         confirmPin.setName("Confirm New Pin");
+        JCheckBox adminField = new JCheckBox("Admin?");
 
         JPanel changePinTextFieldsPanel = new JPanel();
         changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
-        changePinTextFieldsPanel.add(new JLabel("Old Pin"));
         changePinTextFieldsPanel.add(oldPin);
-        changePinTextFieldsPanel.add(new JLabel("New Pin"));
         changePinTextFieldsPanel.add(newPin);
-        changePinTextFieldsPanel.add(new JLabel("Confirm New Pin"));
         changePinTextFieldsPanel.add(confirmPin);
         changePinTextFieldsPanel.getName();
+        changePinTextFieldsPanel.add(adminField);
 
         keyboard = new Keyboard(oldPin, newPin, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    // Example usage:
-                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 4");
+            User currentUser = AuthenticationService.getCurrentUser();
+            String oldPass = oldPin.getText();
+            String newPass = newPin.getText();
+            String confirm = confirmPin.getText();
+            if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
+                if (!Objects.equals(newPass, confirm)) {
+                    PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
                 }
-            });
+                else {
+//                    String hashedPin = AuthenticationService.hashPIN(currentUser.getUsername(), confirm);
+//                    .setHashedPIN(hashedPin);
+//                    .setAdmin(adminField.isSelected());
+//                    UserService.getInstance().updateUser();
+//                    PopUpDialog popup = new PopUpDialog("Changes successful");
+//                    popup.showPopUp();
+                }
+            }
+            else {
+                lockOut();
+            }
         });
 
 
@@ -248,22 +261,28 @@ public class SwitchPanel extends JPanel {
         confirmPin.setName("Confirm Pin");
 
         textPanel5.setLayout(new GridLayout(2, 1));
-        textPanel5.add(new JLabel("Admin PIN"));
         textPanel5.add(adminPin);
-        textPanel5.add(new JLabel("Confirm PIN"));
         textPanel5.add(confirmPin);
 
         keyboard = new Keyboard(adminPin, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            SwingUtilities.invokeLater(new Runnable() {
-                public void run() {
-                    // Example usage:
-                    PopUpDialog popup = new PopUpDialog("You pushed the enter button on screen 5");
-                    popup.showPopUp();
+            User currentUser = AuthenticationService.getCurrentUser();
+            String pin = adminPin.getText();
+            String confirm = confirmPin.getText();
+            if (Objects.equals(pin, confirm)) {
+                if (AuthenticationService.authorizeUser(currentUser.getUsername(), pin)) {
+                    //UserService.getInstance().deleteUser();
                 }
-            });
+                else {
+                    lockOut();
+                }
+            }
+            else {
+                PopUpDialog popup = new PopUpDialog("New PINs do not match.");
+                popup.showPopUp();
+            }
         });
 
         textPanel5 = keyboard.getTextFieldsPanel();
@@ -272,12 +291,20 @@ public class SwitchPanel extends JPanel {
         return textPanel5;
     }
 
-    private void updateBackend (String eventType, String data) {
-        ButtonEvent buttonEvent = new ButtonEvent(eventType, data);
-        KeypadController.getInstance().handleEvent(buttonEvent);
+    private void lockOut () {
+        if(ApplicationState.getInstance().getState() == State.LOCKOUT){
+            GUIUtils guiUtils = new GUIUtils(frame);
+            AuthenticationService.deAuthorizeUser();
+            SafeLocked safeLocked = new SafeLocked(guiUtils);
+            guiUtils.switchScreens(safeLocked.getPanel());
+            DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);
+            EventService.getInstance().publishEvent(event);
+            PopUpDialog popup = new PopUpDialog("You are locked out.");
+            popup.showPopUp();
+        }
+        else {
+            PopUpDialog popup = new PopUpDialog("PIN is incorrect.");
+            popup.showPopUp();
+        }
     }
 }
-
-
-//        EntryScreen entryScreen = new EntryScreen(guiUtils, 3);
-//        guiUtils.switchScreens(entryScreen.getPanel());

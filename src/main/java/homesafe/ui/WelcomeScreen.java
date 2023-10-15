@@ -1,5 +1,6 @@
 package homesafe.ui;
 import homesafe.event.DoorEvent;
+import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
 import javax.swing.*;
 import java.awt.*;
@@ -70,13 +71,17 @@ public class WelcomeScreen {
         // Button Actions ----------------------------------------------------------------------------------------------
         mngPINBtn.addActionListener(e -> {
             // if user is ADMIN, create admin screen
-            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+            if (AuthenticationService.getCurrentUser().isAdmin()) {
+                ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
 
-            guiUtils.switchScreens(managePinAdmin.getPanel());
+                guiUtils.switchScreens(managePinAdmin.getPanel());
+            }
             // else, create non-admin screen (modify PIN only)
-//            textFieldPanelType = 2;
-//            EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
-//            guiUtils.switchScreens(entryScreen.getPanel());
+            else {
+                textFieldPanelType = 2;
+                EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
+                guiUtils.switchScreens(entryScreen.getPanel());
+            }
         });
         viewLogsBtn.addActionListener(e -> {
             // if user is ADMIN, create log screen, pass admin = true
@@ -85,6 +90,7 @@ public class WelcomeScreen {
             guiUtils.switchScreens(logScreen.getPanel());
         });
         lockSafeBtn.addActionListener(e -> {
+            AuthenticationService.deAuthorizeUser();
             SafeLocked safeLocked = new SafeLocked(guiUtils);
             guiUtils.switchScreens(safeLocked.getPanel());
             DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);

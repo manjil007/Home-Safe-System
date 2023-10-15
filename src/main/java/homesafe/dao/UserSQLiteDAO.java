@@ -135,7 +135,7 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             if (userCount == 0) {
                 User defaultUser = new User("admin");
                 defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
-                defaultUser.setAdmin(true);
+                defaultUser.setAdmin(false);
 
                 addUser(defaultUser);
             }

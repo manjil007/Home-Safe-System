@@ -94,7 +94,7 @@ public class SafeLocked {
                     }
                     System.out.println(username + " " + " " + pin + " " + confirmPin);
 
-                }else {
+                } else {
                     // TEST EntryScreen object
                     entryScreen = new EntryScreen(guiUtils, 1);
                     guiUtils.switchScreens(entryScreen.getPanel());
@@ -102,14 +102,11 @@ public class SafeLocked {
             }
         });
 
-        keyBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                GoldRiches goldRiches = new GoldRiches(guiUtils);
-                guiUtils.switchScreens(goldRiches.getPanel());
-                DoorEvent event = new DoorEvent(DoorEvent.DOOR_OPENED, true);
-                EventService.getInstance().publishEvent(event);
-            }
+        keyBtn.addActionListener(e -> {
+            GoldRiches goldRiches = new GoldRiches(guiUtils);
+            guiUtils.switchScreens(goldRiches.getPanel());
+            DoorEvent event = new DoorEvent(DoorEvent.DOOR_OPENED, true);
+            EventService.getInstance().publishEvent(event);
         });
     }
 

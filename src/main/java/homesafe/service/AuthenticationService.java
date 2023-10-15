@@ -25,8 +25,8 @@ public class AuthenticationService {
 
     // 60 second consecutive fail timer (for demo purposes)
     private static final long FAILED_ATTEMPT_TIME = 60000L;
-    // 15 second lockout timer (for demo purposes)
-    private static final long LOGOUT_TIME = 15000L;
+    // 30 second lockout timer (for demo purposes)
+    private static final long LOGOUT_TIME = 30000L;
 
     private static Logger getLogger() {
         return Logger.getLogger(AuthenticationService.class.getName());
