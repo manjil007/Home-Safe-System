@@ -13,7 +13,6 @@ public class LogScreen {
     public LogScreen(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.lightGray);
         createPanel();
 
     }
@@ -33,7 +32,7 @@ public class LogScreen {
         // Panel for displaying log info
         JPanel logInfoPanel = new JPanel();
         logInfoPanel.setLayout(new BoxLayout(logInfoPanel, BoxLayout.Y_AXIS));
-        logInfoPanel.setBackground(Color.CYAN);
+        logInfoPanel.setBackground(new Color(0, 147, 212));
         logInfoPanel.setPreferredSize(new Dimension(800,500));
 
         // Populate panel with LogData

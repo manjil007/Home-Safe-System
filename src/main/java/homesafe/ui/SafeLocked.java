@@ -22,7 +22,6 @@ public class SafeLocked {
     public SafeLocked(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
         panel.setLayout(null);
-        panel.setBackground(Color.darkGray);
         panel.setPreferredSize(screenSize);
 
         createPanel();
@@ -67,8 +66,6 @@ public class SafeLocked {
             @Override
             public void actionPerformed(ActionEvent e) {
                 List<User> users = UserService.getInstance().getAllUsers();
-                System.out.println(users);
-
                 EntryScreen entryScreen;
 
                 if (users.isEmpty()){

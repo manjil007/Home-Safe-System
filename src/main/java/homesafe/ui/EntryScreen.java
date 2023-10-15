@@ -15,7 +15,6 @@ public class EntryScreen {
         switchPanel = new SwitchPanel(textFieldPanelType, guiUtils.frame);
         this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
-        panel.setBackground(Color.GREEN);
         switchPanel.setTextFieldPanelType(textFieldPanelType);
         createPanel();
     }

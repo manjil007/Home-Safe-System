@@ -14,7 +14,6 @@ public class MainGUI {
         GUIUtils guiUtils = new GUIUtils(frame);
         SafeLocked safeLocked = new SafeLocked(guiUtils);
         JPanel panel = safeLocked.getPanel();
-
         Image windowIcon = Toolkit.getDefaultToolkit().getImage("src/main/resources/images/windowIcon.png");
         frame.setIconImage(windowIcon);
         frame.add(panel, BorderLayout.CENTER);

@@ -34,9 +34,12 @@ public class GUIUtils {
      * may delete this method later
      * -Jacob
      */
-    public void createTxtFlds(JTextField txt, int x, int y, int width, int height, JPanel panel) {
-        txt.setBounds(x, y, width, height);
+    public void createTxtFlds(JTextField txt, int width, int height, JPanel panel, String name) {
+        txt.setBounds(0, 0, width, height);
         txt.setOpaque(false);
+        setFont(txt, 25);
+        txt.setName(name);
+        txt.setBorder(BorderFactory.createLineBorder(new Color(1, 1, 1), 7));
         panel.add(txt);
     }
 

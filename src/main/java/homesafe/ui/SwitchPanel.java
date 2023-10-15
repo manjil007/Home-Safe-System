@@ -40,13 +40,15 @@ import java.util.Objects;
 
 public class SwitchPanel extends JPanel {
     private int textFieldPanelType;
-    private JPanel textFieldsPanel;// add "Enter" button to this panel
-    private JPanel switchPanel = new JPanel(); // remove "Enter" button from this panel
+    private JPanel textFieldsPanel;
+    private JPanel switchPanel = new JPanel();
     private Keyboard keyboard;
     private JFrame frame;
+    private GUIUtils guiUtils;
 
     public SwitchPanel(int textFieldPanelType, JFrame frame) {
         this.frame = frame;
+        guiUtils = new GUIUtils(frame);
         setLayout(new BorderLayout());
         // case determines which kind of text panel should be created for the current
         // "screen" object
@@ -70,7 +72,6 @@ public class SwitchPanel extends JPanel {
                 // ????
                 break;
         }
-
     }
     public void setTextFieldPanelType(int textFieldPanelType) {this.textFieldPanelType = textFieldPanelType;}
     public JPanel getTextFieldsPanel(){return textFieldsPanel;}
@@ -79,20 +80,19 @@ public class SwitchPanel extends JPanel {
     public JPanel createTextPanel1(){
         // Create text fields
         JPanel textPanel1 = new JPanel();
-        JTextField usernameField = new JTextField(20);
-        usernameField.setName("Username");
+        JTextField usernameField = new JTextField();
+        guiUtils.createTxtFlds(usernameField, 20, 20, textPanel1, "Username");
         JTextField pinField = new JTextField(20);
-        pinField.setName("PIN");
+        guiUtils.createTxtFlds(pinField, 20, 20, textPanel1, "PIN");
         textPanel1.setLayout(new GridLayout(2, 1));
 
-        keyboard = new Keyboard(usernameField, pinField);
+        keyboard = new Keyboard(frame, usernameField, pinField);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
             String username = usernameField.getText();
             String pin = pinField.getText();
             if (AuthenticationService.authorizeUser(username, pin)) {
-                GUIUtils guiUtils = new GUIUtils(frame);
                 WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
                 guiUtils.switchScreens(welcomeScreen.getPanel());
             }
@@ -114,20 +114,18 @@ public class SwitchPanel extends JPanel {
         return textPanel1;
     }
     public JPanel createTextPanel2(){
-        JTextField oldPin = new JTextField(10);
-        oldPin.setName("Old Pin");
-        JTextField newPin = new JTextField(10);
-        newPin.setName("New Pin");
-        JTextField confirmPin = new JTextField(10);
-        confirmPin.setName("Confirm New Pin");
-
         JPanel changePinTextFieldsPanel = new JPanel();
-        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
-        changePinTextFieldsPanel.add(oldPin);
-        changePinTextFieldsPanel.add(newPin);
-        changePinTextFieldsPanel.add(confirmPin);
 
-        keyboard = new Keyboard(oldPin, newPin, confirmPin);
+        JTextField oldPin = new JTextField(10);
+        guiUtils.createTxtFlds(oldPin, 20, 20, changePinTextFieldsPanel, "Old Pin");
+        JTextField newPin = new JTextField(10);
+        guiUtils.createTxtFlds(newPin, 20, 20, changePinTextFieldsPanel, "New Pin");
+        JTextField confirmPin = new JTextField(10);
+        guiUtils.createTxtFlds(confirmPin, 20, 20, changePinTextFieldsPanel, "Confirm New Pin");
+
+        changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
+
+        keyboard = new Keyboard(frame, oldPin, newPin, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
@@ -159,22 +157,19 @@ public class SwitchPanel extends JPanel {
         return changePinTextFieldsPanel;
     }
     public JPanel createTextPanel3(){
+        JPanel addNewUser = new JPanel();
+
         JTextField userNameField = new JTextField(20);
-        userNameField.setName("User Name");
+        guiUtils.createTxtFlds(userNameField, 20, 20, addNewUser, "Username");
         JTextField pinField = new JTextField(20);
-        pinField.setName("6 Digit Pin");
+        guiUtils.createTxtFlds(pinField, 20, 20, addNewUser, "PIN");
         JTextField confirmPin = new JTextField(20);
-        confirmPin.setName("Confirm New Pin");
+        guiUtils.createTxtFlds(confirmPin, 20, 20, addNewUser, "Confirm PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
 
-        JPanel addNewUser = new JPanel();
         addNewUser.setLayout(new GridLayout(3, 1));
-        addNewUser.add(userNameField);
-        addNewUser.add(pinField);
-        addNewUser.add(confirmPin);
-        addNewUser.add(adminField);
 
-        keyboard = new Keyboard(userNameField, pinField, confirmPin);
+        keyboard = new Keyboard(frame, userNameField, pinField, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
@@ -202,23 +197,19 @@ public class SwitchPanel extends JPanel {
         return addNewUser;
     }
     public JPanel createTextPanel4(){
+        JPanel changePinTextFieldsPanel = new JPanel();
+
         JTextField oldPin = new JTextField(20);
-        oldPin.setName("Old Pin");
+        guiUtils.createTxtFlds(oldPin, 20, 20, changePinTextFieldsPanel, "Old PIN");
         JTextField newPin = new JTextField(20);
-        newPin.setName("New Pin");
+        guiUtils.createTxtFlds(newPin, 20, 20, changePinTextFieldsPanel, "New PIN");
         JTextField confirmPin = new JTextField(20);
-        confirmPin.setName("Confirm New Pin");
+        guiUtils.createTxtFlds(confirmPin, 20, 20, changePinTextFieldsPanel, "Confirm New PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
 
-        JPanel changePinTextFieldsPanel = new JPanel();
         changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
-        changePinTextFieldsPanel.add(oldPin);
-        changePinTextFieldsPanel.add(newPin);
-        changePinTextFieldsPanel.add(confirmPin);
-        changePinTextFieldsPanel.getName();
-        changePinTextFieldsPanel.add(adminField);
 
-        keyboard = new Keyboard(oldPin, newPin, confirmPin);
+        keyboard = new Keyboard(frame, oldPin, newPin, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
@@ -256,15 +247,13 @@ public class SwitchPanel extends JPanel {
 
         // Create text fields
         JTextField adminPin = new JTextField(20);
-        adminPin.setName("Admin PIN");
+        guiUtils.createTxtFlds(adminPin, 20, 20, textPanel5, "PIN");
         JTextField confirmPin = new JTextField(20);
-        confirmPin.setName("Confirm Pin");
+        guiUtils.createTxtFlds(confirmPin, 20, 20, textPanel5, "Confirm PIN");
 
         textPanel5.setLayout(new GridLayout(2, 1));
-        textPanel5.add(adminPin);
-        textPanel5.add(confirmPin);
 
-        keyboard = new Keyboard(adminPin, confirmPin);
+        keyboard = new Keyboard(frame, adminPin, confirmPin);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
@@ -293,7 +282,6 @@ public class SwitchPanel extends JPanel {
 
     private void lockOut () {
         if(ApplicationState.getInstance().getState() == State.LOCKOUT){
-            GUIUtils guiUtils = new GUIUtils(frame);
             AuthenticationService.deAuthorizeUser();
             SafeLocked safeLocked = new SafeLocked(guiUtils);
             guiUtils.switchScreens(safeLocked.getPanel());

@@ -21,6 +21,7 @@ public class Keyboard extends JPanel {
     private JPanel keyboardPanel;
     private JTextField focusedField;
     private JButton[] keyButtons;
+    private GUIUtils guiUtils;
 
     /**
      * The constructor takes
@@ -29,20 +30,28 @@ public class Keyboard extends JPanel {
      * arguments because each panel has a different
      * number of JTextFields
      */
-    public Keyboard(JTextField... textFields) {
+    public Keyboard(JFrame frame, JTextField... textFields) {
         setLayout(new BorderLayout());
 
         // Create text fields
         textFieldsPanel = new JPanel();
         textFieldsPanel.setLayout(new GridLayout(textFields.length * 2, 1));
         for (JTextField textField : textFields) {
-            textFieldsPanel.add(new JLabel(textField.getName()));
+            guiUtils = new GUIUtils(frame);
+            JLabel jLabel = new JLabel(textField.getName());
+            guiUtils.setFont(jLabel, 25);
+            textFieldsPanel.add(jLabel);
             textFieldsPanel.add(textField);
         }
 
         // Create keyboard panel
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+
         keyboardPanel = new JPanel();
         keyboardPanel.setLayout(new GridLayout(4, 10));
+        keyboardPanel.setPreferredSize(new Dimension((int) width, (int) height / 3));
 
         String[] keyLabels = {
                 "0", "1", "2", "3", "4", "5", "6", "7", "8", "9",
@@ -57,21 +66,12 @@ public class Keyboard extends JPanel {
             // Label
             keyButtons[i] = new JButton(keyLabels[i]);
             keyButtons[i].setText(keyLabels[i]);
-
-            //Font
-            try {
-                Font customFont = Font.createFont(Font.TRUETYPE_FONT,
-                        new File("src/main/resources/fonts/spectrumFont.ttf")).deriveFont(15F);
-                GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-                ge.registerFont(customFont);
-                keyButtons[i].setFont(customFont);
-            } catch (IOException | FontFormatException e) {
-                e.printStackTrace();
-            }
+            guiUtils.setFont(keyButtons[i], 15);
+            keyButtons[i].setBackground(new Color(0, 147, 212));
+            keyButtons[i].setBorder((BorderFactory.createLineBorder(Color.white, 5)));
 
             String buttonText = keyButtons[i].getText();
 
-            int finalI = i;
             keyButtons[i].addActionListener(e -> {
                 if (!buttonText.equals("Enter")) {
                     if (buttonText.equals("Backspace") && focusedField != null && focusedField.getText().length() > 0) {
