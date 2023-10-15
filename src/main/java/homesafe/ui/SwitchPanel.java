@@ -45,10 +45,15 @@ public class SwitchPanel extends JPanel {
     private Keyboard keyboard;
     private JFrame frame;
     private GUIUtils guiUtils;
+    private JButton backBtn;
+    private JButton exitBtn;
 
-    public SwitchPanel(int textFieldPanelType, JFrame frame) {
+    public SwitchPanel(int textFieldPanelType, JFrame frame, JButton backBtn, JButton exitBtn) {
         this.frame = frame;
+        this.backBtn = backBtn;
+        this.exitBtn = exitBtn;
         guiUtils = new GUIUtils(frame);
+
         setLayout(new BorderLayout());
         // case determines which kind of text panel should be created for the current
         // "screen" object
@@ -88,6 +93,7 @@ public class SwitchPanel extends JPanel {
 
         keyboard = new Keyboard(frame, usernameField, pinField);
 
+        //Enter button functions
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
             String username = usernameField.getText();
@@ -106,6 +112,18 @@ public class SwitchPanel extends JPanel {
                     popup.showPopUp();
                 }
             }
+        });
+
+        //Back button functions
+        backBtn.addActionListener(e -> {
+            SafeLocked safeLocked = new SafeLocked(guiUtils);
+            guiUtils.switchScreens(safeLocked.getPanel());
+        });
+
+        //Exit Button Functions
+        exitBtn.addActionListener(e -> {
+            SafeLocked safeLocked = new SafeLocked(guiUtils);
+            guiUtils.switchScreens(safeLocked.getPanel());
         });
 
         textPanel1 = keyboard.getTextFieldsPanel();
@@ -151,6 +169,18 @@ public class SwitchPanel extends JPanel {
             }
         });
 
+        //Back button functions
+        backBtn.addActionListener(e -> {
+            WelcomeScreen welcomeScreen = new WelcomeScreen(guiUtils);
+            guiUtils.switchScreens(welcomeScreen.getPanel());
+        });
+
+        //Exit Button Functions
+        exitBtn.addActionListener(e -> {
+            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+            guiUtils.switchScreens(safeUnlocked.getPanel());
+        });
+
         switchPanel.add(keyboard.getKeyboardPanel());
         changePinTextFieldsPanel = keyboard.getTextFieldsPanel();
 
@@ -191,6 +221,18 @@ public class SwitchPanel extends JPanel {
                 PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                 popup.showPopUp();
             }
+        });
+
+        //Back button functions
+        backBtn.addActionListener(e -> {
+            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+            guiUtils.switchScreens(managePinAdmin.getPanel());
+        });
+
+        //Exit Button Functions
+        exitBtn.addActionListener(e -> {
+            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+            guiUtils.switchScreens(safeUnlocked.getPanel());
         });
 
         addNewUser = keyboard.getTextFieldsPanel();
@@ -239,6 +281,18 @@ public class SwitchPanel extends JPanel {
             }
         });
 
+        //Back button functions
+        backBtn.addActionListener(e -> {
+            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+            guiUtils.switchScreens(managePinAdmin.getPanel());
+        });
+
+        //Exit Button Functions
+        exitBtn.addActionListener(e -> {
+            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+            guiUtils.switchScreens(safeUnlocked.getPanel());
+        });
+
 
         changePinTextFieldsPanel = keyboard.getTextFieldsPanel();
             switchPanel.add(keyboard.getKeyboardPanel());
@@ -275,6 +329,18 @@ public class SwitchPanel extends JPanel {
                 PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                 popup.showPopUp();
             }
+        });
+
+        //Back button functions
+        backBtn.addActionListener(e -> {
+            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+            guiUtils.switchScreens(managePinAdmin.getPanel());
+        });
+
+        //Exit Button Functions
+        exitBtn.addActionListener(e -> {
+            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+            guiUtils.switchScreens(safeUnlocked.getPanel());
         });
 
         textPanel5 = keyboard.getTextFieldsPanel();

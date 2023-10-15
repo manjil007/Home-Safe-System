@@ -70,25 +70,23 @@ public class WelcomeScreen {
 
         // Button Actions ----------------------------------------------------------------------------------------------
         mngPINBtn.addActionListener(e -> {
-            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
-            guiUtils.switchScreens(managePinAdmin.getPanel());
+//            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+//            guiUtils.switchScreens(managePinAdmin.getPanel());
 
             // if user is ADMIN, create admin screen
-//            if (AuthenticationService.getCurrentUser().isAdmin()) {
-//                ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
-//
-//                guiUtils.switchScreens(managePinAdmin.getPanel());
-//            }
+            if (AuthenticationService.getCurrentUser().isAdmin()) {
+                ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+
+                guiUtils.switchScreens(managePinAdmin.getPanel());
+            }
             // else, create non-admin screen (modify PIN only)
-//            else {
-//                textFieldPanelType = 2;
-//                EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
-//                guiUtils.switchScreens(entryScreen.getPanel());
-//            }
+            else {
+                textFieldPanelType = 2;
+                EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
+                guiUtils.switchScreens(entryScreen.getPanel());
+            }
         });
         viewLogsBtn.addActionListener(e -> {
-            // if user is ADMIN, create log screen, pass admin = true
-            // else, create log screen, pass admin = false
             LogScreen logScreen = new LogScreen(guiUtils);
             guiUtils.switchScreens(logScreen.getPanel());
         });

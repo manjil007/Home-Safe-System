@@ -12,7 +12,8 @@ public class EntryScreen {
 
 
     public EntryScreen(GUIUtils guiUtils, int textFieldPanelType) {
-        switchPanel = new SwitchPanel(textFieldPanelType, guiUtils.frame);
+        switchPanel = new SwitchPanel(textFieldPanelType, guiUtils.frame,
+                westPanelButtons.getBackButton(), westPanelButtons.getExitDisplayButton());
         this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
         switchPanel.setTextFieldPanelType(textFieldPanelType);
@@ -32,10 +33,10 @@ public class EntryScreen {
         panel.add(eastEmptyPanel, BorderLayout.EAST);
 
         // Button Actions
-        westPanelButtons.getBackButton().addActionListener(e -> {
-            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
-            guiUtils.switchScreens(safeUnlocked.getPanel());
-        });
+//        westPanelButtons.getBackButton().addActionListener(e -> {
+//            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+//            guiUtils.switchScreens(safeUnlocked.getPanel());
+//        });
 
         westPanelButtons.getExitDisplayButton().addActionListener(e -> {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
