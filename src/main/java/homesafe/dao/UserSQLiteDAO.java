@@ -251,7 +251,10 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
             PreparedStatement ps = conn.prepareStatement(FIND_USER_BY_NAME_QUERY);
             ps.setString(1, name);
             ResultSet rs = ps.executeQuery();
-            return Optional.of(mapUser(rs));
+            if (rs.next()) {
+                return Optional.of(mapUser(rs));
+            }
+            return Optional.empty();
         } catch (SQLException e) {
             long dur = System.currentTimeMillis() - start;
             getLogger().log(WARNING, "[SQLStats] USER_BY_NAME failed({0}) in {1} ms.",
