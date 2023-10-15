@@ -32,6 +32,10 @@ public class AuthenticationService {
         return Logger.getLogger(AuthenticationService.class.getName());
     }
 
+    public static void setCurrentUser(User user){
+        currentUser = user;
+    }
+
     public static User getCurrentUser() {
         return currentUser;
     }

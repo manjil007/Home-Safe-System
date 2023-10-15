@@ -210,6 +210,7 @@ public class SwitchPanel extends JPanel {
         changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
 
         keyboard = new Keyboard(frame, oldPin, newPin, confirmPin);
+        changePinTextFieldsPanel.add(adminField);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {

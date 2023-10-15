@@ -3,6 +3,7 @@ package homesafe.ui;
 import homesafe.dao.UserDAO;
 import homesafe.dao.UserSQLiteDAO;
 import homesafe.event.DoorEvent;
+import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
 import homesafe.service.UserService;
 import homesafe.entity.User;
@@ -67,10 +68,11 @@ public class SafeLocked {
             public void actionPerformed(ActionEvent e) {
                 List<User> users = UserService.getInstance().getAllUsers();
                 EntryScreen entryScreen;
-                System.out.println("user size = " + users.size());
+                System.out.println(users);
 //                System.out.println("user name = " + users.get(0).getUsername());
 //                System.out.println("user password = " + users.get(0).getHashedPIN());
                 if (users.isEmpty()){
+                    AuthenticationService.setCurrentUser(new User("first_user"));
                     entryScreen = new EntryScreen(guiUtils, 3);
                     guiUtils.switchScreens(entryScreen.getPanel());
 //

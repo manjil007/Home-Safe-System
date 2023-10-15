@@ -1,9 +1,11 @@
 package homesafe.ui;
 import homesafe.entity.LogData;
+import homesafe.service.AuthenticationService;
 import homesafe.service.LogService;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class LogScreen {
 
@@ -36,13 +38,36 @@ public class LogScreen {
         logInfoPanel.setPreferredSize(new Dimension(800,500));
 
         // Populate panel with LogData
-        for(LogData logData : LogService.fetchAllLogs()){
-            JLabel msg = new JLabel(logData.getMessage());
-            JLabel user = new JLabel(logData.getUsername());
-            JLabel time = new JLabel(String.valueOf(logData.getCreatedAt()));
-            logInfoPanel.add(msg);
-            logInfoPanel.add(user);
-            logInfoPanel.add(time);
+        if (AuthenticationService.getCurrentUser().isAdmin()) {
+            for (LogData logData : LogService.fetchAllLogs()) {
+                JLabel msg = new JLabel(logData.getMessage());
+                JLabel user = new JLabel(logData.getUsername());
+                JLabel time = new JLabel(String.valueOf(logData.getCreatedAt()));
+
+                guiUtils.setFont(msg, 20);
+                guiUtils.setFont(user, 20);
+                guiUtils.setFont(time, 20);
+
+                logInfoPanel.add(msg);
+                logInfoPanel.add(user);
+                logInfoPanel.add(time);
+            }
+        }
+        else {
+            for (LogData logData : LogService.fetchAllLogsByUsername(
+                    AuthenticationService.getCurrentUser().getUsername())) {
+                JLabel msg = new JLabel(logData.getMessage());
+                JLabel user = new JLabel(logData.getUsername());
+                JLabel time = new JLabel(String.valueOf(logData.getCreatedAt()));
+
+                guiUtils.setFont(msg, 20);
+                guiUtils.setFont(user, 20);
+                guiUtils.setFont(time, 20);
+
+                logInfoPanel.add(msg);
+                logInfoPanel.add(user);
+                logInfoPanel.add(time);
+            }
         }
 
         panel.add(logInfoPanel, BorderLayout.CENTER);

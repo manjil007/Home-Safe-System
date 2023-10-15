@@ -73,7 +73,7 @@ public class UserService {
      */
     public void addUser(User user) {
         // hash user's pin
-        user.setHashedPIN(AuthenticationService.hashPIN(user.getUsername(), user.getHashedPIN()));
+      //  user.setHashedPIN(AuthenticationService.hashPIN(user.getUsername(), user.getHashedPIN()));
         try {
             boolean result = userDAO.addUser(user);
             if (result) {
