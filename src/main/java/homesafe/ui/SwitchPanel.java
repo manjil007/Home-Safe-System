@@ -166,8 +166,10 @@ public class SwitchPanel extends JPanel {
         JTextField confirmPin = new JTextField(20);
         guiUtils.createTxtFlds(confirmPin, 20, 20, addNewUser, "Confirm PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
+        guiUtils.setFont(adminField, 20);
 
         addNewUser.setLayout(new GridLayout(3, 1));
+        switchPanel.add(adminField);
 
         keyboard = new Keyboard(frame, userNameField, pinField, confirmPin);
 
