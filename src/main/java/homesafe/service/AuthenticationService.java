@@ -140,13 +140,15 @@ public class AuthenticationService {
      */
     private static void updateFailedAttempts(int val) {
         concurrentFailedAttempts = val;
-        if (val == 0) {
+        if (val == 0 && failedAttemptedTimer != null) {
             failedAttemptedTimer.cancel();
         } else if (val >= 3) { // 3 failed attempts before timer reset and we lock the system out
             performLockout();
             concurrentFailedAttempts = 0;
         } else {
-            failedAttemptedTimer.cancel();
+            if (failedAttemptedTimer != null) {
+                failedAttemptedTimer.cancel();
+            }
             failedAttemptedTimer = new AuthorizationTimer(true);
             timer.schedule(failedAttemptedTimer, FAILED_ATTEMPT_TIME);
         }
