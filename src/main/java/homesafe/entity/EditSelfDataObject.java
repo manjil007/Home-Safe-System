@@ -19,9 +19,9 @@ public class EditSelfDataObject implements DataObject {
 
     // User should NEVER be null
     private final User user;
-    private String oldPin;
-    private String newPin;
-    private String confirmPin;
+    private String oldPin = "";
+    private String newPin = "";
+    private String confirmPin = "";
 
     // Currently active field being edited
     private String active;

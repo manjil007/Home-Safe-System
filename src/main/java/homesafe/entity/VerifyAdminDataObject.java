@@ -17,10 +17,10 @@ public class VerifyAdminDataObject implements DataObject {
 
     // User should NEVER be null
     private final User user;
-    private String pin;
-    private String confirmPin;
+    private String pin = "";
+    private String confirmPin = "";
     // active field name
-    private String active;
+    private String active = "";
 
     public VerifyAdminDataObject(User user) {
         this.user = user;

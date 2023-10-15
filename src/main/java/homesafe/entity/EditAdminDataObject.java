@@ -19,13 +19,13 @@ public class EditAdminDataObject implements DataObject {
     // User should only be null if adding a new user
     private User user;
     // Username will only be updated for a new user
-    private String username;
-    private String newPin;
-    private String confirmPin;
+    private String username = "";
+    private String newPin = "";
+    private String confirmPin = "";
     private boolean admin;
 
     // currently active field name to be updated
-    private String active;
+    private String active = "";
 
     public EditAdminDataObject(User user) {
         this.user = user;
