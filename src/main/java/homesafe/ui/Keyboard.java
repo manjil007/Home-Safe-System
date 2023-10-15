@@ -76,7 +76,9 @@ public class Keyboard extends JPanel {
                 if (!buttonText.equals("Enter")) {
                     if (buttonText.equals("Backspace") && focusedField != null && focusedField.getText().length() > 0) {
                         focusedField.setText(focusedField.getText().substring(0, focusedField.getText().length() - 1));
-                    } else {
+                    }
+                    else if (buttonText.equals("Backspace")){}
+                    else {
                         focusedField.setText(focusedField.getText() + buttonText);
                     }
                 }
