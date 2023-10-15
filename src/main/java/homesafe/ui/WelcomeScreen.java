@@ -70,18 +70,21 @@ public class WelcomeScreen {
 
         // Button Actions ----------------------------------------------------------------------------------------------
         mngPINBtn.addActionListener(e -> {
-            // if user is ADMIN, create admin screen
-            if (AuthenticationService.getCurrentUser().isAdmin()) {
-                ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+            guiUtils.switchScreens(managePinAdmin.getPanel());
 
-                guiUtils.switchScreens(managePinAdmin.getPanel());
-            }
+            // if user is ADMIN, create admin screen
+//            if (AuthenticationService.getCurrentUser().isAdmin()) {
+//                ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
+//
+//                guiUtils.switchScreens(managePinAdmin.getPanel());
+//            }
             // else, create non-admin screen (modify PIN only)
-            else {
-                textFieldPanelType = 2;
-                EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
-                guiUtils.switchScreens(entryScreen.getPanel());
-            }
+//            else {
+//                textFieldPanelType = 2;
+//                EntryScreen entryScreen = new EntryScreen(guiUtils, textFieldPanelType);
+//                guiUtils.switchScreens(entryScreen.getPanel());
+//            }
         });
         viewLogsBtn.addActionListener(e -> {
             // if user is ADMIN, create log screen, pass admin = true

@@ -1,5 +1,6 @@
 package homesafe.ui;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,29 +18,25 @@ public class ManagePinAdmin {
 
     private void createPanel(){
         // Panel for displaying log info
-        JPanel pinManagerPanel = new JPanel(new GridLayout(1, 2)); // Use GridLayout to split into two panels
-        pinManagerPanel.setBackground(Color.CYAN);
-        pinManagerPanel.setPreferredSize(new Dimension(800,500));
+        JPanel pinManagerPanel = new JPanel(new GridLayout(0, 2)); // Use GridLayout to split into two panels
 
         // Left panel for the first stack of buttons
         JPanel leftButtonStackPanel = new JPanel();
-        leftButtonStackPanel.setLayout(new BoxLayout(leftButtonStackPanel, BoxLayout.PAGE_AXIS)); //test
-        leftButtonStackPanel.setBackground(Color.CYAN); //test
+        leftButtonStackPanel.setLayout(new GridLayout(10,0));
 
         List<JButton> leftButtons = new ArrayList<>();
-        Dimension buttonSize = new Dimension(750, 200);
-        for (int i = 1; i <= 5; i++) {
+        Dimension buttonSize = new Dimension(10000, 200);
+        for (int i = 1; i <= 10; i++) {
             JButton button = new JButton("User " + i);
             leftButtons.add(button);
             button.setPreferredSize(buttonSize);
             leftButtonStackPanel.add(button);
         }
-
         pinManagerPanel.add(leftButtonStackPanel);
 
         // Right panel for the second stack of buttons
         JPanel rightButtonStackPanel = new JPanel();
-        rightButtonStackPanel.setLayout(new BoxLayout(rightButtonStackPanel, BoxLayout.PAGE_AXIS));
+        rightButtonStackPanel.setLayout(new GridLayout(10,0));
         List<JButton> rightButtons = new ArrayList<>();
 
         JButton addButton = new JButton("ADD");
@@ -71,6 +68,7 @@ public class ManagePinAdmin {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
             guiUtils.switchScreens(safeUnlocked.getPanel());
         });
+
     }
 
     public JPanel getPanel(){return panel;}
