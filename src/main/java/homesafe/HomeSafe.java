@@ -37,7 +37,8 @@ public class HomeSafe {
      */
     public static void main(String[] args) {
         initialize();
-        manualTestDatabase();
+        //Manjil commented this
+        //manualTestDatabase();
         manualTestEvents();
 
         // adding hard stop so system doesn't keep running forever

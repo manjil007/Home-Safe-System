@@ -67,29 +67,31 @@ public class SafeLocked {
             public void actionPerformed(ActionEvent e) {
                 List<User> users = UserService.getInstance().getAllUsers();
                 EntryScreen entryScreen;
-
+                System.out.println("user size = " + users.size());
+//                System.out.println("user name = " + users.get(0).getUsername());
+//                System.out.println("user password = " + users.get(0).getHashedPIN());
                 if (users.isEmpty()){
                     entryScreen = new EntryScreen(guiUtils, 3);
                     guiUtils.switchScreens(entryScreen.getPanel());
-
-                    String username = "";
-                    String pin = "";
-                    String confirmPin = "";
-
-                    JPanel panels = entryScreen.getPanel();
-                    for (Component component : panels.getComponents()){
-                        if (component.getName() != null && component.getName().equals("User Name")){
-                            JTextField textField = (JTextField)component;
-                            username = textField.getText();
-                        }else if (component.getName() != null && component.getName().equals("6 Digit Pin")){
-                            JTextField textField = (JTextField)component;
-                            pin = textField.getText();
-                        }else if (component.getName() != null && component.getName().equals("Confirm New Pin")){
-                            JTextField textField = (JTextField)component;
-                            confirmPin = textField.getText();
-                        }
-                    }
-                    System.out.println(username + " " + " " + pin + " " + confirmPin);
+//
+//                    String username = "";
+//                    String pin = "";
+//                    String confirmPin = "";
+//
+//                    JPanel panels = entryScreen.getPanel();
+//                    for (Component component : panels.getComponents()){
+//                        if (component.getName() != null && component.getName().equals("User Name")){
+//                            JTextField textField = (JTextField)component;
+//                            username = textField.getText();
+//                        }else if (component.getName() != null && component.getName().equals("6 Digit Pin")){
+//                            JTextField textField = (JTextField)component;
+//                            pin = textField.getText();
+//                        }else if (component.getName() != null && component.getName().equals("Confirm New Pin")){
+//                            JTextField textField = (JTextField)component;
+//                            confirmPin = textField.getText();
+//                        }
+//                    }
+//                    System.out.println(username + " " + " " + pin + " " + confirmPin);
 
                 } else {
                     // TEST EntryScreen object

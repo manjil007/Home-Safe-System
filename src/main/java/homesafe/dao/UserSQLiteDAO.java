@@ -131,17 +131,17 @@ public class UserSQLiteDAO extends AbstractSQLiteDAO implements UserDAO {
                     e.getMessage().trim());
         }
 
-        try {
-            if (userCount == 0) {
-                User defaultUser = new User("admin");
-                defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
-                defaultUser.setAdmin(false);
-
-                addUser(defaultUser);
-            }
-        } catch (SQLException e) {
-            getLogger().log(SEVERE, "[SQLStats] Failed to create initial user. {0}", e.getMessage().trim());
-        }
+//        try {
+//            if (userCount == 0) {
+//                User defaultUser = new User("admin");
+//                defaultUser.setHashedPIN(AuthenticationService.hashPIN("admin", "000000"));
+//                defaultUser.setAdmin(false);
+//
+//                addUser(defaultUser);
+//            }
+//        } catch (SQLException e) {
+//            getLogger().log(SEVERE, "[SQLStats] Failed to create initial user. {0}", e.getMessage().trim());
+//        }
     }
 
     @Override
