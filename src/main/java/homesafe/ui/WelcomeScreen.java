@@ -54,7 +54,7 @@ public class WelcomeScreen {
         menuGrid.add(lockSafeBtn, menuGbc);
 
         // WEST PANEL
-        WestPanelButtons westButtons = new WestPanelButtons();
+        WestPanelButtons westButtons = new WestPanelButtons(guiUtils.frame);
 
         // EAST PANEL
         JPanel emptySidePanel = new JPanel();

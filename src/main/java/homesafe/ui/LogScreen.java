@@ -73,7 +73,7 @@ public class LogScreen {
         panel.add(logInfoPanel, BorderLayout.CENTER);
 
         // Back & Exit Display Buttons
-        WestPanelButtons westButtons = new WestPanelButtons();
+        WestPanelButtons westButtons = new WestPanelButtons(guiUtils.frame);
         panel.add(westButtons, BorderLayout.WEST);
 
         // Button Actions

@@ -60,7 +60,7 @@ public class ManagePinAdmin {
         pinManagerPanel.add(rightButtonStackPanel);
 
         // Back & Exit Display Buttons
-        WestPanelButtons westButtons = new WestPanelButtons();
+        WestPanelButtons westButtons = new WestPanelButtons(guiUtils.frame);
 
         // Adding everything to MAIN panel
         panel.add(westButtons, BorderLayout.WEST);

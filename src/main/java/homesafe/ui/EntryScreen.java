@@ -4,17 +4,18 @@ import javax.swing.*;
 import java.awt.*;
 
 public class EntryScreen {
-    private WestPanelButtons westPanelButtons = new WestPanelButtons();
+    private GUIUtils guiUtils;
+    private WestPanelButtons westPanelButtons;
     private JPanel eastEmptyPanel = new JPanel();
     private SwitchPanel switchPanel;
-    private GUIUtils guiUtils;
     private JPanel panel = new JPanel();
 
 
     public EntryScreen(GUIUtils guiUtils, int textFieldPanelType) {
+        this.guiUtils = guiUtils;
+        westPanelButtons = new WestPanelButtons(guiUtils.frame);
         switchPanel = new SwitchPanel(textFieldPanelType, guiUtils.frame,
                 westPanelButtons.getBackButton(), westPanelButtons.getExitDisplayButton());
-        this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
         switchPanel.setTextFieldPanelType(textFieldPanelType);
         createPanel();
