@@ -4,6 +4,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ManagePinAdmin {
 
@@ -20,35 +21,42 @@ public class ManagePinAdmin {
         // Panel for displaying log info
         JPanel pinManagerPanel = new JPanel(new GridLayout(0, 2));
 
-        // Left panel for the first stack of buttons
-        JPanel leftButtonStackPanel = new JPanel();
-        leftButtonStackPanel.setLayout(new GridLayout(10,0));
-        List<JButton> leftButtons = new ArrayList<>();
-        Dimension buttonSize = new Dimension(10000, 200);
-        for (int i = 1; i <= 10; i++) {
-            JButton button = new JButton("User " + i);
-            leftButtons.add(button);
-            button.setPreferredSize(buttonSize);
-            leftButtonStackPanel.add(button);
-        }
-        pinManagerPanel.add(leftButtonStackPanel);
-
         // Right panel for the second stack of buttons
         JPanel rightButtonStackPanel = new JPanel();
         rightButtonStackPanel.setLayout(new GridLayout(10,0));
         List<JButton> rightButtons = new ArrayList<>();
         JButton addButton = new JButton("ADD");
         rightButtons.add(addButton);
-        addButton.setPreferredSize(buttonSize);
         rightButtonStackPanel.add(addButton);
         JButton modifyButton = new JButton("MODIFY");
         rightButtons.add(modifyButton);
-        modifyButton.setPreferredSize(buttonSize);
         rightButtonStackPanel.add(modifyButton);
         JButton deleteButton = new JButton("DELETE");
         rightButtons.add(deleteButton);
-        deleteButton.setPreferredSize(buttonSize);
         rightButtonStackPanel.add(deleteButton);
+
+
+        // Left panel for the first stack of buttons
+        JPanel leftButtonStackPanel = new JPanel();
+        leftButtonStackPanel.setLayout(new GridLayout(10,0));
+        List<JButton> leftButtons = new ArrayList<>();
+
+        for (int i = 1; i <= 10; i++) {
+            JButton button = new JButton("User " + i);
+            leftButtons.add(button);
+            button.addActionListener(e1 -> {
+                modifyButton.addActionListener(e2 -> {
+                    EntryScreen entryScreen = new EntryScreen(guiUtils,4);
+                    guiUtils.switchScreens(entryScreen.getPanel());
+                });
+                deleteButton.addActionListener(e3 -> {
+                    EntryScreen entryScreen = new EntryScreen(guiUtils,5);
+                    guiUtils.switchScreens(entryScreen.getPanel());
+                });
+            });
+            leftButtonStackPanel.add(button);
+        }
+        pinManagerPanel.add(leftButtonStackPanel);
         pinManagerPanel.add(rightButtonStackPanel);
 
         // Back & Exit Display Buttons
@@ -67,8 +75,21 @@ public class ManagePinAdmin {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
             guiUtils.switchScreens(safeUnlocked.getPanel());
         });
+        addButton.addActionListener(e -> {
+            EntryScreen entryScreen = new EntryScreen(guiUtils,3);
+            guiUtils.switchScreens(entryScreen.getPanel());
+        });
 
-
+        // Actions if user tries to click modify and delete without
+        // first selection a user
+        modifyButton.addActionListener(e -> {
+            PopUpDialog msg = new PopUpDialog("You must choose a user whose PIN you can MODIFY first!");
+            msg.showPopUp();
+        });
+        deleteButton.addActionListener(e -> {
+            PopUpDialog msg = new PopUpDialog("You must choose a user to DELETE first!");
+            msg.showPopUp();
+        });
 
     }
 

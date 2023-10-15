@@ -20,7 +20,7 @@ import java.util.Objects;
  * Creates text fields: Username, PIN
  *
  * public JPanel createTextPanel2();
- * Manage pin screen
+ * Modify pin screen
  * Creates text fields: Old PW, new PW, confirm new PW
  *
  * public JPanel createTextPanel3();
@@ -28,7 +28,7 @@ import java.util.Objects;
  * Creates text fields: Username, enter 6-digit PIN, confirm new PIN, Admin?
  *
  * public JPanel createTextPanel4();
- * Manage pin admin screen
+ * Modify pin screen (admin)
  * Creates text fields: old PW, new PW, confirm new PIN, Admin?
  *
  *
