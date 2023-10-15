@@ -21,7 +21,7 @@ public class LogSQLiteDAO extends AbstractSQLiteDAO implements LogDAO {
 
     private static final String CREATE_LOG_TABLE
             = "CREATE TABLE IF NOT EXISTS logs (\n"
-            + "             username TEXT PRIMARY KEY,\n"
+            + "             username TEXT NOT NULL,\n"
             + "             created_at DATETIME NOT NULL,\n"
             + "             message TEXT NOT NULL\n"
             + ");";
@@ -48,6 +48,7 @@ public class LogSQLiteDAO extends AbstractSQLiteDAO implements LogDAO {
 
     public LogSQLiteDAO(Connection conn) {
         super(conn);
+        initialSetup();
     }
 
     private static Logger getLogger() {
@@ -66,7 +67,7 @@ public class LogSQLiteDAO extends AbstractSQLiteDAO implements LogDAO {
     public void initialSetup() {
         try (Connection conn = DAOUtils.getConnection()) {
             PreparedStatement ps = conn.prepareStatement(CREATE_LOG_TABLE);
-            ps.executeUpdate();
+            ps.execute();
         } catch (SQLException e) {
             getLogger().log(WARNING, "[LogSQLiteDAO] failed to initialize log table. {0}",
                     e.getMessage().trim());

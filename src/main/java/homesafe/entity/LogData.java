@@ -33,4 +33,13 @@ public class LogData {
     public String getMessage() {
         return message;
     }
+
+    @Override
+    public String toString() {
+        return "LogData{" +
+                "createdAt=" + createdAt +
+                ", username='" + username + '\'' +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }
