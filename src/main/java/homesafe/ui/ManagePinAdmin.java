@@ -18,12 +18,11 @@ public class ManagePinAdmin {
 
     private void createPanel(){
         // Panel for displaying log info
-        JPanel pinManagerPanel = new JPanel(new GridLayout(0, 2)); // Use GridLayout to split into two panels
+        JPanel pinManagerPanel = new JPanel(new GridLayout(0, 2));
 
         // Left panel for the first stack of buttons
         JPanel leftButtonStackPanel = new JPanel();
         leftButtonStackPanel.setLayout(new GridLayout(10,0));
-
         List<JButton> leftButtons = new ArrayList<>();
         Dimension buttonSize = new Dimension(10000, 200);
         for (int i = 1; i <= 10; i++) {
@@ -38,7 +37,6 @@ public class ManagePinAdmin {
         JPanel rightButtonStackPanel = new JPanel();
         rightButtonStackPanel.setLayout(new GridLayout(10,0));
         List<JButton> rightButtons = new ArrayList<>();
-
         JButton addButton = new JButton("ADD");
         rightButtons.add(addButton);
         addButton.setPreferredSize(buttonSize);
@@ -51,13 +49,14 @@ public class ManagePinAdmin {
         rightButtons.add(deleteButton);
         deleteButton.setPreferredSize(buttonSize);
         rightButtonStackPanel.add(deleteButton);
-
         pinManagerPanel.add(rightButtonStackPanel);
-        panel.add(pinManagerPanel, BorderLayout.CENTER);
 
         // Back & Exit Display Buttons
         WestPanelButtons westButtons = new WestPanelButtons();
+
+        // Adding everything to MAIN panel
         panel.add(westButtons, BorderLayout.WEST);
+        panel.add(pinManagerPanel, BorderLayout.CENTER);
 
         // Button Actions
         westButtons.getBackButton().addActionListener(e -> {
@@ -68,6 +67,8 @@ public class ManagePinAdmin {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
             guiUtils.switchScreens(safeUnlocked.getPanel());
         });
+
+
 
     }
 
