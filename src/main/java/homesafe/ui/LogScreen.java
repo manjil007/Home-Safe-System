@@ -38,6 +38,8 @@ public class LogScreen {
                 i++;
             }
             table = new JTable(data, columnNames);
+            table.setRowHeight(100);
+            table.setEnabled(false);
             guiUtils.setFont(table, 20);
             table.setBounds(30, 40, 200, 300);
 
