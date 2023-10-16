@@ -4,6 +4,11 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * This class helps set up a common place
+ * that buttons are used throughout the program
+ */
+
 public class WestPanelButtons extends JPanel {
     private final JButton backBtn;
     private final JButton exitDisplay;

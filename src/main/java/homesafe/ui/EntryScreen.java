@@ -5,6 +5,14 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * This class serves the purpsose of calling the switchPanel class,
+ * which has each individual screen base on what the user wishses to do.
+ * Establishes the west and east panels (where most buttons will be)
+ *
+ * Should probably consolidate the class with switchPanel
+ */
+
 public class EntryScreen {
     private GUIUtils guiUtils;
     private WestPanelButtons westPanelButtons;

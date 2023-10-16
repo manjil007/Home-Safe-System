@@ -8,6 +8,12 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class allows an administrator to manage their own pin/account
+ * and the pins/account of other users. The administrator can  add users,
+ * modify their pins or delete them entirely.
+ */
+
 public class ManagePinAdmin {
     private final GUIUtils guiUtils;
     private final JPanel panel = new JPanel(); // MAIN Panel

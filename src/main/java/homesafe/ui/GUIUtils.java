@@ -5,6 +5,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+
+/**
+ * GuiUtils is the foundation of the programs UI,
+ * it establishes the JFrame that most panels are built off of
+ */
 public class GUIUtils {
     JFrame frame;
 

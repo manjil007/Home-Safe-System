@@ -10,6 +10,13 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
+/**
+ * The Welcome Screen is the frame that
+ * contains the buttons:
+ * - Manage Pin
+ * - View Logs
+ * - Lock Safe
+ */
 
 public class WelcomeScreen {
 

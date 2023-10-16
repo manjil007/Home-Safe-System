@@ -9,6 +9,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Vector;
 
+
+/**
+ * The LogScreen shows the username and the time
+ * that the user logged in. It also tracks when new
+ * users are created and deleted.
+ */
+
 public class LogScreen {
 
     private final GUIUtils guiUtils;

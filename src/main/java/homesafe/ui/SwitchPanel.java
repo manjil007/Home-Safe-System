@@ -413,6 +413,12 @@ public class SwitchPanel extends JPanel {
         return textPanel5;
     }
 
+    /**
+     * The lockOut class will lock the user out based
+     * on conditions met such as entering the wrong pin a
+     * certain number of times.
+     */
+
     private void lockOut () {
         if(ApplicationState.getInstance().getState() == State.LOCKOUT){
             AuthenticationService.deAuthorizeUser();

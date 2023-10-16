@@ -9,12 +9,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This class was created in order to separate
- * the keyboard from each individual panel. Will have to come
- * up with a more proper name than keyboard2 later.
- *
- * The original keyboard class needs to be renamed something else
- * because at this point it doesn't do keyboard stuff anymore.
+ * This keyboard class is what allows the user to enter
+ * their username and pin.
  */
 
 public class Keyboard extends JPanel {
