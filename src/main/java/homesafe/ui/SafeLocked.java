@@ -67,7 +67,9 @@ public class SafeLocked {
                 EntryScreen entryScreen;
 
                 if (users.isEmpty()) {
-                    AuthenticationService.setCurrentUser(new User("first_user"));
+                    User user = new User("first_user");
+                    user.setAdmin(true);
+                    AuthenticationService.setCurrentUser(user);
                     entryScreen = new EntryScreen(guiUtils, 3, new User(""));
                     guiUtils.switchScreens(entryScreen.getPanel());
                     //first user must be an admin
