@@ -32,14 +32,6 @@ public class TemperatureSensorController extends AbstractController{
         }
     }
 
-    public float getThreshold() {
-        return threshold;
-    }
-
-    public void setThreshold(float threshold) {
-        this.threshold = threshold;
-    }
-
     @Override
     public void run() {
         // TODO
