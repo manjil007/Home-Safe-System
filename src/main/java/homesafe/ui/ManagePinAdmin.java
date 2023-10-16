@@ -28,7 +28,7 @@ public class ManagePinAdmin {
         rightButtonStackPanel.setBorder(new EmptyBorder(20, 20, 20, 60));
 
         JLabel actionListLabel = new JLabel("Actions");
-        guiUtils.setFont(actionListLabel, 20);
+        guiUtils.setFont(actionListLabel, 25);
         rightButtonStackPanel.add(actionListLabel);
 
         JButton addButton = new JButton();
@@ -49,7 +49,7 @@ public class ManagePinAdmin {
         leftButtonStackPanel.setBorder(new EmptyBorder(20, 0, 20, 20));
 
         JLabel userListLabel = new JLabel("Users");
-        guiUtils.setFont(userListLabel, 20);
+        guiUtils.setFont(userListLabel, 25);
         leftButtonStackPanel.add(userListLabel);
 
         List<User> users = UserService.getInstance().getAllUsers();
