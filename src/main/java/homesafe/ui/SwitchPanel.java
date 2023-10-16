@@ -1,6 +1,7 @@
 package homesafe.ui;
 
 import homesafe.entity.ApplicationState;
+import homesafe.entity.LogData;
 import homesafe.entity.State;
 import homesafe.entity.User;
 import homesafe.event.DoorEvent;
@@ -47,6 +48,7 @@ public class SwitchPanel extends JPanel {
     private GUIUtils guiUtils;
     private JButton backBtn;
     private JButton exitBtn;
+    private LogData logData;
 
     public SwitchPanel(int textFieldPanelType, JFrame frame, JButton backBtn, JButton exitBtn, User user) {
         this.frame = frame;
@@ -230,7 +232,7 @@ public class SwitchPanel extends JPanel {
                 newUser.setHashedPIN(hashedPin);
                 newUser.setAdmin(adminField.isSelected());
                 UserService.getInstance().addUser(newUser);
-                PopUpDialog popup = new PopUpDialog("PIN change successful");
+                PopUpDialog popup = new PopUpDialog("User: " + username + " created");
                 popup.showPopUp();
             }
             else {
@@ -324,7 +326,7 @@ public class SwitchPanel extends JPanel {
 
         // Create text fields
         JTextField adminPin = new JTextField(20);
-        guiUtils.createTxtFlds(adminPin, 20, 20, textPanel5, "PIN");
+        guiUtils.createTxtFlds(adminPin, 20, 20, textPanel5, "Enter Admin PIN");
         JTextField confirmPin = new JTextField(20);
         guiUtils.createTxtFlds(confirmPin, 20, 20, textPanel5, "Confirm PIN");
 
