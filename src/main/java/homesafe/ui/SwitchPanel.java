@@ -15,6 +15,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * public JPanel createTextPanel1();
@@ -160,12 +161,19 @@ public class SwitchPanel extends JPanel {
             String oldPass = oldPin.getText();
             String newPass = newPin.getText();
             String confirm = confirmPin.getText();
+            Pattern pattern = Pattern.compile("\\d+");
+            boolean isNumber = pattern.matcher(newPass).matches();
 
             if (oldPass.length() == 0 || newPass.length() == 0 || confirm.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
                 popup.showPopUp();
-            }
-            else if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
+            }else if (newPass.length()!= 6){
+                PopUpDialog popup = new PopUpDialog("PIN must be of length 6");
+                popup.showPopUp();
+            }else if (!isNumber) {
+                PopUpDialog popup = new PopUpDialog("Please ensure that your PIN consists of numbers only.");
+                popup.showPopUp();
+            } else if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
                 if (!Objects.equals(newPass, confirm)) {
                     PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
@@ -177,8 +185,7 @@ public class SwitchPanel extends JPanel {
                     PopUpDialog popup = new PopUpDialog("PIN change successful");
                     popup.showPopUp();
                 }
-            }
-            else {
+            }else {
                 lockOut();
             }
         });
@@ -222,12 +229,20 @@ public class SwitchPanel extends JPanel {
             String username = userNameField.getText();
             String pin = pinField.getText();
             String confirm = confirmPin.getText();
+            Pattern pattern = Pattern.compile("\\d+");
+            boolean isNumber = pattern.matcher(pin).matches();
+
 
             if (username.length() == 0 || pin.length() == 0 || confirm.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
                 popup.showPopUp();
-            }
-            else if (Objects.equals(pin, confirm)) {
+            }else if (pin.length()!= 6){
+                PopUpDialog popup = new PopUpDialog("PIN must be of length 6");
+                popup.showPopUp();
+            }else if (!isNumber) {
+                PopUpDialog popup = new PopUpDialog("Please ensure that your PIN consists of numbers only.");
+                popup.showPopUp();
+            }else if (Objects.equals(pin, confirm)) {
                 User newUser = new User(username);
                 List<User> users = UserService.getInstance().getAllUsers();
                 String hashedPin = AuthenticationService.hashPIN(newUser.getUsername(), confirm);
@@ -236,8 +251,7 @@ public class SwitchPanel extends JPanel {
                 UserService.getInstance().addUser(newUser);
                 PopUpDialog popup = new PopUpDialog("User: " + username + " created");
                 popup.showPopUp();
-            }
-            else {
+            }else {
                 PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                 popup.showPopUp();
             }
@@ -281,12 +295,19 @@ public class SwitchPanel extends JPanel {
             String oldPass = oldPin.getText();
             String newPass = newPin.getText();
             String confirm = confirmPin.getText();
+            Pattern pattern = Pattern.compile("\\d+");
+            boolean isNumber = pattern.matcher(newPass).matches();
 
             if (oldPass.length() == 0 || newPass.length() == 0 || confirm.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
                 popup.showPopUp();
-            }
-            else if (AuthenticationService.authorizeUser(user.getUsername(), oldPass)) {
+            }else if (newPass.length()!= 6){
+                PopUpDialog popup = new PopUpDialog("PIN must be of length 6");
+                popup.showPopUp();
+            }else if (!isNumber) {
+                PopUpDialog popup = new PopUpDialog("Please ensure that your PIN consists of numbers only.");
+                popup.showPopUp();
+            } else if (AuthenticationService.authorizeUser(user.getUsername(), oldPass)) {
                 if (!Objects.equals(newPass, confirm)) {
                     PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
@@ -299,8 +320,7 @@ public class SwitchPanel extends JPanel {
                     PopUpDialog popup = new PopUpDialog("Changes successful");
                     popup.showPopUp();
                 }
-            }
-            else {
+            }else {
                 lockOut();
             }
         });
@@ -341,9 +361,17 @@ public class SwitchPanel extends JPanel {
             User currentUser = AuthenticationService.getCurrentUser();
             String pin = adminPin.getText();
             String confirm = confirmPin.getText();
+            Pattern pattern = Pattern.compile("\\d+");
+            boolean isNumber = pattern.matcher(pin).matches();
 
             if (pin.length() == 0 || confirm.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
+                popup.showPopUp();
+            }else if (pin.length()!= 6){
+                PopUpDialog popup = new PopUpDialog("PIN must be of length 6");
+                popup.showPopUp();
+            }else if (!isNumber) {
+                PopUpDialog popup = new PopUpDialog("Please ensure that your PIN consists of numbers only.");
                 popup.showPopUp();
             }
             else if (Objects.equals(pin, confirm)) {
@@ -351,12 +379,10 @@ public class SwitchPanel extends JPanel {
                     UserService.getInstance().deleteUser(user);
                     PopUpDialog popup = new PopUpDialog("User successfully deleted.");
                     popup.showPopUp();
-                }
-                else {
+                } else {
                     lockOut();
                 }
-            }
-            else {
+            } else {
                 PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                 popup.showPopUp();
             }
