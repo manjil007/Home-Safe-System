@@ -24,30 +24,19 @@ public class ManagePinAdmin {
         // Right panel for the second stack of buttons
         JPanel rightButtonStackPanel = new JPanel();
         rightButtonStackPanel.setLayout(new GridLayout(10,0));
-        List<JButton> rightButtons = new ArrayList<>();
         JButton addButton = new JButton("ADD");
-        rightButtons.add(addButton);
         rightButtonStackPanel.add(addButton);
         JButton modifyButton = new JButton("MODIFY");
-        rightButtons.add(modifyButton);
         rightButtonStackPanel.add(modifyButton);
         JButton deleteButton = new JButton("DELETE");
-        rightButtons.add(deleteButton);
         rightButtonStackPanel.add(deleteButton);
-
 
         // Left panel for the first stack of buttons
         JPanel leftButtonStackPanel = new JPanel();
         leftButtonStackPanel.setLayout(new GridLayout(10,0));
-        List<JButton> leftButtons = new ArrayList<>();
-
-
         List<User> users = UserService.getInstance().getAllUsers();
-
-
         for (int i = 0; i < users.size(); i++) {
             JButton button = new JButton(users.get(i).getUsername());
-            leftButtons.add(button);
             int finalI = i;
             button.addActionListener(e1 -> {
                 modifyButton.addActionListener(e2 -> {

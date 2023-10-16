@@ -71,16 +71,10 @@ public class WelcomeScreen {
 
         // Button Actions ----------------------------------------------------------------------------------------------
         mngPINBtn.addActionListener(e -> {
-//            ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
-//            guiUtils.switchScreens(managePinAdmin.getPanel());
-
-            // if user is ADMIN, create admin screen
             if (AuthenticationService.getCurrentUser().isAdmin()) {
                 ManagePinAdmin managePinAdmin = new ManagePinAdmin(guiUtils);
-
                 guiUtils.switchScreens(managePinAdmin.getPanel());
             }
-            // else, create non-admin screen (modify PIN only)
             else {
                 EntryScreen entryScreen = new EntryScreen(guiUtils, 2, new User(""));
                 guiUtils.switchScreens(entryScreen.getPanel());
