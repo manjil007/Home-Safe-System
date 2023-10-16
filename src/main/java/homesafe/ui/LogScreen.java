@@ -5,6 +5,7 @@ import homesafe.service.LogService;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.JTableHeader;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -37,12 +38,6 @@ public class LogScreen {
                 data[i][j] = String.valueOf(logData.getCreatedAt());
                 i++;
             }
-            table = new JTable(data, columnNames);
-            table.setRowHeight(100);
-            table.setEnabled(false);
-            guiUtils.setFont(table, 17);
-            table.setBounds(30, 40, 200, 300);
-
         }
         //non-admin
         else {
@@ -55,12 +50,16 @@ public class LogScreen {
                 data[i][j] = String.valueOf(logData.getCreatedAt());
                 i++;
             }
-            table = new JTable(data, columnNames);
-            guiUtils.setFont(table, 17);
-            table.setRowHeight(100);
-            table.setEnabled(false);
-            table.setBounds(30, 40, 200, 300);
         }
+
+
+        table = new JTable(data, columnNames);
+        table.setRowHeight(100);
+        table.setEnabled(false);
+        guiUtils.setFont(table.getTableHeader(), 25);
+        guiUtils.setFont(table, 17);
+        table.setBounds(30, 40, 200, 300);
+
         JScrollPane sp = new JScrollPane(table);
         sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
