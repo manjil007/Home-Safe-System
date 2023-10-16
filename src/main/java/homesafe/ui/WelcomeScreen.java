@@ -28,23 +28,20 @@ public class WelcomeScreen {
         JPanel menuGrid = new JPanel(new GridBagLayout());
         GridBagConstraints menuGbc = new GridBagConstraints();
         menuGbc.fill = GridBagConstraints.BOTH;
-        // Button images for menu
-        ImageIcon mngPINIcon = new ImageIcon("src/main/resources/images/welcomeScreen/managePIN.png");
-        ImageIcon viewLogsIcon = new ImageIcon("src/main/resources/images/welcomeScreen/viewLogs.png");
-        ImageIcon lockSafeIcon = new ImageIcon("src/main/resources/images/welcomeScreen/lockSafe.png");
+
         // Create buttons with preferred size
-        JButton mngPINBtn = new JButton(mngPINIcon);
-        mngPINBtn.setPreferredSize(new Dimension(150, 80));
-        mngPINBtn.setContentAreaFilled(false);
-        mngPINBtn.setBorderPainted(false);
-        JButton viewLogsBtn = new JButton(viewLogsIcon);
-        viewLogsBtn.setPreferredSize(new Dimension(130, 80));
-        viewLogsBtn.setContentAreaFilled(false);
-        viewLogsBtn.setBorderPainted(false);
-        JButton lockSafeBtn = new JButton(lockSafeIcon);
-        lockSafeBtn.setPreferredSize(new Dimension(130, 80));
-        lockSafeBtn.setContentAreaFilled(false);
-        lockSafeBtn.setBorderPainted(false);
+        JButton mngPINBtn = new JButton();
+        guiUtils.createDisplayBtn(mngPINBtn, "Manage PIN", 25);
+        mngPINBtn.setBorder((BorderFactory.createLineBorder(Color.white, 10)));
+
+        JButton viewLogsBtn = new JButton();
+        guiUtils.createDisplayBtn(viewLogsBtn, "View Logs", 25);
+        viewLogsBtn.setBorder((BorderFactory.createLineBorder(Color.white, 10)));
+
+        JButton lockSafeBtn = new JButton();
+        guiUtils.createDisplayBtn(lockSafeBtn, "Lock Safe", 25);
+       lockSafeBtn.setBorder((BorderFactory.createLineBorder(Color.white, 10)));
+
         // Add buttons to the menu grid
         menuGbc.gridx = 0;
         menuGbc.gridy = 0;

@@ -70,4 +70,11 @@ public class GUIUtils {
         CardLayout cl = (CardLayout) (cards.getLayout());
         cl.next(cards);
     }
+
+    public void createDisplayBtn (JButton btn, String text, float fontSize) {
+        btn.setBackground(new Color(0, 147, 212));
+        btn.setText(text);
+        setFont(btn, fontSize);
+        btn.setBorder((BorderFactory.createLineBorder(Color.white, 5)));
+    }
 }

@@ -24,11 +24,16 @@ public class ManagePinAdmin {
         // Right panel for the second stack of buttons
         JPanel rightButtonStackPanel = new JPanel();
         rightButtonStackPanel.setLayout(new GridLayout(10,0));
-        JButton addButton = new JButton("ADD");
+        JButton addButton = new JButton();
+        guiUtils.createDisplayBtn(addButton, "ADD", 20);
         rightButtonStackPanel.add(addButton);
-        JButton modifyButton = new JButton("MODIFY");
+
+        JButton modifyButton = new JButton();
+        guiUtils.createDisplayBtn(modifyButton, "MODIFY", 20);
         rightButtonStackPanel.add(modifyButton);
-        JButton deleteButton = new JButton("DELETE");
+
+        JButton deleteButton = new JButton();
+        guiUtils.createDisplayBtn(deleteButton, "DELETE", 20);
         rightButtonStackPanel.add(deleteButton);
 
         // Left panel for the first stack of buttons
@@ -37,6 +42,9 @@ public class ManagePinAdmin {
         List<User> users = UserService.getInstance().getAllUsers();
         for (int i = 0; i < users.size(); i++) {
             JButton button = new JButton(users.get(i).getUsername());
+            guiUtils.setFont(button, 20);
+            guiUtils.createClearBtn(button,0,0,100,100,leftButtonStackPanel);
+
             int finalI = i;
             button.addActionListener(e1 -> {
                 modifyButton.addActionListener(e2 -> {
@@ -48,8 +56,6 @@ public class ManagePinAdmin {
                     guiUtils.switchScreens(entryScreen.getPanel());
                 });
             });
-            guiUtils.setFont(button, 20);
-            guiUtils.createClearBtn(button,0,0,100,100,leftButtonStackPanel);
         }
         pinManagerPanel.add(leftButtonStackPanel);
         pinManagerPanel.add(rightButtonStackPanel);

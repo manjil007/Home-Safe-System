@@ -16,18 +16,10 @@ public class WestPanelButtons extends JPanel {
 
         // Create side buttons with preferred size
         backBtn = new JButton();
-        backBtn.setPreferredSize(new Dimension(200, 75)); // Increase the size
-        backBtn.setBackground(new Color(0, 147, 212));
-        backBtn.setText("<--");
-        guiUtils.setFont(backBtn, 35);
-        backBtn.setBorder((BorderFactory.createLineBorder(Color.white, 5)));
+        guiUtils.createDisplayBtn(backBtn, "<--", 35);
 
         exitDisplay = new JButton();
-        exitDisplay.setPreferredSize(new Dimension(200, 75)); // Increase the size
-        exitDisplay.setBackground(new Color(0, 147, 212));
-        exitDisplay.setText("Exit");
-        guiUtils.setFont(exitDisplay, 35);
-        exitDisplay.setBorder((BorderFactory.createLineBorder(Color.white, 5)));
+        guiUtils.createDisplayBtn(exitDisplay, "Exit", 35);
 
         // Add side buttons to the side button panel
         add(backBtn);

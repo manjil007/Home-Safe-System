@@ -65,10 +65,7 @@ public class Keyboard extends JPanel {
         for (int i = 0; i < keyButtons.length; i++) {
             // Label
             keyButtons[i] = new JButton(keyLabels[i]);
-            keyButtons[i].setText(keyLabels[i]);
-            guiUtils.setFont(keyButtons[i], 15);
-            keyButtons[i].setBackground(new Color(0, 147, 212));
-            keyButtons[i].setBorder((BorderFactory.createLineBorder(Color.white, 5)));
+            guiUtils.createDisplayBtn(keyButtons[i], keyLabels[i], 15);
 
             String buttonText = keyButtons[i].getText();
 
