@@ -2,22 +2,13 @@ package homesafe;
 
 import homesafe.dao.DAOFactory;
 import homesafe.dao.UserDAO;
-import homesafe.event.AbstractSafeEvent;
-import homesafe.event.DoorEvent;
-import homesafe.event.ExampleSafeEvent;
 import homesafe.entity.User;
 import homesafe.service.EventService;
 import homesafe.service.ExampleEventConsumer;
 import homesafe.service.ExampleEventProducer;
-import homesafe.service.UserService;
-import homesafe.ui.GUIUtils;
 import homesafe.ui.MainGUI;
-import homesafe.ui.WelcomeScreen;
-import org.w3c.dom.events.Event;
-import org.w3c.dom.events.EventListener;
 
 import java.sql.SQLException;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;

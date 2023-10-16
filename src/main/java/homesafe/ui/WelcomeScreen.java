@@ -15,12 +15,6 @@ public class WelcomeScreen {
 
     private final GUIUtils guiUtils;
     private final JPanel panel = new JPanel();
-    private HumidityEvent humidityEvent = new HumidityEvent("humidity", 20);
-
-
-
-    private int textFieldPanelType;
-
 
     public WelcomeScreen(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
@@ -63,20 +57,17 @@ public class WelcomeScreen {
 
         // EAST PANEL
         JPanel emptySidePanel = new JPanel();
-        emptySidePanel.setLayout(new BoxLayout(emptySidePanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
-        emptySidePanel.setPreferredSize(new Dimension (500,150));
-
-
+        emptySidePanel.setLayout(new GridLayout(10, 1));
+        HumidityEvent humidityEvent = new HumidityEvent("humidity", 20);
         JLabel humid = new JLabel("Humidity: ");
-        JLabel temp = new JLabel("Temperature: ");
-        JLabel time = new JLabel("Time: ");
-        GridLayout gridLayout = new GridLayout(10, 1);
-
-        emptySidePanel.setLayout(gridLayout);
+        guiUtils.setFont(humid,20);
         emptySidePanel.add(humid);
+        JLabel temp = new JLabel("Temperature: ");
+        guiUtils.setFont(temp,20);
         emptySidePanel.add(temp);
+        JLabel time = new JLabel("Time: ");
+        guiUtils.setFont(time,20);
         emptySidePanel.add(time);
-
 
 
         // Adding sub-panels to MAIN PANEL
