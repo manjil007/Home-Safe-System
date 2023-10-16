@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -228,9 +229,10 @@ public class SwitchPanel extends JPanel {
             }
             else if (Objects.equals(pin, confirm)) {
                 User newUser = new User(username);
+                List<User> users = UserService.getInstance().getAllUsers();
                 String hashedPin = AuthenticationService.hashPIN(newUser.getUsername(), confirm);
                 newUser.setHashedPIN(hashedPin);
-                newUser.setAdmin(adminField.isSelected());
+                newUser.setAdmin(adminField.isSelected() || users.size() == 0);
                 UserService.getInstance().addUser(newUser);
                 PopUpDialog popup = new PopUpDialog("User: " + username + " created");
                 popup.showPopUp();
