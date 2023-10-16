@@ -23,30 +23,40 @@ public class ManagePinAdmin {
 
         // Right panel for the second stack of buttons
         JPanel rightButtonStackPanel = new JPanel();
-        rightButtonStackPanel.setLayout(new GridLayout(10,0));
+        rightButtonStackPanel.setLayout(new GridLayout(11,0)); //added an extra row in case
+
+        JLabel actionListLabel = new JLabel("Actions");
+        guiUtils.setFont(actionListLabel, 20);
+        rightButtonStackPanel.add(actionListLabel);
+
         JButton addButton = new JButton();
         guiUtils.createDisplayBtn(addButton, "ADD", 20);
         rightButtonStackPanel.add(addButton);
-
         JButton modifyButton = new JButton();
         guiUtils.createDisplayBtn(modifyButton, "MODIFY", 20);
         rightButtonStackPanel.add(modifyButton);
-
         JButton deleteButton = new JButton();
         guiUtils.createDisplayBtn(deleteButton, "DELETE", 20);
         rightButtonStackPanel.add(deleteButton);
 
         // Left panel for the first stack of buttons
         JPanel leftButtonStackPanel = new JPanel();
-        leftButtonStackPanel.setLayout(new GridLayout(10,0));
+        leftButtonStackPanel.setLayout(new GridLayout(11,0));
+
+        JLabel userListLabel = new JLabel("Users");
+        guiUtils.setFont(userListLabel, 20);
+        leftButtonStackPanel.add(userListLabel);
+
         List<User> users = UserService.getInstance().getAllUsers();
         for (int i = 0; i < users.size(); i++) {
-            JButton button = new JButton(users.get(i).getUsername());
-            guiUtils.setFont(button, 20);
-            guiUtils.createClearBtn(button,0,0,100,100,leftButtonStackPanel);
+            JButton button = new JButton();
+            guiUtils.createDisplayBtn(button,users.get(i).getUsername(),20);
+            leftButtonStackPanel.add(button);
 
             int finalI = i;
             button.addActionListener(e1 -> {
+                button.setBorderPainted(true);
+
                 modifyButton.addActionListener(e2 -> {
                     EntryScreen entryScreen = new EntryScreen(guiUtils,4, users.get(finalI));
                     guiUtils.switchScreens(entryScreen.getPanel());
