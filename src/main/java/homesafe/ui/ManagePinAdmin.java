@@ -26,7 +26,7 @@ public class ManagePinAdmin {
         rightButtonStackPanel.setLayout(new GridLayout(11,0)); //added an extra row in case
 
         JLabel actionListLabel = new JLabel("Actions");
-        guiUtils.setFont(actionListLabel, 20);
+        guiUtils.setFont(actionListLabel, 25);
         rightButtonStackPanel.add(actionListLabel);
 
         JButton addButton = new JButton();
@@ -44,7 +44,7 @@ public class ManagePinAdmin {
         leftButtonStackPanel.setLayout(new GridLayout(11,0));
 
         JLabel userListLabel = new JLabel("Users");
-        guiUtils.setFont(userListLabel, 20);
+        guiUtils.setFont(userListLabel, 25);
         leftButtonStackPanel.add(userListLabel);
 
         List<User> users = UserService.getInstance().getAllUsers();
