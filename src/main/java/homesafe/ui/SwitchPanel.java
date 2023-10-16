@@ -157,7 +157,12 @@ public class SwitchPanel extends JPanel {
             String oldPass = oldPin.getText();
             String newPass = newPin.getText();
             String confirm = confirmPin.getText();
-            if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
+
+            if (oldPass.length() == 0 || newPass.length() == 0 || confirm.length() == 0){
+                PopUpDialog popup = new PopUpDialog("Please fill out all fields");
+                popup.showPopUp();
+            }
+            else if (AuthenticationService.authorizeUser(currentUser.getUsername(), oldPass)) {
                 if (!Objects.equals(newPass, confirm)) {
                     PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
@@ -214,7 +219,12 @@ public class SwitchPanel extends JPanel {
             String username = userNameField.getText();
             String pin = pinField.getText();
             String confirm = confirmPin.getText();
-            if (Objects.equals(pin, confirm)) {
+
+            if (username.length() == 0 || pin.length() == 0 || confirm.length() == 0){
+                PopUpDialog popup = new PopUpDialog("Please fill out all fields");
+                popup.showPopUp();
+            }
+            else if (Objects.equals(pin, confirm)) {
                 User newUser = new User(username);
                 String hashedPin = AuthenticationService.hashPIN(newUser.getUsername(), confirm);
                 newUser.setHashedPIN(hashedPin);
@@ -264,11 +274,15 @@ public class SwitchPanel extends JPanel {
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
-            User currentUser = AuthenticationService.getCurrentUser();
             String oldPass = oldPin.getText();
             String newPass = newPin.getText();
             String confirm = confirmPin.getText();
-            if (AuthenticationService.authorizeUser(user.getUsername(), oldPass)) {
+
+            if (oldPass.length() == 0 || newPass.length() == 0 || confirm.length() == 0){
+                PopUpDialog popup = new PopUpDialog("Please fill out all fields");
+                popup.showPopUp();
+            }
+            else if (AuthenticationService.authorizeUser(user.getUsername(), oldPass)) {
                 if (!Objects.equals(newPass, confirm)) {
                     PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
@@ -323,7 +337,12 @@ public class SwitchPanel extends JPanel {
             User currentUser = AuthenticationService.getCurrentUser();
             String pin = adminPin.getText();
             String confirm = confirmPin.getText();
-            if (Objects.equals(pin, confirm)) {
+
+            if (pin.length() == 0 || confirm.length() == 0){
+                PopUpDialog popup = new PopUpDialog("Please fill out all fields");
+                popup.showPopUp();
+            }
+            else if (Objects.equals(pin, confirm)) {
                 if (AuthenticationService.authorizeUser(currentUser.getUsername(), pin)) {
                     UserService.getInstance().deleteUser(user);
                     PopUpDialog popup = new PopUpDialog("User successfully deleted.");
