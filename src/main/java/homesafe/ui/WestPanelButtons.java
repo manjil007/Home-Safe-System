@@ -10,10 +10,6 @@ public class WestPanelButtons extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
         GUIUtils guiUtils = new GUIUtils(frame);
 
-        // Button Images for side buttons
-      //  ImageIcon backBtnIcon = new ImageIcon("src/main/resources/images/welcomeScreen/back.png");
-      //  ImageIcon exitDisplayIcon = new ImageIcon("src/main/resources/images/welcomeScreen/exitDisplay.png");
-
         // Create side buttons with preferred size
         backBtn = new JButton();
         guiUtils.createDisplayBtn(backBtn, "<--", 35);

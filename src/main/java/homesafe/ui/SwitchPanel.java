@@ -51,9 +51,12 @@ public class SwitchPanel extends JPanel {
     private JButton backBtn;
     private JButton exitBtn;
     private LogData logData;
+    private JPanel eastPanel;
 
-    public SwitchPanel(int textFieldPanelType, JFrame frame, JButton backBtn, JButton exitBtn, User user) {
+    public SwitchPanel(int textFieldPanelType, JFrame frame, JButton backBtn, JButton exitBtn,
+                       User user, JPanel eastPanel) {
         this.frame = frame;
+        this.eastPanel = eastPanel;
         this.backBtn = backBtn;
         this.exitBtn = exitBtn;
         guiUtils = new GUIUtils(frame);
@@ -217,10 +220,10 @@ public class SwitchPanel extends JPanel {
         JTextField confirmPin = new JTextField(20);
         guiUtils.createTxtFlds(confirmPin, 20, 20, addNewUser, "Confirm PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
-        guiUtils.setFont(adminField, 20);
+        guiUtils.setFont(adminField, 25);
 
         addNewUser.setLayout(new GridLayout(3, 1));
-        switchPanel.add(adminField);
+        eastPanel.add(adminField);
 
         keyboard = new Keyboard(frame, userNameField, pinField, confirmPin);
 
@@ -270,6 +273,7 @@ public class SwitchPanel extends JPanel {
         });
 
         addNewUser = keyboard.getTextFieldsPanel();
+        //keyboard.getKeyboardPanel().setPreferredSize(new Dimension(300, 30));
         switchPanel.add(keyboard.getKeyboardPanel());
 
         return addNewUser;
@@ -284,13 +288,13 @@ public class SwitchPanel extends JPanel {
         JTextField confirmPin = new JTextField(20);
         guiUtils.createTxtFlds(confirmPin, 20, 20, changePinTextFieldsPanel, "Confirm New PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
-        guiUtils.setFont(adminField, 20);
+        guiUtils.setFont(adminField, 25);
         adminField.setSelected(AuthenticationService.getCurrentUser().isAdmin());
 
         changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
 
         keyboard = new Keyboard(frame, oldPin, newPin, confirmPin);
-        switchPanel.add(adminField);
+        eastPanel.add(adminField);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {

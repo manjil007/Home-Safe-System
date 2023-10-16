@@ -12,12 +12,11 @@ public class EntryScreen {
     private SwitchPanel switchPanel;
     private JPanel panel = new JPanel();
 
-
     public EntryScreen(GUIUtils guiUtils, int textFieldPanelType, User user) {
         this.guiUtils = guiUtils;
         westPanelButtons = new WestPanelButtons(guiUtils.frame);
         switchPanel = new SwitchPanel(textFieldPanelType, guiUtils.frame,
-                westPanelButtons.getBackButton(), westPanelButtons.getExitDisplayButton(), user);
+                westPanelButtons.getBackButton(), westPanelButtons.getExitDisplayButton(), user, eastEmptyPanel);
         panel.setLayout(new BorderLayout());
         switchPanel.setTextFieldPanelType(textFieldPanelType);
         createPanel();
