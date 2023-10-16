@@ -40,7 +40,7 @@ public class LogScreen {
             table = new JTable(data, columnNames);
             table.setRowHeight(100);
             table.setEnabled(false);
-            guiUtils.setFont(table, 20);
+            guiUtils.setFont(table, 17);
             table.setBounds(30, 40, 200, 300);
 
         }
@@ -56,7 +56,7 @@ public class LogScreen {
                 i++;
             }
             table = new JTable(data, columnNames);
-            guiUtils.setFont(table, 20);
+            guiUtils.setFont(table, 17);
             table.setBounds(30, 40, 200, 300);
         }
         JScrollPane sp = new JScrollPane(table);
