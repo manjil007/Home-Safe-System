@@ -86,6 +86,7 @@ public class WelcomeScreen {
 
         // Adding sub-panels to MAIN PANEL
         westButtons.setBorder(new EmptyBorder(10, 10, 10, 60));
+        emptySidePanel.setBorder(new EmptyBorder(10, 10, 10, 60));
         panel.add(westButtons, BorderLayout.WEST);
         panel.add(menuGrid, BorderLayout.CENTER);
         panel.add(emptySidePanel, BorderLayout.EAST);
