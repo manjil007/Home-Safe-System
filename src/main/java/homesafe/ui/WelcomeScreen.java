@@ -4,11 +4,16 @@ import homesafe.entity.User;
 import homesafe.event.AbstractSafeEvent;
 import homesafe.event.DoorEvent;
 import homesafe.event.HumidityEvent;
+import homesafe.event.TemperatureEvent;
 import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 /**
  * The Welcome Screen is the frame that
@@ -48,7 +53,7 @@ public class WelcomeScreen {
 
         JButton lockSafeBtn = new JButton();
         guiUtils.createDisplayBtn(lockSafeBtn, "Lock Safe", 25);
-       lockSafeBtn.setBorder((BorderFactory.createLineBorder(Color.white, 10)));
+        lockSafeBtn.setBorder((BorderFactory.createLineBorder(Color.white, 10)));
 
         // Add buttons to the menu grid
         menuGbc.gridx = 0;
@@ -64,15 +69,17 @@ public class WelcomeScreen {
 
         // EAST PANEL
         JPanel emptySidePanel = new JPanel();
-        emptySidePanel.setLayout(new GridLayout(10, 1));
-        HumidityEvent humidityEvent = new HumidityEvent("humidity", 20);
-        JLabel humid = new JLabel("Humidity: ");
+        emptySidePanel.setLayout(new GridLayout(20, 1));
+        HumidityEvent humidityEvent = new HumidityEvent("Humidity", 20);
+        JLabel humid = new JLabel(humidityEvent.getEventType() + ": " + humidityEvent.getHumidity());
         guiUtils.setFont(humid,20);
         emptySidePanel.add(humid);
-        JLabel temp = new JLabel("Temperature: ");
+        TemperatureEvent tempEvent = new TemperatureEvent("Temperature (F)", 75);
+        JLabel temp = new JLabel(tempEvent.getEventType() + ": " + tempEvent.getTemperature());
         guiUtils.setFont(temp,20);
         emptySidePanel.add(temp);
-        JLabel time = new JLabel("Time: ");
+        JLabel time = new JLabel("Time: " +
+                LocalTime.now(ZoneId.systemDefault()).format(DateTimeFormatter.ofPattern("h:mm")));
         guiUtils.setFont(time,20);
         emptySidePanel.add(time);
 
