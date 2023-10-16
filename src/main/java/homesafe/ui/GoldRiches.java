@@ -12,6 +12,8 @@ public class GoldRiches {
     private JPanel panel = new JPanel();
     private GUIUtils guiUtils;
 
+    private SafeLocked safeLocked;
+    private boolean isLocked = true;
     public GoldRiches(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
         panel.setLayout(null);
@@ -39,16 +41,32 @@ public class GoldRiches {
         panel.add(gold);
 
         //Button Actions
-        closeBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
-                guiUtils.switchScreens(safeUnlocked.getPanel());
-                DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);
-                EventService.getInstance().publishEvent(event);
-            }
-        });
+
+        if (!isLocked) {
+            closeBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
+                    guiUtils.switchScreens(safeUnlocked.getPanel());
+                    DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);
+                    EventService.getInstance().publishEvent(event);
+                }
+            });
+        } else {
+            closeBtn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SafeLocked safeLocked1 = new SafeLocked(guiUtils);
+                    guiUtils.switchScreens(safeLocked1.getPanel());
+                    DoorEvent event = new DoorEvent(DoorEvent.DOOR_CLOSED, false);
+                    EventService.getInstance().publishEvent(event);
+                }
+            });
+        }
+
     }
+
+
 
     public JPanel getPanel() {
         return panel;

@@ -29,7 +29,7 @@ public class SafeLocked {
         //Get screen sizing
         double width = screenSize.getWidth();
         double height = screenSize.getHeight();
-        int halfHeight = (int) ((height/2) - 215);
+        int halfHeight = (int) ((height / 2) - 215);
 
         //Set up button images
         ImageIcon devIcon = new ImageIcon("src/main/resources/images/devTools.png");
@@ -39,14 +39,14 @@ public class SafeLocked {
         keyIcon = guiUtils.resizeImg(keyIcon, 30, 60);
 
         //Create buttons
-      //  JButton devToolsBtn = new JButton(devIcon);
+        //  JButton devToolsBtn = new JButton(devIcon);
         JButton handleBtn = new JButton(handleIcon);
         JButton displayBtn = new JButton("Locked");
         JButton keyBtn = new JButton(keyIcon);
 
         guiUtils.setFont(displayBtn, 30);
 
-      //  guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
+        //  guiUtils.createClearBtn(devToolsBtn, 20, 20, 75, 75, panel);
         guiUtils.createClearBtn(handleBtn, 100, halfHeight, 350, 350, panel);
         guiUtils.createColorBtn(displayBtn, 550, halfHeight, (int) width - 650, 350, Color.black, panel);
         guiUtils.createClearBtn(keyBtn, (int) (width / 2) - 15, (int) (height / 2) + 200, 30, 60, panel);
@@ -66,7 +66,7 @@ public class SafeLocked {
                 List<User> users = UserService.getInstance().getAllUsers();
                 EntryScreen entryScreen;
 
-                if (users.isEmpty()){
+                if (users.isEmpty()) {
                     AuthenticationService.setCurrentUser(new User("first_user"));
                     entryScreen = new EntryScreen(guiUtils, 3, new User(""));
                     guiUtils.switchScreens(entryScreen.getPanel());
@@ -78,6 +78,7 @@ public class SafeLocked {
             }
         });
 
+
         keyBtn.addActionListener(e -> {
             GoldRiches goldRiches = new GoldRiches(guiUtils);
             guiUtils.switchScreens(goldRiches.getPanel());
@@ -86,7 +87,10 @@ public class SafeLocked {
         });
     }
 
+
     public JPanel getPanel() {
         return panel;
     }
 }
+
+
