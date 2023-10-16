@@ -59,7 +59,6 @@ public class LogScreen {
             }
         }
 
-
         table = new JTable(data, columnNames);
         table.setRowHeight(100);
         table.setEnabled(false);
