@@ -60,6 +60,7 @@ public class LogScreen {
         JScrollPane sp = new JScrollPane(table);
         sp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         sp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        table.getColumnModel().getColumn(0).setPreferredWidth(500);
         panel.add(sp, BorderLayout.CENTER);
         // Back & Exit Display Buttons
         WestPanelButtons westButtons = new WestPanelButtons(guiUtils.frame);
