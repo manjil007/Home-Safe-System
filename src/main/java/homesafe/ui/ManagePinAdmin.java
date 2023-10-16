@@ -48,7 +48,8 @@ public class ManagePinAdmin {
                     guiUtils.switchScreens(entryScreen.getPanel());
                 });
             });
-            leftButtonStackPanel.add(button);
+            guiUtils.setFont(button, 20);
+            guiUtils.createClearBtn(button,0,0,100,100,leftButtonStackPanel);
         }
         pinManagerPanel.add(leftButtonStackPanel);
         pinManagerPanel.add(rightButtonStackPanel);
