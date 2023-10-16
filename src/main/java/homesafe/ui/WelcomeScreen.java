@@ -1,6 +1,9 @@
 package homesafe.ui;
+import homesafe.controller.SensorSimulation;
 import homesafe.entity.User;
+import homesafe.event.AbstractSafeEvent;
 import homesafe.event.DoorEvent;
+import homesafe.event.HumidityEvent;
 import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
 import javax.swing.*;
@@ -12,6 +15,9 @@ public class WelcomeScreen {
 
     private final GUIUtils guiUtils;
     private final JPanel panel = new JPanel();
+    private HumidityEvent humidityEvent = new HumidityEvent("humidity", 20);
+
+
 
     private int textFieldPanelType;
 
@@ -58,7 +64,19 @@ public class WelcomeScreen {
         // EAST PANEL
         JPanel emptySidePanel = new JPanel();
         emptySidePanel.setLayout(new BoxLayout(emptySidePanel, BoxLayout.Y_AXIS)); // Use BoxLayout with Y_AXIS
-        emptySidePanel.setPreferredSize(new Dimension (200,150));
+        emptySidePanel.setPreferredSize(new Dimension (500,150));
+
+
+        JLabel humid = new JLabel("Humidity: ");
+        JLabel temp = new JLabel("Temperature: ");
+        JLabel time = new JLabel("Time: ");
+        GridLayout gridLayout = new GridLayout(10, 1);
+
+        emptySidePanel.setLayout(gridLayout);
+        emptySidePanel.add(humid);
+        emptySidePanel.add(temp);
+        emptySidePanel.add(time);
+
 
 
         // Adding sub-panels to MAIN PANEL
