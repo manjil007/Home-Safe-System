@@ -284,11 +284,13 @@ public class SwitchPanel extends JPanel {
         JTextField confirmPin = new JTextField(20);
         guiUtils.createTxtFlds(confirmPin, 20, 20, changePinTextFieldsPanel, "Confirm New PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
+        guiUtils.setFont(adminField, 20);
+        adminField.setSelected(AuthenticationService.getCurrentUser().isAdmin());
 
         changePinTextFieldsPanel.setLayout(new GridLayout(3, 1));
 
         keyboard = new Keyboard(frame, oldPin, newPin, confirmPin);
-        changePinTextFieldsPanel.add(adminField);
+        switchPanel.add(adminField);
 
         JButton enterBtn = keyboard.getEnterButton();
         enterBtn.addActionListener(e -> {
