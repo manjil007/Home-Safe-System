@@ -6,6 +6,7 @@ package homesafe.controller;
 
 import homesafe.event.HumidityEvent;
 import homesafe.event.SafeEventHandler;
+import homesafe.service.EventService;
 
 /**
  * Humidity sensor controller handle the humidity event inside safe.
@@ -32,6 +33,7 @@ public class HumiditySensorController extends AbstractController implements Safe
 
     public void setHumidity(float humidity) {
         this.humidity = humidity;
+        EventService.getInstance().publishEvent(new HumidityEvent(HumidityEvent.UPDATE_EVENT, humidity));
     }
 
     @Override
