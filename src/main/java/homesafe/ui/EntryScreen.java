@@ -1,7 +1,6 @@
 package homesafe.ui;
 
 import homesafe.entity.User;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -28,8 +27,8 @@ public class EntryScreen {
         // EAST Panel Setup
         eastEmptyPanel.setLayout(new BoxLayout(eastEmptyPanel, BoxLayout.Y_AXIS));
         eastEmptyPanel.setPreferredSize(new Dimension(200,150));
-        // Create Enter Button object
 
+        // WEST Panel Setup
         westPanelButtons.setBorder(new EmptyBorder(10, 10, 10, 60));
         eastEmptyPanel.setBorder(new EmptyBorder(100, 0, 10, 50));
         panel.add(switchPanel.getSwitchPanel(), BorderLayout.SOUTH);

@@ -53,14 +53,23 @@ public class ManagePinAdmin {
         leftButtonStackPanel.add(userListLabel);
 
         List<User> users = UserService.getInstance().getAllUsers();
+        JButton[] buttons = new JButton[users.size()];
+
         for (int i = 0; i < users.size(); i++) {
-            JButton button = new JButton();
-            guiUtils.createDisplayBtn(button,users.get(i).getUsername(),20);
-            leftButtonStackPanel.add(button);
+            buttons[i] = new JButton();
+            buttons[i].setText(users.get(i).getUsername());
+            guiUtils.setFont(buttons[i], 20);
+            buttons[i].setBackground(new Color(0, 147, 212));
+            buttons[i].setBorder((BorderFactory.createLineBorder(Color.white, 5)));
+            leftButtonStackPanel.add(buttons[i]);
 
             int finalI = i;
-            button.addActionListener(e1 -> {
-                button.setBorderPainted(true);
+            buttons[i].addActionListener(e1 -> {
+                for (int j = 0; j < users.size(); j++) {
+                    buttons[j].setBorder((BorderFactory.createLineBorder(Color.white, 5)));
+                }
+
+                buttons[finalI].setBorder((BorderFactory.createLineBorder(new Color(0, 147, 212), 5)));
 
                 modifyButton.addActionListener(e2 -> {
                     EntryScreen entryScreen = new EntryScreen(guiUtils,4, users.get(finalI));
