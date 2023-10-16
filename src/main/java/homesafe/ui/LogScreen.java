@@ -4,6 +4,7 @@ import homesafe.service.AuthenticationService;
 import homesafe.service.LogService;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -75,6 +76,7 @@ public class LogScreen {
 
         // Back & Exit Display Buttons
         WestPanelButtons westButtons = new WestPanelButtons(guiUtils.frame);
+        westButtons.setBorder(new EmptyBorder(10, 10, 10, 60));
         panel.add(westButtons, BorderLayout.WEST);
 
         // Button Actions

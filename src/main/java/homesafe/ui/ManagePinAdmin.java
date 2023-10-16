@@ -3,6 +3,7 @@ import homesafe.entity.User;
 import homesafe.service.UserService;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ManagePinAdmin {
         // Right panel for the second stack of buttons
         JPanel rightButtonStackPanel = new JPanel();
         rightButtonStackPanel.setLayout(new GridLayout(11,0)); //added an extra row in case
+        rightButtonStackPanel.setBorder(new EmptyBorder(20, 20, 20, 60));
 
         JLabel actionListLabel = new JLabel("Actions");
         guiUtils.setFont(actionListLabel, 20);
@@ -32,9 +34,11 @@ public class ManagePinAdmin {
         JButton addButton = new JButton();
         guiUtils.createDisplayBtn(addButton, "ADD", 20);
         rightButtonStackPanel.add(addButton);
+
         JButton modifyButton = new JButton();
         guiUtils.createDisplayBtn(modifyButton, "MODIFY", 20);
         rightButtonStackPanel.add(modifyButton);
+
         JButton deleteButton = new JButton();
         guiUtils.createDisplayBtn(deleteButton, "DELETE", 20);
         rightButtonStackPanel.add(deleteButton);
@@ -42,6 +46,7 @@ public class ManagePinAdmin {
         // Left panel for the first stack of buttons
         JPanel leftButtonStackPanel = new JPanel();
         leftButtonStackPanel.setLayout(new GridLayout(11,0));
+        leftButtonStackPanel.setBorder(new EmptyBorder(20, 0, 20, 20));
 
         JLabel userListLabel = new JLabel("Users");
         guiUtils.setFont(userListLabel, 20);
@@ -74,6 +79,7 @@ public class ManagePinAdmin {
         WestPanelButtons westButtons = new WestPanelButtons(guiUtils.frame);
 
         // Adding everything to MAIN panel
+        westButtons.setBorder(new EmptyBorder(10, 10, 10, 60));
         panel.add(westButtons, BorderLayout.WEST);
         panel.add(pinManagerPanel, BorderLayout.CENTER);
 

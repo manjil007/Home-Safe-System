@@ -220,6 +220,7 @@ public class SwitchPanel extends JPanel {
         JTextField confirmPin = new JTextField(20);
         guiUtils.createTxtFlds(confirmPin, 20, 20, addNewUser, "Confirm PIN");
         JCheckBox adminField = new JCheckBox("Admin?");
+        adminField.setSelected(AuthenticationService.getCurrentUser().isAdmin());
         guiUtils.setFont(adminField, 25);
 
         addNewUser.setLayout(new GridLayout(3, 1));
@@ -304,7 +305,7 @@ public class SwitchPanel extends JPanel {
             Pattern pattern = Pattern.compile("\\d+");
             boolean isNumber = pattern.matcher(newPass).matches();
 
-            if (oldPass.length() == 0 || newPass.length() == 0 || confirm.length() == 0){
+            if (oldPass.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
                 popup.showPopUp();
             }else if (newPass.length()!= 6){

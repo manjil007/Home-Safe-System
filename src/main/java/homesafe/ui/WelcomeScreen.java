@@ -4,6 +4,7 @@ import homesafe.event.DoorEvent;
 import homesafe.service.AuthenticationService;
 import homesafe.service.EventService;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 
 
@@ -61,6 +62,7 @@ public class WelcomeScreen {
 
 
         // Adding sub-panels to MAIN PANEL
+        westButtons.setBorder(new EmptyBorder(10, 10, 10, 60));
         panel.add(westButtons, BorderLayout.WEST);
         panel.add(menuGrid, BorderLayout.CENTER);
         panel.add(emptySidePanel, BorderLayout.EAST);

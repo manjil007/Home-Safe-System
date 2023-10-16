@@ -1,6 +1,7 @@
 package homesafe.ui;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
@@ -43,6 +44,7 @@ public class Keyboard extends JPanel {
             textFieldsPanel.add(jLabel);
             textFieldsPanel.add(textField);
         }
+        textFieldsPanel.setBorder(new EmptyBorder(10, 130, 30, 130));
 
         // Create keyboard panel
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
