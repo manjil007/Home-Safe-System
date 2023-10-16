@@ -38,14 +38,6 @@ public class VibrationSensorController extends AbstractController {
         }
     }
 
-    public VibrationLevel getThreshold() {
-        return threshold;
-    }
-
-    public void setThreshold(VibrationLevel threshold) {
-        this.threshold = threshold;
-    }
-
     @Override
     public void run() {
         // TODO
