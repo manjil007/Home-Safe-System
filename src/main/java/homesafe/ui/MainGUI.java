@@ -7,6 +7,10 @@ import java.awt.*;
 
 import static javax.swing.SwingUtilities.updateComponentTreeUI;
 
+/**
+ * This is the main gui class, everything is run from here
+ */
+
 public class MainGUI {
     public MainGUI() {
 

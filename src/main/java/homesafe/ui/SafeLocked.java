@@ -12,6 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
+/**
+ * This class establishes how the  safe will look
+ * and act when it is locked.
+ */
+
 public class SafeLocked {
     private GUIUtils guiUtils;
     private JPanel panel = new JPanel();

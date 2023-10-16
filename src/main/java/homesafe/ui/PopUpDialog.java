@@ -5,6 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * When a user is finished entering a username and pin,
+ * entering the wrong amount of numbers for a pin/ or when they
+ * are locked out. This class will send a pop-up with a unique
+ * message depending on the situation.
+ */
+
 public class PopUpDialog extends JDialog {
     public PopUpDialog(String message) {
         // Set dialog properties
