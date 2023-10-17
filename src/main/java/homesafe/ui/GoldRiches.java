@@ -8,6 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * This class is GUI to display inside of the
+ * safe
+ */
 public class GoldRiches {
     private JPanel panel = new JPanel();
     private GUIUtils guiUtils;
@@ -22,6 +26,9 @@ public class GoldRiches {
         createPanel();
     }
 
+    /**
+     * Creates a panel with an image of the safe's valuables.
+     */
     private void createPanel() {
         //Get screen dimensions
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -67,7 +74,10 @@ public class GoldRiches {
     }
 
 
-
+    /**
+     * Method to return the JPanel created in GoldRiches class
+     * @return JPanel
+     */
     public JPanel getPanel() {
         return panel;
     }

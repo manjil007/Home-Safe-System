@@ -90,6 +90,11 @@ public class SwitchPanel extends JPanel {
     public JPanel getTextFieldsPanel(){return textFieldsPanel;}
     public JPanel getSwitchPanel(){return switchPanel;}
 
+    /**
+     * Creates a login panel for user authentication.
+     *
+     * @return A JPanel with a graphical user interface for user login.
+     */
     public JPanel createTextPanel1(){
         // Create text fields
         JPanel textPanel1 = new JPanel();
@@ -144,6 +149,12 @@ public class SwitchPanel extends JPanel {
 
         return textPanel1;
     }
+
+    /**
+     * Creates a panel for changing the non-admin user's password.
+     *
+     * @return A JPanel with a graphical user interface for non admin password modification.
+     */
     public JPanel createTextPanel2(){
         JPanel changePinTextFieldsPanel = new JPanel();
 
@@ -210,6 +221,14 @@ public class SwitchPanel extends JPanel {
 
         return changePinTextFieldsPanel;
     }
+
+
+    /**
+     * Creates a panel for first-time user and new user setup.
+     *
+     * @return A JPanel with a graphical user interface for new user and first log in setup.
+     */
+
     public JPanel createTextPanel3(){
         JPanel addNewUser = new JPanel();
 
@@ -284,6 +303,12 @@ public class SwitchPanel extends JPanel {
 
         return addNewUser;
     }
+
+    /**
+     * Creates a panel for changing the admin user's password.
+     *
+     * @return A JPanel with a graphical user interface for admin password modification.
+     */
     public JPanel createTextPanel4(User user){
         JPanel changePinTextFieldsPanel = new JPanel();
 
@@ -358,6 +383,13 @@ public class SwitchPanel extends JPanel {
 
             return changePinTextFieldsPanel;
     }
+
+
+    /**
+     * Creates a panel for admin user PIN confirmation before deleting another user.
+     *
+     * @return A JPanel with a graphical user interface to confirm the admin's PIN for user deletion.
+     */
     public JPanel createTextPanel5(User user){
         JPanel textPanel5 = new JPanel();
 

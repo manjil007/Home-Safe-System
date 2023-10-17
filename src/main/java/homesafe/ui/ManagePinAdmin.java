@@ -17,6 +17,8 @@ import java.util.List;
 public class ManagePinAdmin {
     private final GUIUtils guiUtils;
     private final JPanel panel = new JPanel(); // MAIN Panel
+
+    //constructor
     public ManagePinAdmin(GUIUtils guiUtils){
         this.guiUtils = guiUtils;
         panel.setLayout(new BorderLayout());
@@ -24,6 +26,9 @@ public class ManagePinAdmin {
         createPanel();
     }
 
+    /**
+     * Creates a panel for managing user PINs with a graphical user interface.
+     */
     private void createPanel(){
         // Panel for displaying log info
         JPanel pinManagerPanel = new JPanel(new GridLayout(0, 2));

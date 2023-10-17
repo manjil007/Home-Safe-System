@@ -22,6 +22,7 @@ public class SafeLocked {
     private JPanel panel = new JPanel();
     private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
+    //constructor
     public SafeLocked(GUIUtils guiUtils) {
         this.guiUtils = guiUtils;
         panel.setLayout(null);
@@ -30,6 +31,11 @@ public class SafeLocked {
         createPanel();
     }
 
+    /**
+     * Creates a panel to display a screen indicating that the safe is locked.
+     *
+     * @return A JPanel with a graphical user interface to convey the safe's locked status.
+     */
     private void createPanel() {
         //Get screen sizing
         double width = screenSize.getWidth();

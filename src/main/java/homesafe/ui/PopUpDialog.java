@@ -13,6 +13,8 @@ import java.awt.event.ActionListener;
  */
 
 public class PopUpDialog extends JDialog {
+
+    //constructor
     public PopUpDialog(String message) {
         // Set dialog properties
         setTitle("Custom PopUp");
@@ -37,6 +39,7 @@ public class PopUpDialog extends JDialog {
         });
     }
 
+    //Method to display the pop-up
     public void showPopUp() {
         setVisible(true);
     }

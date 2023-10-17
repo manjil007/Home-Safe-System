@@ -22,6 +22,11 @@ public class SafeUnlocked {
         createPanel();
     }
 
+    /**
+     * Creates a panel to display a screen indicating that the safe is unlocked.
+     *
+     * @return A JPanel with a graphical user interface to convey the safe's unlocked status.
+     */
     private void createPanel() {
         //Get screen sizing
         double width = screenSize.getWidth();

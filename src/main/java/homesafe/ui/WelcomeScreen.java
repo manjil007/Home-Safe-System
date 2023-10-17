@@ -35,6 +35,12 @@ public class WelcomeScreen {
         createPanel();
     }
 
+
+    /**
+     * Creates a welcome panel displayed upon user login.
+     *
+     * @return A JPanel with a graphical user interface for the welcome screen.
+     */
     private void createPanel() {
 
         // CENTRAL PANEL

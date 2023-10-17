@@ -29,6 +29,9 @@ public class LogScreen {
 
     }
 
+    /**
+     * Creates a panel for displaying logs for both admin and non-admin users with a graphical user interface.
+     */
     private void createPanel(){
         String[] columnNames = {"Message", "Time"};
         JTable table;
