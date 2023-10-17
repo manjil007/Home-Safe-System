@@ -304,6 +304,7 @@ public class SwitchPanel extends JPanel {
             String confirm = confirmPin.getText();
             Pattern pattern = Pattern.compile("\\d+");
             boolean isNumber = pattern.matcher(newPass).matches();
+            User currUser = AuthenticationService.getCurrentUser();
 
             if (oldPass.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
@@ -315,6 +316,8 @@ public class SwitchPanel extends JPanel {
                 PopUpDialog popup = new PopUpDialog("Please ensure that your PIN consists of numbers only.");
                 popup.showPopUp();
             } else if (AuthenticationService.authorizeUser(user.getUsername(), oldPass)) {
+                AuthenticationService.setCurrentUser(currUser);
+
                 if (!Objects.equals(newPass, confirm)) {
                     PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                     popup.showPopUp();
@@ -327,7 +330,7 @@ public class SwitchPanel extends JPanel {
                     PopUpDialog popup = new PopUpDialog("Changes successful");
                     popup.showPopUp();
                 }
-            }else {
+            } else {
                 lockOut();
             }
         });
