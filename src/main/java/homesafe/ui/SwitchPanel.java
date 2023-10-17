@@ -236,26 +236,31 @@ public class SwitchPanel extends JPanel {
             Pattern pattern = Pattern.compile("\\d+");
             boolean isNumber = pattern.matcher(pin).matches();
 
-
             if (username.length() == 0 || pin.length() == 0 || confirm.length() == 0){
                 PopUpDialog popup = new PopUpDialog("Please fill out all fields");
                 popup.showPopUp();
-            }else if (pin.length()!= 6){
+            } else if (pin.length()!= 6){
                 PopUpDialog popup = new PopUpDialog("PIN must be of length 6");
                 popup.showPopUp();
-            }else if (!isNumber) {
+            } else if (!isNumber) {
                 PopUpDialog popup = new PopUpDialog("Please ensure that your PIN consists of numbers only.");
                 popup.showPopUp();
-            }else if (Objects.equals(pin, confirm)) {
+            } else if (Objects.equals(pin, confirm)) {
                 User newUser = new User(username);
                 List<User> users = UserService.getInstance().getAllUsers();
                 String hashedPin = AuthenticationService.hashPIN(newUser.getUsername(), confirm);
                 newUser.setHashedPIN(hashedPin);
                 newUser.setAdmin(adminField.isSelected() || users.size() == 0);
+
+                if (users.size() == 0) {
+                    newUser.setAdmin(true);
+                    AuthenticationService.setCurrentUser(newUser);
+                }
+
                 UserService.getInstance().addUser(newUser);
                 PopUpDialog popup = new PopUpDialog("User: " + username + " created");
                 popup.showPopUp();
-            }else {
+             } else {
                 PopUpDialog popup = new PopUpDialog("New PINs do not match.");
                 popup.showPopUp();
             }
