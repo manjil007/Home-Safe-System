@@ -20,6 +20,12 @@ public class EntryScreen {
     private SwitchPanel switchPanel;
     private JPanel panel = new JPanel();
 
+    /**
+     * Constrcutor for EntryScreen
+     * @param guiUtils
+     * @param textFieldPanelType
+     * @param user
+     */
     public EntryScreen(GUIUtils guiUtils, int textFieldPanelType, User user) {
         this.guiUtils = guiUtils;
         westPanelButtons = new WestPanelButtons(guiUtils.frame);
@@ -30,6 +36,9 @@ public class EntryScreen {
         createPanel();
     }
 
+    /**
+     * Method to create panel
+     */
     private void createPanel() {
 
         // EAST Panel Setup
@@ -44,19 +53,14 @@ public class EntryScreen {
         panel.add(westPanelButtons, BorderLayout.WEST);
         panel.add(eastEmptyPanel, BorderLayout.EAST);
 
-        // Button Actions
-//        westPanelButtons.getBackButton().addActionListener(e -> {
-//            SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
-//            guiUtils.switchScreens(safeUnlocked.getPanel());
-//        });
-
         westPanelButtons.getExitDisplayButton().addActionListener(e -> {
             SafeUnlocked safeUnlocked = new SafeUnlocked(guiUtils);
             guiUtils.switchScreens(safeUnlocked.getPanel());
         });
     }
 
-    public SwitchPanel getSwitchPanel(){return switchPanel;}
-
+    /**
+     * Method to get the panel created above
+     */
     public JPanel getPanel(){return panel;}
 }

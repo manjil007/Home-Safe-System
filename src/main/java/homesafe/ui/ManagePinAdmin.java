@@ -116,18 +116,6 @@ public class ManagePinAdmin {
                 guiUtils.switchScreens(entryScreen.getPanel());
             }
         });
-
-        // Actions if user tries to click modify and delete without
-        // first selection a user
-//        modifyButton.addActionListener(e -> {
-//            PopUpDialog msg = new PopUpDialog("You must choose a user whose PIN you can MODIFY first!");
-//            msg.showPopUp();
-//        });
-//        deleteButton.addActionListener(e -> {
-//            PopUpDialog msg = new PopUpDialog("You must choose a user to DELETE first!");
-//            msg.showPopUp();
-//        });
-
     }
 
     public JPanel getPanel(){return panel;}
