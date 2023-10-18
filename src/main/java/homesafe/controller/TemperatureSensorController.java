@@ -10,6 +10,11 @@ public class TemperatureSensorController extends AbstractController{
     private float threshold;
     private static TemperatureSensorController instance;
 
+    /**
+     *
+     * @param temperature
+     * @param threshold
+     */
     public TemperatureSensorController(float temperature, float threshold) {
         this.temperature = temperature;
         this.threshold = threshold;
@@ -24,6 +29,10 @@ public class TemperatureSensorController extends AbstractController{
         return temperature;
     }
 
+    /**
+     *
+     * @param temperature
+     */
     public void setTemperature(float temperature) {
         this.temperature = temperature;
         if (this.temperature > threshold) {

@@ -23,14 +23,18 @@ public class HumiditySensorController extends AbstractController implements Safe
         return instance;
     }
 
+    /**
+     * The humidity sensor controller constructor
+     * @param humidity the safe humidity
+     */
     public HumiditySensorController(float humidity) {
         this.humidity = humidity;
     }
 
-    public float getHumidity() {
-        return humidity;
-    }
-
+    /**
+     * This set the humidity for display
+     * @param humidity the safe humidity
+     */
     public void setHumidity(float humidity) {
         this.humidity = humidity;
         EventService.getInstance().publishEvent(new HumidityEvent(HumidityEvent.UPDATE_EVENT, humidity));
@@ -41,6 +45,10 @@ public class HumiditySensorController extends AbstractController implements Safe
         // TODO
     }
 
+    /**
+     *
+     * @param event the event
+     */
     @Override
     public void handleEvent(HumidityEvent event) {
         setHumidity(event.getHumidity());
